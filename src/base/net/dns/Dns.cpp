@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,17 +21,17 @@
 #include "base/net/dns/DnsUvBackend.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 DnsConfig Dns::m_config;
 std::map<String, std::shared_ptr<IDnsBackend> > Dns::m_backends;
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-std::shared_ptr<xmrig::DnsRequest> xmrig::Dns::resolve(const String &host, IDnsListener *listener, uint64_t ttl)
+std::shared_ptr<tgxm::DnsRequest> tgxm::Dns::resolve(const String &host, IDnsListener *listener, uint64_t ttl)
 {
     if (m_backends.find(host) == m_backends.end()) {
         m_backends.insert({ host, std::make_shared<DnsUvBackend>() });

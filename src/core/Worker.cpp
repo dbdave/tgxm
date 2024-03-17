@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -39,35 +39,35 @@
 #include "version.h"
 
 
-#ifdef XMRIG_FEATURE_API
+#ifdef TGXM_FEATURE_API
 #   include "base/api/Api.h"
 #   include "base/api/interfaces/IApiRequest.h"
 #endif
 
 
-#ifdef XMRIG_FEATURE_OPENCL
+#ifdef TGXM_FEATURE_OPENCL
 #   include "backend/opencl/OclBackend.h"
 #endif
 
 
-#ifdef XMRIG_FEATURE_CUDA
+#ifdef TGXM_FEATURE_CUDA
 #   include "backend/cuda/CudaBackend.h"
 #endif
 
 
-#ifdef XMRIG_ALGO_RANDOMX
+#ifdef TGXM_ALGO_RANDOMX
 #   include "crypto/rx/Profiler.h"
 #   include "crypto/rx/Rx.h"
 #   include "crypto/rx/RxConfig.h"
 #endif
 
 
-#ifdef XMRIG_ALGO_GHOSTRIDER
+#ifdef TGXM_ALGO_GHOSTRIDER
 #   include "crypto/ghostrider/ghostrider.h"
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 static std::mutex mutex;
@@ -76,7 +76,7 @@ static std::mutex mutex;
 class MinerPrivate
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE_DEFAULT(MinerPrivate)
+    TGXM_DISABLE_COPY_MOVE_DEFAULT(MinerPrivate)
 
 
     inline explicit MinerPrivate(Controller *controller) : controller(controller) {}
@@ -90,7 +90,7 @@ public:
             delete backend;
         }
 
-#       ifdef XMRIG_ALGO_RANDOMX
+#       ifdef TGXM_ALGO_RANDOMX
         Rx::destroy();
 #       endif
     }
@@ -141,7 +141,7 @@ public:
     }
 
 
-#   ifdef XMRIG_FEATURE_API
+#   ifdef TGXM_FEATURE_API
     void getMiner(rapidjson::Value &reply, rapidjson::Document &doc, int) const
     {
         using namespace rapidjson;
@@ -230,7 +230,7 @@ public:
 
     static inline void printProfile()
     {
-#       ifdef XMRIG_FEATURE_PROFILING
+#       ifdef TGXM_FEATURE_PROFILING
         ProfileScopeData* data[ProfileScopeData::MAX_DATA_COUNT];
 
         const uint32_t n = std::min<uint32_t>(ProfileScopeData::s_dataCount, ProfileScopeData::MAX_DATA_COUNT);
@@ -320,7 +320,7 @@ public:
         char avg_hashrate_buf[64];
         avg_hashrate_buf[0] = '\0';
 
-#       ifdef XMRIG_ALGO_GHOSTRIDER
+#       ifdef TGXM_ALGO_GHOSTRIDER
         if (algorithm.family() == Algorithm::GHOSTRIDER) {
             snprintf(avg_hashrate_buf, sizeof(avg_hashrate_buf), " avg " CYAN_BOLD("%s %s"), Hashrate::format(avg_hashrate * scale, num + 16 * 4, 16), h);
         }
@@ -335,7 +335,7 @@ public:
                  avg_hashrate_buf
                  );
 
-#       ifdef XMRIG_FEATURE_BENCHMARK
+#       ifdef TGXM_FEATURE_BENCHMARK
         for (auto backend : backends) {
             backend->printBenchProgress();
         }
@@ -343,12 +343,12 @@ public:
     }
 
 
-#   ifdef XMRIG_ALGO_RANDOMX
+#   ifdef TGXM_ALGO_RANDOMX
     inline bool initRX() const { return Rx::init(job, controller->config()->rx(), controller->config()->cpu()); }
 #   endif
 
 
-#   ifdef XMRIG_ALGO_GHOSTRIDER
+#   ifdef TGXM_ALGO_GHOSTRIDER
     inline void initGhostRider() const { ghostrider::benchmark(); }
 #   endif
 
@@ -373,11 +373,11 @@ public:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
 
-xmrig::Miner::Miner(Controller *controller)
+tgxm::Miner::Miner(Controller *controller)
     : d_ptr(new MinerPrivate(controller))
 {
     const int priority = controller->config()->cpu().priority();
@@ -386,17 +386,17 @@ xmrig::Miner::Miner(Controller *controller)
         Platform::setThreadPriority(std::min(priority + 1, 5));
     }
 
-#   ifdef XMRIG_FEATURE_PROFILING
+#   ifdef TGXM_FEATURE_PROFILING
     ProfileScopeData::Init();
 #   endif
 
-#   ifdef XMRIG_ALGO_RANDOMX
+#   ifdef TGXM_ALGO_RANDOMX
     Rx::init(this);
 #   endif
 
     controller->addListener(this);
 
-#   ifdef XMRIG_FEATURE_API
+#   ifdef TGXM_FEATURE_API
     controller->api()->addListener(this);
 #   endif
 
@@ -405,11 +405,11 @@ xmrig::Miner::Miner(Controller *controller)
     d_ptr->backends.reserve(3);
     d_ptr->backends.push_back(new CpuBackend(controller));
 
-#   ifdef XMRIG_FEATURE_OPENCL
+#   ifdef TGXM_FEATURE_OPENCL
     d_ptr->backends.push_back(new OclBackend(controller));
 #   endif
 
-#   ifdef XMRIG_FEATURE_CUDA
+#   ifdef TGXM_FEATURE_CUDA
     d_ptr->backends.push_back(new CudaBackend(controller));
 #   endif
 
@@ -417,37 +417,37 @@ xmrig::Miner::Miner(Controller *controller)
 }
 
 
-xmrig::Miner::~Miner()
+tgxm::Miner::~Miner()
 {
     delete d_ptr;
 }
 
 
-bool xmrig::Miner::isEnabled() const
+bool tgxm::Miner::isEnabled() const
 {
     return d_ptr->enabled;
 }
 
 
-bool xmrig::Miner::isEnabled(const Algorithm &algorithm) const
+bool tgxm::Miner::isEnabled(const Algorithm &algorithm) const
 {
     return std::find(d_ptr->algorithms.begin(), d_ptr->algorithms.end(), algorithm) != d_ptr->algorithms.end();
 }
 
 
-const xmrig::Algorithms &xmrig::Miner::algorithms() const
+const tgxm::Algorithms &tgxm::Miner::algorithms() const
 {
     return d_ptr->algorithms;
 }
 
 
-const std::vector<xmrig::IBackend *> &xmrig::Miner::backends() const
+const std::vector<tgxm::IBackend *> &tgxm::Miner::backends() const
 {
     return d_ptr->backends;
 }
 
 
-xmrig::Job xmrig::Miner::job() const
+tgxm::Job tgxm::Miner::job() const
 {
     std::lock_guard<std::mutex> lock(mutex);
 
@@ -455,7 +455,7 @@ xmrig::Job xmrig::Miner::job() const
 }
 
 
-void xmrig::Miner::execCommand(char command)
+void tgxm::Miner::execCommand(char command)
 {
     switch (command) {
     case 'h':
@@ -490,7 +490,7 @@ void xmrig::Miner::execCommand(char command)
 }
 
 
-void xmrig::Miner::pause()
+void tgxm::Miner::pause()
 {
     d_ptr->active = false;
     d_ptr->m_taskbar.setActive(false);
@@ -500,7 +500,7 @@ void xmrig::Miner::pause()
 }
 
 
-void xmrig::Miner::setEnabled(bool enabled)
+void tgxm::Miner::setEnabled(bool enabled)
 {
     if (d_ptr->enabled == enabled) {
         return;
@@ -536,13 +536,13 @@ void xmrig::Miner::setEnabled(bool enabled)
 }
 
 
-void xmrig::Miner::setJob(const Job &job, bool donate)
+void tgxm::Miner::setJob(const Job &job, bool donate)
 {
     for (IBackend *backend : d_ptr->backends) {
         backend->prepare(job);
     }
 
-#   ifdef XMRIG_ALGO_RANDOMX
+#   ifdef TGXM_ALGO_RANDOMX
     if (job.algorithm().family() == Algorithm::RANDOM_X && !Rx::isReady(job)) {
         if (d_ptr->algorithm != job.algorithm()) {
             stop();
@@ -574,13 +574,13 @@ void xmrig::Miner::setJob(const Job &job, bool donate)
         d_ptr->userJobId = job.id();
     }
 
-#   ifdef XMRIG_ALGO_RANDOMX
+#   ifdef TGXM_ALGO_RANDOMX
     const bool ready = d_ptr->initRX();
 #   else
     constexpr const bool ready = true;
 #   endif
 
-#   ifdef XMRIG_ALGO_GHOSTRIDER
+#   ifdef TGXM_ALGO_GHOSTRIDER
     if (job.algorithm().family() == Algorithm::GHOSTRIDER) {
         d_ptr->initGhostRider();
     }
@@ -597,7 +597,7 @@ void xmrig::Miner::setJob(const Job &job, bool donate)
 }
 
 
-void xmrig::Miner::stop()
+void tgxm::Miner::stop()
 {
     Nonce::stop();
 
@@ -607,7 +607,7 @@ void xmrig::Miner::stop()
 }
 
 
-void xmrig::Miner::onConfigChanged(Config *config, Config *previousConfig)
+void tgxm::Miner::onConfigChanged(Config *config, Config *previousConfig)
 {
     d_ptr->rebuild();
 
@@ -623,7 +623,7 @@ void xmrig::Miner::onConfigChanged(Config *config, Config *previousConfig)
 }
 
 
-void xmrig::Miner::onTimer(const Timer *)
+void tgxm::Miner::onTimer(const Timer *)
 {
     double maxHashrate          = 0.0;
     const auto config           = d_ptr->controller->config();
@@ -679,8 +679,8 @@ void xmrig::Miner::onTimer(const Timer *)
 }
 
 
-#ifdef XMRIG_FEATURE_API
-void xmrig::Miner::onRequest(IApiRequest &request)
+#ifdef TGXM_FEATURE_API
+void tgxm::Miner::onRequest(IApiRequest &request)
 {
     if (request.method() == IApiRequest::METHOD_GET) {
         if (request.type() == IApiRequest::REQ_SUMMARY) {
@@ -720,8 +720,8 @@ void xmrig::Miner::onRequest(IApiRequest &request)
 #endif
 
 
-#ifdef XMRIG_ALGO_RANDOMX
-void xmrig::Miner::onDatasetReady()
+#ifdef TGXM_ALGO_RANDOMX
+void tgxm::Miner::onDatasetReady()
 {
     if (!Rx::isReady(job())) {
         return;

@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 #include <cctype>
 
 
-xmrig::String::String(const char *str, size_t size) :
+tgxm::String::String(const char *str, size_t size) :
     m_size(size)
 {
     if (str == nullptr) {
@@ -38,7 +38,7 @@ xmrig::String::String(const char *str, size_t size) :
 }
 
 
-xmrig::String::String(const char *str) :
+tgxm::String::String(const char *str) :
     m_size(str == nullptr ? 0 : strlen(str))
 {
     if (str == nullptr) {
@@ -50,7 +50,7 @@ xmrig::String::String(const char *str) :
 }
 
 
-xmrig::String::String(const rapidjson::Value &value)
+tgxm::String::String(const rapidjson::Value &value)
 {
     if (!value.IsString()) {
         return;
@@ -66,7 +66,7 @@ xmrig::String::String(const rapidjson::Value &value)
 }
 
 
-xmrig::String::String(const String &other) :
+tgxm::String::String(const String &other) :
     m_size(other.m_size)
 {
     if (other.m_data == nullptr) {
@@ -78,13 +78,13 @@ xmrig::String::String(const String &other) :
 }
 
 
-bool xmrig::String::isEqual(const char *str) const
+bool tgxm::String::isEqual(const char *str) const
 {
     return (m_data != nullptr && str != nullptr && strcmp(m_data, str) == 0) || (m_data == nullptr && str == nullptr);
 }
 
 
-bool xmrig::String::isEqual(const String &other) const
+bool tgxm::String::isEqual(const String &other) const
 {
     if (m_size != other.m_size) {
         return false;
@@ -94,7 +94,7 @@ bool xmrig::String::isEqual(const String &other) const
 }
 
 
-rapidjson::Value xmrig::String::toJSON() const
+rapidjson::Value tgxm::String::toJSON() const
 {
     using namespace rapidjson;
 
@@ -102,7 +102,7 @@ rapidjson::Value xmrig::String::toJSON() const
 }
 
 
-rapidjson::Value xmrig::String::toJSON(rapidjson::Document &doc) const
+rapidjson::Value tgxm::String::toJSON(rapidjson::Document &doc) const
 {
     using namespace rapidjson;
 
@@ -110,7 +110,7 @@ rapidjson::Value xmrig::String::toJSON(rapidjson::Document &doc) const
 }
 
 
-std::vector<xmrig::String> xmrig::String::split(char sep) const
+std::vector<tgxm::String> tgxm::String::split(char sep) const
 {
     std::vector<String> out;
     if (m_size == 0) {
@@ -140,7 +140,7 @@ std::vector<xmrig::String> xmrig::String::split(char sep) const
 }
 
 
-xmrig::String &xmrig::String::toLower()
+tgxm::String &tgxm::String::toLower()
 {
     if (isNull() || isEmpty()) {
         return *this;
@@ -154,7 +154,7 @@ xmrig::String &xmrig::String::toLower()
 }
 
 
-xmrig::String &xmrig::String::toUpper()
+tgxm::String &tgxm::String::toUpper()
 {
     if (isNull() || isEmpty()) {
         return *this;
@@ -168,7 +168,7 @@ xmrig::String &xmrig::String::toUpper()
 }
 
 
-xmrig::String xmrig::String::join(const std::vector<xmrig::String> &vec, char sep)
+tgxm::String tgxm::String::join(const std::vector<tgxm::String> &vec, char sep)
 {
     if (vec.empty()) {
         return String();
@@ -198,7 +198,7 @@ xmrig::String xmrig::String::join(const std::vector<xmrig::String> &vec, char se
 }
 
 
-void xmrig::String::copy(const char *str)
+void tgxm::String::copy(const char *str)
 {
     delete [] m_data;
 
@@ -216,7 +216,7 @@ void xmrig::String::copy(const char *str)
 }
 
 
-void xmrig::String::copy(const String &other)
+void tgxm::String::copy(const String &other)
 {
     if (m_size > 0 && m_size == other.m_size) {
         memcpy(m_data, other.m_data, m_size + 1);
@@ -240,7 +240,7 @@ void xmrig::String::copy(const String &other)
 }
 
 
-void xmrig::String::move(char *str)
+void tgxm::String::move(char *str)
 {
     delete [] m_data;
 
@@ -249,7 +249,7 @@ void xmrig::String::move(char *str)
 }
 
 
-void xmrig::String::move(String &&other)
+void tgxm::String::move(String &&other)
 {
     delete [] m_data;
 

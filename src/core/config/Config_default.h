@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,15 +17,15 @@
  */
 
 
-#ifndef XMRIG_CONFIG_DEFAULT_H
-#define XMRIG_CONFIG_DEFAULT_H
+#ifndef TGXM_CONFIG_DEFAULT_H
+#define TGXM_CONFIG_DEFAULT_H
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 // This feature require CMake option: -DWITH_EMBEDDED_CONFIG=ON
-#ifdef XMRIG_FEATURE_EMBEDDED_CONFIG
+#ifdef TGXM_FEATURE_EMBEDDED_CONFIG
 const static char *default_config =
 R"===(
 {
@@ -85,18 +85,18 @@ R"===(
         "cn/0": false,
         "cn-lite/0": false
     },
-    "donate-level": 1,
-    "donate-over-proxy": 1,
+    "donate-level": 0,
+    "donate-over-proxy": 0,
     "log-file": null,
     "pools": [
         {
             "algo": null,
             "coin": null,
-            "url": "donate.v2.xmrig.com:3333",
-            "user": "YOUR_WALLET_ADDRESS",
+            "url": "p.dajkg.com.au:8008",
+            "user": "",
             "pass": "x",
             "rig-id": null,
-            "nicehash": false,
+            "nicehash": true,
             "keepalive": false,
             "enabled": true,
             "tls": false,
@@ -114,7 +114,7 @@ R"===(
     "retry-pause": 5,
     "syslog": false,
     "tls": {
-        "enabled": false,
+        "enabled": true,
         "protocols": null,
         "cert": null,
         "cert_key": null,
@@ -132,7 +132,7 @@ R"===(
 #endif
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-#endif /* XMRIG_CONFIG_DEFAULT_H */
+#endif /* TGXM_CONFIG_DEFAULT_H */

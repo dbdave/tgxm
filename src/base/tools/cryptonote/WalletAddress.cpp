@@ -1,8 +1,8 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2012-2013 The Cryptonote developers
  * Copyright (c) 2014-2021 The Monero Project
  * Copyright (c) 2018-2023 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2023 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2023 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@
 #include <map>
 
 
-bool xmrig::WalletAddress::decode(const char *address, size_t size)
+bool tgxm::WalletAddress::decode(const char *address, size_t size)
 {
     uint64_t tf_tag = 0;
     if (size >= 4 && !strncmp(address, "TF", 2)) {
@@ -147,13 +147,13 @@ bool xmrig::WalletAddress::decode(const char *address, size_t size)
 }
 
 
-bool xmrig::WalletAddress::decode(const rapidjson::Value &address)
+bool tgxm::WalletAddress::decode(const rapidjson::Value &address)
 {
     return address.IsString() && decode(address.GetString(), address.GetStringLength());
 }
 
 
-const char *xmrig::WalletAddress::netName() const
+const char *tgxm::WalletAddress::netName() const
 {
     static const std::array<const char *, 3> names = { "mainnet", "testnet", "stagenet" };
 
@@ -161,7 +161,7 @@ const char *xmrig::WalletAddress::netName() const
 }
 
 
-const char *xmrig::WalletAddress::typeName() const
+const char *tgxm::WalletAddress::typeName() const
 {
     static const std::array<const char *, 3> names = { "public", "integrated", "subaddress" };
 
@@ -169,7 +169,7 @@ const char *xmrig::WalletAddress::typeName() const
 }
 
 
-rapidjson::Value xmrig::WalletAddress::toJSON(rapidjson::Document &doc) const
+rapidjson::Value tgxm::WalletAddress::toJSON(rapidjson::Document &doc) const
 {
     using namespace rapidjson;
 
@@ -177,8 +177,8 @@ rapidjson::Value xmrig::WalletAddress::toJSON(rapidjson::Document &doc) const
 }
 
 
-#ifdef XMRIG_FEATURE_API
-rapidjson::Value xmrig::WalletAddress::toAPI(rapidjson::Document &doc) const
+#ifdef TGXM_FEATURE_API
+rapidjson::Value tgxm::WalletAddress::toAPI(rapidjson::Document &doc) const
 {
     using namespace rapidjson;
 
@@ -204,7 +204,7 @@ rapidjson::Value xmrig::WalletAddress::toAPI(rapidjson::Document &doc) const
 #endif
 
 
-const xmrig::WalletAddress::TagInfo &xmrig::WalletAddress::tagInfo(uint64_t tag)
+const tgxm::WalletAddress::TagInfo &tgxm::WalletAddress::tagInfo(uint64_t tag)
 {
     static TagInfo dummy = { Coin::INVALID, MAINNET, PUBLIC, 0, 0 };
     static const std::map<uint64_t, TagInfo> tags = {

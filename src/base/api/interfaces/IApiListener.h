@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,14 +16,14 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_IAPILISTENER_H
-#define XMRIG_IAPILISTENER_H
+#ifndef TGXM_IAPILISTENER_H
+#define TGXM_IAPILISTENER_H
 
 
 #include "base/tools/Object.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class IApiRequest;
@@ -32,18 +32,18 @@ class IApiRequest;
 class IApiListener
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE(IApiListener)
+    TGXM_DISABLE_COPY_MOVE(IApiListener)
 
     IApiListener()          = default;
     virtual ~IApiListener() = default;
 
-#   ifdef XMRIG_FEATURE_API
+#   ifdef TGXM_FEATURE_API
     virtual void onRequest(IApiRequest &request) = 0;
 #   endif
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif // XMRIG_IAPILISTENER_H
+#endif // TGXM_IAPILISTENER_H

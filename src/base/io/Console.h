@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_CONSOLE_H
-#define XMRIG_CONSOLE_H
+#ifndef TGXM_CONSOLE_H
+#define TGXM_CONSOLE_H
 
 
 #include "base/tools/Object.h"
@@ -28,14 +28,14 @@ using uv_handle_t   = struct uv_handle_s;
 using uv_stream_t   = struct uv_stream_s;
 using uv_tty_t      = struct uv_tty_s;
 
-#ifdef XMRIG_OS_WIN
+#ifdef TGXM_OS_WIN
 using ssize_t = intptr_t;
 #else
 #   include <sys/types.h>
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class IConsoleListener;
@@ -44,7 +44,7 @@ class IConsoleListener;
 class Console
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE_DEFAULT(Console)
+    TGXM_DISABLE_COPY_MOVE_DEFAULT(Console)
 
     Console(IConsoleListener *listener);
     ~Console();
@@ -61,7 +61,7 @@ private:
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif /* XMRIG_CONSOLE_H */
+#endif /* TGXM_CONSOLE_H */

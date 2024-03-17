@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -25,28 +25,28 @@
 #include "base/tools/Chrono.h"
 
 
-#ifdef XMRIG_FEATURE_OPENCL
+#ifdef TGXM_FEATURE_OPENCL
 #   include "backend/opencl/OclWorker.h"
 #endif
 
 
-#ifdef XMRIG_FEATURE_CUDA
+#ifdef TGXM_FEATURE_CUDA
 #   include "backend/cuda/CudaWorker.h"
 #endif
 
 
-#ifdef XMRIG_FEATURE_BENCHMARK
+#ifdef TGXM_FEATURE_BENCHMARK
 #   include "backend/common/benchmark/Benchmark.h"
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class WorkersPrivate
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE(WorkersPrivate)
+    TGXM_DISABLE_COPY_MOVE(WorkersPrivate)
 
     WorkersPrivate()    = default;
     ~WorkersPrivate()   = default;
@@ -57,11 +57,11 @@ public:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
 template<class T>
-xmrig::Workers<T>::Workers() :
+tgxm::Workers<T>::Workers() :
     d_ptr(new WorkersPrivate())
 {
 
@@ -69,14 +69,14 @@ xmrig::Workers<T>::Workers() :
 
 
 template<class T>
-xmrig::Workers<T>::~Workers()
+tgxm::Workers<T>::~Workers()
 {
     delete d_ptr;
 }
 
 
 template<class T>
-bool xmrig::Workers<T>::tick(uint64_t)
+bool tgxm::Workers<T>::tick(uint64_t)
 {
     if (!d_ptr->hashrate) {
         return true;
@@ -106,7 +106,7 @@ bool xmrig::Workers<T>::tick(uint64_t)
         d_ptr->hashrate->add(totalHashCount, Chrono::steadyMSecs());
     }
 
-#   ifdef XMRIG_FEATURE_BENCHMARK
+#   ifdef TGXM_FEATURE_BENCHMARK
     return !d_ptr->benchmark || !d_ptr->benchmark->finish(totalHashCount);
 #   else
     return true;
@@ -115,23 +115,23 @@ bool xmrig::Workers<T>::tick(uint64_t)
 
 
 template<class T>
-const xmrig::Hashrate *xmrig::Workers<T>::hashrate() const
+const tgxm::Hashrate *tgxm::Workers<T>::hashrate() const
 {
     return d_ptr->hashrate.get();
 }
 
 
 template<class T>
-void xmrig::Workers<T>::setBackend(IBackend *backend)
+void tgxm::Workers<T>::setBackend(IBackend *backend)
 {
     d_ptr->backend = backend;
 }
 
 
 template<class T>
-void xmrig::Workers<T>::stop()
+void tgxm::Workers<T>::stop()
 {
-#   ifdef XMRIG_MINER_PROJECT
+#   ifdef TGXM_MINER_PROJECT
     Nonce::stop(T::backend());
 #   endif
 
@@ -141,7 +141,7 @@ void xmrig::Workers<T>::stop()
 
     m_workers.clear();
 
-#   ifdef XMRIG_MINER_PROJECT
+#   ifdef TGXM_MINER_PROJECT
     Nonce::touch(T::backend());
 #   endif
 
@@ -149,9 +149,9 @@ void xmrig::Workers<T>::stop()
 }
 
 
-#ifdef XMRIG_FEATURE_BENCHMARK
+#ifdef TGXM_FEATURE_BENCHMARK
 template<class T>
-void xmrig::Workers<T>::start(const std::vector<T> &data, const std::shared_ptr<Benchmark> &benchmark)
+void tgxm::Workers<T>::start(const std::vector<T> &data, const std::shared_ptr<Benchmark> &benchmark)
 {
     if (!benchmark) {
         return start(data, true);
@@ -166,14 +166,14 @@ void xmrig::Workers<T>::start(const std::vector<T> &data, const std::shared_ptr<
 
 
 template<class T>
-xmrig::IWorker *xmrig::Workers<T>::create(Thread<T> *)
+tgxm::IWorker *tgxm::Workers<T>::create(Thread<T> *)
 {
     return nullptr;
 }
 
 
 template<class T>
-void *xmrig::Workers<T>::onReady(void *arg)
+void *tgxm::Workers<T>::onReady(void *arg)
 {
     auto handle = static_cast<Thread<T>* >(arg);
 
@@ -199,7 +199,7 @@ void *xmrig::Workers<T>::onReady(void *arg)
 
 
 template<class T>
-void xmrig::Workers<T>::start(const std::vector<T> &data, bool /*sleep*/)
+void tgxm::Workers<T>::start(const std::vector<T> &data, bool /*sleep*/)
 {
     for (const auto &item : data) {
         m_workers.push_back(new Thread<T>(d_ptr->backend, m_workers.size(), item));
@@ -207,7 +207,7 @@ void xmrig::Workers<T>::start(const std::vector<T> &data, bool /*sleep*/)
 
     d_ptr->hashrate = std::make_shared<Hashrate>(m_workers.size());
 
-#   ifdef XMRIG_MINER_PROJECT
+#   ifdef TGXM_MINER_PROJECT
     Nonce::touch(T::backend());
 #   endif
 
@@ -217,13 +217,13 @@ void xmrig::Workers<T>::start(const std::vector<T> &data, bool /*sleep*/)
 }
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 template<>
-xmrig::IWorker *xmrig::Workers<CpuLaunchData>::create(Thread<CpuLaunchData> *handle)
+tgxm::IWorker *tgxm::Workers<CpuLaunchData>::create(Thread<CpuLaunchData> *handle)
 {
-#   ifdef XMRIG_MINER_PROJECT
+#   ifdef TGXM_MINER_PROJECT
     switch (handle->config().intensity) {
     case 1:
         return new CpuWorker<1>(handle->id(), handle->config());
@@ -256,9 +256,9 @@ xmrig::IWorker *xmrig::Workers<CpuLaunchData>::create(Thread<CpuLaunchData> *han
 template class Workers<CpuLaunchData>;
 
 
-#ifdef XMRIG_FEATURE_OPENCL
+#ifdef TGXM_FEATURE_OPENCL
 template<>
-xmrig::IWorker *xmrig::Workers<OclLaunchData>::create(Thread<OclLaunchData> *handle)
+tgxm::IWorker *tgxm::Workers<OclLaunchData>::create(Thread<OclLaunchData> *handle)
 {
     return new OclWorker(handle->id(), handle->config());
 }
@@ -268,9 +268,9 @@ template class Workers<OclLaunchData>;
 #endif
 
 
-#ifdef XMRIG_FEATURE_CUDA
+#ifdef TGXM_FEATURE_CUDA
 template<>
-xmrig::IWorker *xmrig::Workers<CudaLaunchData>::create(Thread<CudaLaunchData> *handle)
+tgxm::IWorker *tgxm::Workers<CudaLaunchData>::create(Thread<CudaLaunchData> *handle)
 {
     return new CudaWorker(handle->id(), handle->config());
 }
@@ -280,4 +280,4 @@ template class Workers<CudaLaunchData>;
 #endif
 
 
-} // namespace xmrig
+} // namespace tgxm

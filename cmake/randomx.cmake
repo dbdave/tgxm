@@ -1,5 +1,5 @@
 if (WITH_RANDOMX)
-    add_definitions(/DXMRIG_ALGO_RANDOMX)
+    add_definitions(/DTGXM_ALGO_RANDOMX)
     set(WITH_ARGON2 ON)
 
     list(APPEND HEADERS_CRYPTO
@@ -48,14 +48,14 @@ if (WITH_RANDOMX)
              src/crypto/randomx/jit_compiler_x86_static.asm
              src/crypto/randomx/jit_compiler_x86.cpp
             )
-    elseif (WITH_ASM AND NOT XMRIG_ARM AND CMAKE_SIZEOF_VOID_P EQUAL 8)
+    elseif (WITH_ASM AND NOT TGXM_ARM AND CMAKE_SIZEOF_VOID_P EQUAL 8)
         list(APPEND SOURCES_CRYPTO
              src/crypto/randomx/jit_compiler_x86_static.S
              src/crypto/randomx/jit_compiler_x86.cpp
             )
         # cheat because cmake and ccache hate each other
         set_property(SOURCE src/crypto/randomx/jit_compiler_x86_static.S PROPERTY LANGUAGE C)
-    elseif (XMRIG_ARM AND CMAKE_SIZEOF_VOID_P EQUAL 8)
+    elseif (TGXM_ARM AND CMAKE_SIZEOF_VOID_P EQUAL 8)
         list(APPEND SOURCES_CRYPTO
              src/crypto/randomx/jit_compiler_a64_static.S
              src/crypto/randomx/jit_compiler_a64.cpp
@@ -102,17 +102,17 @@ if (WITH_RANDOMX)
             )
     endif()
 
-    if (WITH_MSR AND NOT XMRIG_ARM AND CMAKE_SIZEOF_VOID_P EQUAL 8 AND (XMRIG_OS_WIN OR XMRIG_OS_LINUX))
-        add_definitions(/DXMRIG_FEATURE_MSR)
-        add_definitions(/DXMRIG_FIX_RYZEN)
+    if (WITH_MSR AND NOT TGXM_ARM AND CMAKE_SIZEOF_VOID_P EQUAL 8 AND (TGXM_OS_WIN OR TGXM_OS_LINUX))
+        add_definitions(/DTGXM_FEATURE_MSR)
+        add_definitions(/DTGXM_FIX_RYZEN)
         message("-- WITH_MSR=ON")
 
-        if (XMRIG_OS_WIN)
+        if (TGXM_OS_WIN)
             list(APPEND SOURCES_CRYPTO
                 src/crypto/rx/RxFix_win.cpp
                 src/hw/msr/Msr_win.cpp
                 )
-        elseif (XMRIG_OS_LINUX)
+        elseif (TGXM_OS_LINUX)
             list(APPEND SOURCES_CRYPTO
                 src/crypto/rx/RxFix_linux.cpp
                 src/hw/msr/Msr_linux.cpp
@@ -132,17 +132,17 @@ if (WITH_RANDOMX)
             src/hw/msr/MsrItem.cpp
             )
     else()
-        remove_definitions(/DXMRIG_FEATURE_MSR)
-        remove_definitions(/DXMRIG_FIX_RYZEN)
+        remove_definitions(/DTGXM_FEATURE_MSR)
+        remove_definitions(/DTGXM_FIX_RYZEN)
         message("-- WITH_MSR=OFF")
     endif()
 
     if (WITH_PROFILING)
-        add_definitions(/DXMRIG_FEATURE_PROFILING)
+        add_definitions(/DTGXM_FEATURE_PROFILING)
 
         list(APPEND HEADERS_CRYPTO src/crypto/rx/Profiler.h)
         list(APPEND SOURCES_CRYPTO src/crypto/rx/Profiler.cpp)
     endif()
 else()
-    remove_definitions(/DXMRIG_ALGO_RANDOMX)
+    remove_definitions(/DTGXM_ALGO_RANDOMX)
 endif()

@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 #include "base/io/json/Json.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 static const char *kAffinity    = "affinity";
@@ -73,10 +73,10 @@ static inline int64_t getAffinity(uint64_t index, int64_t affinity)
 }
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-xmrig::CpuThreads::CpuThreads(const rapidjson::Value &value)
+tgxm::CpuThreads::CpuThreads(const rapidjson::Value &value)
 {
     if (value.IsArray()) {
         for (auto &v : value.GetArray()) {
@@ -103,7 +103,7 @@ xmrig::CpuThreads::CpuThreads(const rapidjson::Value &value)
 }
 
 
-xmrig::CpuThreads::CpuThreads(size_t count, uint32_t intensity)
+tgxm::CpuThreads::CpuThreads(size_t count, uint32_t intensity)
 {
     m_data.reserve(count);
 
@@ -113,7 +113,7 @@ xmrig::CpuThreads::CpuThreads(size_t count, uint32_t intensity)
 }
 
 
-bool xmrig::CpuThreads::isEqual(const CpuThreads &other) const
+bool tgxm::CpuThreads::isEqual(const CpuThreads &other) const
 {
     if (isEmpty() && other.isEmpty()) {
         return true;
@@ -123,7 +123,7 @@ bool xmrig::CpuThreads::isEqual(const CpuThreads &other) const
 }
 
 
-rapidjson::Value xmrig::CpuThreads::toJSON(rapidjson::Document &doc) const
+rapidjson::Value tgxm::CpuThreads::toJSON(rapidjson::Document &doc) const
 {
     using namespace rapidjson;
     auto &allocator = doc.GetAllocator();

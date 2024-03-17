@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -41,25 +41,25 @@
 #include "core/Controller.h"
 
 
-#ifdef XMRIG_ALGO_KAWPOW
+#ifdef TGXM_ALGO_KAWPOW
 #   include "crypto/kawpow/KPCache.h"
 #   include "crypto/kawpow/KPHash.h"
 #endif
 
 
-#ifdef XMRIG_FEATURE_API
+#ifdef TGXM_FEATURE_API
 #   include "base/api/interfaces/IApiRequest.h"
 #endif
 
 
-#ifdef XMRIG_FEATURE_ADL
+#ifdef TGXM_FEATURE_ADL
 #include "backend/opencl/wrappers/AdlLib.h"
 
-namespace xmrig { static const char *kAdlLabel = "ADL"; }
+namespace tgxm { static const char *kAdlLabel = "ADL"; }
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 extern template class Threads<OclThreads>;
@@ -157,7 +157,7 @@ public:
             return printDisabled(kLabel, RED_S " (no devices)");
         }
 
-#       ifdef XMRIG_FEATURE_ADL
+#       ifdef TGXM_FEATURE_ADL
         if (cl.isAdlEnabled()) {
             if (AdlLib::init()) {
                 Log::print(GREEN_BOLD(" * ") WHITE_BOLD("%-13s") "press " MAGENTA_BG(WHITE_BOLD_S "e") " for health report",
@@ -207,7 +207,7 @@ public:
         for (const auto &data : threads) {
             size_t mem_used = data.thread.intensity() * algo_l3 / oneMiB;
 
-#           ifdef XMRIG_ALGO_KAWPOW
+#           ifdef TGXM_ALGO_KAWPOW
             if (algo.family() == Algorithm::KAWPOW) {
                 const uint32_t epoch = job.height() / KPHash::EPOCH_LENGTH;
                 mem_used = (KPCache::cache_size(epoch) + KPCache::dag_size(epoch)) / oneMiB;
@@ -235,7 +235,7 @@ public:
     }
 
 
-#   ifdef XMRIG_FEATURE_ADL
+#   ifdef TGXM_FEATURE_ADL
     void printHealth()
     {
         if (!AdlLib::isReady()) {
@@ -273,70 +273,70 @@ public:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-const char *xmrig::ocl_tag()
+const char *tgxm::ocl_tag()
 {
     return Tags::opencl();
 }
 
 
-xmrig::OclBackend::OclBackend(Controller *controller) :
+tgxm::OclBackend::OclBackend(Controller *controller) :
     d_ptr(new OclBackendPrivate(controller))
 {
     d_ptr->workers.setBackend(this);
 }
 
 
-xmrig::OclBackend::~OclBackend()
+tgxm::OclBackend::~OclBackend()
 {
     delete d_ptr;
 
     OclLib::close();
 
-#   ifdef XMRIG_FEATURE_ADL
+#   ifdef TGXM_FEATURE_ADL
     AdlLib::close();
 #   endif
 }
 
 
-bool xmrig::OclBackend::isEnabled() const
+bool tgxm::OclBackend::isEnabled() const
 {
     return d_ptr->controller->config()->cl().isEnabled() && OclLib::isInitialized() && d_ptr->platform.isValid() && !d_ptr->devices.empty();
 }
 
 
-bool xmrig::OclBackend::isEnabled(const Algorithm &algorithm) const
+bool tgxm::OclBackend::isEnabled(const Algorithm &algorithm) const
 {
     return !d_ptr->controller->config()->cl().threads().get(algorithm).isEmpty();
 }
 
 
-const xmrig::Hashrate *xmrig::OclBackend::hashrate() const
+const tgxm::Hashrate *tgxm::OclBackend::hashrate() const
 {
     return d_ptr->workers.hashrate();
 }
 
 
-const xmrig::String &xmrig::OclBackend::profileName() const
+const tgxm::String &tgxm::OclBackend::profileName() const
 {
     return d_ptr->profileName;
 }
 
 
-const xmrig::String &xmrig::OclBackend::type() const
+const tgxm::String &tgxm::OclBackend::type() const
 {
     return kType;
 }
 
 
-void xmrig::OclBackend::execCommand(char)
+void tgxm::OclBackend::execCommand(char)
 {
 }
 
 
-void xmrig::OclBackend::prepare(const Job &job)
+void tgxm::OclBackend::prepare(const Job &job)
 {
     if (d_ptr) {
         d_ptr->workers.jobEarlyNotification(job);
@@ -344,7 +344,7 @@ void xmrig::OclBackend::prepare(const Job &job)
 }
 
 
-void xmrig::OclBackend::printHashrate(bool details)
+void tgxm::OclBackend::printHashrate(bool details)
 {
     if (!details || !hashrate()) {
         return;
@@ -390,15 +390,15 @@ void xmrig::OclBackend::printHashrate(bool details)
 }
 
 
-void xmrig::OclBackend::printHealth()
+void tgxm::OclBackend::printHealth()
 {
-#   ifdef XMRIG_FEATURE_ADL
+#   ifdef TGXM_FEATURE_ADL
     d_ptr->printHealth();
 #   endif
 }
 
 
-void xmrig::OclBackend::setJob(const Job &job)
+void tgxm::OclBackend::setJob(const Job &job)
 {
     const auto &cl = d_ptr->controller->config()->cl();
     if (cl.isEnabled()) {
@@ -436,7 +436,7 @@ void xmrig::OclBackend::setJob(const Job &job)
 }
 
 
-void xmrig::OclBackend::start(IWorker *worker, bool ready)
+void tgxm::OclBackend::start(IWorker *worker, bool ready)
 {
     mutex.lock();
 
@@ -454,7 +454,7 @@ void xmrig::OclBackend::start(IWorker *worker, bool ready)
 }
 
 
-void xmrig::OclBackend::stop()
+void tgxm::OclBackend::stop()
 {
     if (d_ptr->threads.empty()) {
         return;
@@ -471,14 +471,14 @@ void xmrig::OclBackend::stop()
 }
 
 
-bool xmrig::OclBackend::tick(uint64_t ticks)
+bool tgxm::OclBackend::tick(uint64_t ticks)
 {
     return d_ptr->workers.tick(ticks);
 }
 
 
-#ifdef XMRIG_FEATURE_API
-rapidjson::Value xmrig::OclBackend::toJSON(rapidjson::Document &doc) const
+#ifdef TGXM_FEATURE_API
+rapidjson::Value tgxm::OclBackend::toJSON(rapidjson::Document &doc) const
 {
     using namespace rapidjson;
     auto &allocator = doc.GetAllocator();
@@ -516,7 +516,7 @@ rapidjson::Value xmrig::OclBackend::toJSON(rapidjson::Document &doc) const
 }
 
 
-void xmrig::OclBackend::handleRequest(IApiRequest &)
+void tgxm::OclBackend::handleRequest(IApiRequest &)
 {
 }
 #endif

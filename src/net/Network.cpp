@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2019      Howard Chu  <https://github.com/hyc>
  * Copyright (c) 2018-2023 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2023 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2023 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -39,13 +39,13 @@
 #include "net/strategies/DonateStrategy.h"
 
 
-#ifdef XMRIG_FEATURE_API
+#ifdef TGXM_FEATURE_API
 #   include "base/api/Api.h"
 #   include "base/api/interfaces/IApiRequest.h"
 #endif
 
 
-#ifdef XMRIG_FEATURE_BENCHMARK
+#ifdef TGXM_FEATURE_BENCHMARK
 #   include "backend/common/benchmark/BenchState.h"
 #endif
 
@@ -57,13 +57,13 @@
 #include <memory>
 
 
-xmrig::Network::Network(Controller *controller) :
+tgxm::Network::Network(Controller *controller) :
     m_controller(controller)
 {
     JobResults::setListener(this, controller->config()->cpu().isHwAES());
     controller->addListener(this);
 
-#   ifdef XMRIG_FEATURE_API
+#   ifdef TGXM_FEATURE_API
     controller->api()->addListener(this);
 #   endif
 
@@ -80,7 +80,7 @@ xmrig::Network::Network(Controller *controller) :
 }
 
 
-xmrig::Network::~Network()
+tgxm::Network::~Network()
 {
     JobResults::stop();
 
@@ -91,13 +91,13 @@ xmrig::Network::~Network()
 }
 
 
-void xmrig::Network::connect()
+void tgxm::Network::connect()
 {
     m_strategy->connect();
 }
 
 
-void xmrig::Network::execCommand(char command)
+void tgxm::Network::execCommand(char command)
 {
     switch (command) {
     case 's':
@@ -116,7 +116,7 @@ void xmrig::Network::execCommand(char command)
 }
 
 
-void xmrig::Network::onActive(IStrategy *strategy, IClient *client)
+void tgxm::Network::onActive(IStrategy *strategy, IClient *client)
 {
     if (m_donate && m_donate == strategy) {
         LOG_NOTICE("%s " WHITE_BOLD("dev donate started"), Tags::network());
@@ -125,7 +125,7 @@ void xmrig::Network::onActive(IStrategy *strategy, IClient *client)
 
     const auto &pool = client->pool();
 
-#   ifdef XMRIG_FEATURE_BENCHMARK
+#   ifdef TGXM_FEATURE_BENCHMARK
     if (pool.mode() == Pool::MODE_BENCHMARK) {
         return;
     }
@@ -147,7 +147,7 @@ void xmrig::Network::onActive(IStrategy *strategy, IClient *client)
 }
 
 
-void xmrig::Network::onConfigChanged(Config *config, Config *previousConfig)
+void tgxm::Network::onConfigChanged(Config *config, Config *previousConfig)
 {
     if (config->pools() == previousConfig->pools() || !config->pools().active()) {
         return;
@@ -163,7 +163,7 @@ void xmrig::Network::onConfigChanged(Config *config, Config *previousConfig)
 }
 
 
-void xmrig::Network::onJob(IStrategy *strategy, IClient *client, const Job &job, const rapidjson::Value &)
+void tgxm::Network::onJob(IStrategy *strategy, IClient *client, const Job &job, const rapidjson::Value &)
 {
     if (m_donate && m_donate->isActive() && m_donate != strategy) {
         return;
@@ -173,7 +173,7 @@ void xmrig::Network::onJob(IStrategy *strategy, IClient *client, const Job &job,
 }
 
 
-void xmrig::Network::onJobResult(const JobResult &result)
+void tgxm::Network::onJobResult(const JobResult &result)
 {
     if (result.index == 1 && m_donate) {
         m_donate->submit(result);
@@ -184,7 +184,7 @@ void xmrig::Network::onJobResult(const JobResult &result)
 }
 
 
-void xmrig::Network::onLogin(IStrategy *, IClient *client, rapidjson::Document &doc, rapidjson::Value &params)
+void tgxm::Network::onLogin(IStrategy *, IClient *client, rapidjson::Document &doc, rapidjson::Value &params)
 {
     using namespace rapidjson;
     auto &allocator = doc.GetAllocator();
@@ -208,7 +208,7 @@ void xmrig::Network::onLogin(IStrategy *, IClient *client, rapidjson::Document &
 }
 
 
-void xmrig::Network::onPause(IStrategy *strategy)
+void tgxm::Network::onPause(IStrategy *strategy)
 {
     if (m_donate && m_donate == strategy) {
         LOG_NOTICE("%s " WHITE_BOLD("dev donate finished"), Tags::network());
@@ -223,7 +223,7 @@ void xmrig::Network::onPause(IStrategy *strategy)
 }
 
 
-void xmrig::Network::onResultAccepted(IStrategy *, IClient *, const SubmitResult &result, const char *error)
+void tgxm::Network::onResultAccepted(IStrategy *, IClient *, const SubmitResult &result, const char *error)
 {
     uint64_t diff     = result.diff;
     const char *scale = NetworkState::scaleDiff(diff);
@@ -239,7 +239,7 @@ void xmrig::Network::onResultAccepted(IStrategy *, IClient *, const SubmitResult
 }
 
 
-void xmrig::Network::onVerifyAlgorithm(IStrategy *, const IClient *, const Algorithm &algorithm, bool *ok)
+void tgxm::Network::onVerifyAlgorithm(IStrategy *, const IClient *, const Algorithm &algorithm, bool *ok)
 {
     if (!m_controller->miner()->isEnabled(algorithm)) {
         *ok = false;
@@ -249,8 +249,8 @@ void xmrig::Network::onVerifyAlgorithm(IStrategy *, const IClient *, const Algor
 }
 
 
-#ifdef XMRIG_FEATURE_API
-void xmrig::Network::onRequest(IApiRequest &request)
+#ifdef TGXM_FEATURE_API
+void tgxm::Network::onRequest(IApiRequest &request)
 {
     if (request.type() == IApiRequest::REQ_SUMMARY) {
         request.accept();
@@ -262,9 +262,9 @@ void xmrig::Network::onRequest(IApiRequest &request)
 #endif
 
 
-void xmrig::Network::setJob(IClient *client, const Job &job, bool donate)
+void tgxm::Network::setJob(IClient *client, const Job &job, bool donate)
 {
-#   ifdef XMRIG_FEATURE_BENCHMARK
+#   ifdef TGXM_FEATURE_BENCHMARK
     if (!BenchState::size())
 #   endif
     {
@@ -299,7 +299,7 @@ void xmrig::Network::setJob(IClient *client, const Job &job, bool donate)
 }
 
 
-void xmrig::Network::tick()
+void tgxm::Network::tick()
 {
     const uint64_t now = Chrono::steadyMSecs();
 
@@ -309,14 +309,14 @@ void xmrig::Network::tick()
         m_donate->tick(now);
     }
 
-#   ifdef XMRIG_FEATURE_API
+#   ifdef TGXM_FEATURE_API
     m_controller->api()->tick();
 #   endif
 }
 
 
-#ifdef XMRIG_FEATURE_API
-void xmrig::Network::getConnection(rapidjson::Value &reply, rapidjson::Document &doc, int version) const
+#ifdef TGXM_FEATURE_API
+void tgxm::Network::getConnection(rapidjson::Value &reply, rapidjson::Document &doc, int version) const
 {
     using namespace rapidjson;
     auto &allocator = doc.GetAllocator();
@@ -326,7 +326,7 @@ void xmrig::Network::getConnection(rapidjson::Value &reply, rapidjson::Document 
 }
 
 
-void xmrig::Network::getResults(rapidjson::Value &reply, rapidjson::Document &doc, int version) const
+void tgxm::Network::getResults(rapidjson::Value &reply, rapidjson::Document &doc, int version) const
 {
     using namespace rapidjson;
     auto &allocator = doc.GetAllocator();

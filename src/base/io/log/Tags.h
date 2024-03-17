@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,15 +16,15 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_TAGS_H
-#define XMRIG_TAGS_H
+#ifndef TGXM_TAGS_H
+#define TGXM_TAGS_H
 
 
 #include <cstddef>
 #include <cstdint>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class Tags
@@ -35,36 +35,36 @@ public:
     static const char *origin();
     static const char *signal();
 
-#   ifdef XMRIG_MINER_PROJECT
+#   ifdef TGXM_MINER_PROJECT
     static const char *cpu();
     static const char *miner();
-#   ifdef XMRIG_ALGO_RANDOMX
+#   ifdef TGXM_ALGO_RANDOMX
     static const char *randomx();
 #   endif
-#   ifdef XMRIG_FEATURE_BENCHMARK
+#   ifdef TGXM_FEATURE_BENCHMARK
     static const char *bench();
 #   endif
 #   endif
 
-#   ifdef XMRIG_PROXY_PROJECT
+#   ifdef TGXM_PROXY_PROJECT
     static const char *proxy();
 #   endif
 
-#   ifdef XMRIG_FEATURE_CUDA
+#   ifdef TGXM_FEATURE_CUDA
     static const char *nvidia();
 #   endif
 
-#   ifdef XMRIG_FEATURE_OPENCL
+#   ifdef TGXM_FEATURE_OPENCL
     static const char *opencl();
 #   endif
 
-#   ifdef XMRIG_FEATURE_PROFILING
+#   ifdef TGXM_FEATURE_PROFILING
     static const char* profiler();
 #   endif
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif /* XMRIG_TAGS_H */
+#endif /* TGXM_TAGS_H */

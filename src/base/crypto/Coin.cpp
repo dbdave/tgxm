@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 struct CoinInfo
@@ -66,10 +66,10 @@ const char *Coin::kField    = "coin";
 const char *Coin::kUnknown  = "UNKNOWN_COIN";
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-xmrig::Coin::Coin(const rapidjson::Value &value)
+tgxm::Coin::Coin(const rapidjson::Value &value)
 {
     if (value.IsString()) {
         m_id = parse(value.GetString());
@@ -80,25 +80,25 @@ xmrig::Coin::Coin(const rapidjson::Value &value)
 }
 
 
-xmrig::Algorithm xmrig::Coin::algorithm(uint8_t) const
+tgxm::Algorithm tgxm::Coin::algorithm(uint8_t) const
 {
     return coinInfo[m_id].algorithm;
 }
 
 
-const char *xmrig::Coin::code() const
+const char *tgxm::Coin::code() const
 {
     return coinInfo[m_id].code;
 }
 
 
-const char *xmrig::Coin::name() const
+const char *tgxm::Coin::name() const
 {
     return coinInfo[m_id].name;
 }
 
 
-rapidjson::Value xmrig::Coin::toJSON() const
+rapidjson::Value tgxm::Coin::toJSON() const
 {
     using namespace rapidjson;
 
@@ -106,19 +106,19 @@ rapidjson::Value xmrig::Coin::toJSON() const
 }
 
 
-uint64_t xmrig::Coin::target(uint8_t) const
+uint64_t tgxm::Coin::target(uint8_t) const
 {
     return coinInfo[m_id].target;
 }
 
 
-uint64_t xmrig::Coin::units() const
+uint64_t tgxm::Coin::units() const
 {
     return coinInfo[m_id].units;
 }
 
 
-xmrig::Coin::Id xmrig::Coin::parse(const char *name)
+tgxm::Coin::Id tgxm::Coin::parse(const char *name)
 {
     if (name == nullptr || strlen(name) < 3) {
         return INVALID;
@@ -134,7 +134,7 @@ xmrig::Coin::Id xmrig::Coin::parse(const char *name)
 }
 
 
-const char *xmrig::Coin::tag(Id id)
+const char *tgxm::Coin::tag(Id id)
 {
     return coinInfo[id].tag;
 }

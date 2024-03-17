@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2020 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2020 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2020 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_IBACKEND_H
-#define XMRIG_IBACKEND_H
+#ifndef TGXM_IBACKEND_H
+#define TGXM_IBACKEND_H
 
 
 #include "3rdparty/rapidjson/fwd.h"
@@ -27,7 +27,7 @@
 #include <cstdint>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class Algorithm;
@@ -42,7 +42,7 @@ class String;
 class IBackend
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE(IBackend)
+    TGXM_DISABLE_COPY_MOVE(IBackend)
 
     IBackend()          = default;
     virtual ~IBackend() = default;
@@ -61,19 +61,19 @@ public:
     virtual void start(IWorker *worker, bool ready)                     = 0;
     virtual void stop()                                                 = 0;
 
-#   ifdef XMRIG_FEATURE_API
+#   ifdef TGXM_FEATURE_API
     virtual rapidjson::Value toJSON(rapidjson::Document &doc) const     = 0;
     virtual void handleRequest(IApiRequest &request)                    = 0;
 #   endif
 
-#   ifdef XMRIG_FEATURE_BENCHMARK
+#   ifdef TGXM_FEATURE_BENCHMARK
     virtual Benchmark *benchmark() const                                = 0;
     virtual void printBenchProgress() const                             = 0;
 #   endif
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-#endif // XMRIG_IBACKEND_H
+#endif // TGXM_IBACKEND_H

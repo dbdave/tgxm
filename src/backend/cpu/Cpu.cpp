@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2020 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2020 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2020 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -24,20 +24,20 @@
 #include "3rdparty/rapidjson/document.h"
 
 
-#if defined(XMRIG_FEATURE_HWLOC)
+#if defined(TGXM_FEATURE_HWLOC)
 #   include "backend/cpu/platform/HwlocCpuInfo.h"
 #else
 #   include "backend/cpu/platform/BasicCpuInfo.h"
 #endif
 
 
-static xmrig::ICpuInfo *cpuInfo = nullptr;
+static tgxm::ICpuInfo *cpuInfo = nullptr;
 
 
-xmrig::ICpuInfo *xmrig::Cpu::info()
+tgxm::ICpuInfo *tgxm::Cpu::info()
 {
     if (cpuInfo == nullptr) {
-#       if defined(XMRIG_FEATURE_HWLOC)
+#       if defined(TGXM_FEATURE_HWLOC)
         cpuInfo = new HwlocCpuInfo();
 #       else
         cpuInfo = new BasicCpuInfo();
@@ -48,13 +48,13 @@ xmrig::ICpuInfo *xmrig::Cpu::info()
 }
 
 
-rapidjson::Value xmrig::Cpu::toJSON(rapidjson::Document &doc)
+rapidjson::Value tgxm::Cpu::toJSON(rapidjson::Document &doc)
 {
     return info()->toJSON(doc);
 }
 
 
-void xmrig::Cpu::release()
+void tgxm::Cpu::release()
 {
     delete cpuInfo;
     cpuInfo = nullptr;

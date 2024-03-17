@@ -1,8 +1,8 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2012-2013 The Cryptonote developers
  * Copyright (c) 2014-2021 The Monero Project
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,15 +18,15 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_WALLETADDRESS_H
-#define XMRIG_WALLETADDRESS_H
+#ifndef TGXM_WALLETADDRESS_H
+#define TGXM_WALLETADDRESS_H
 
 
 #include "base/tools/String.h"
 #include "base/crypto/Coin.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class WalletAddress
@@ -74,7 +74,7 @@ public:
     const char *typeName() const;
     rapidjson::Value toJSON(rapidjson::Document &doc) const;
 
-#   ifdef XMRIG_FEATURE_API
+#   ifdef TGXM_FEATURE_API
     rapidjson::Value toAPI(rapidjson::Document &doc) const;
 #   endif
 
@@ -98,7 +98,7 @@ private:
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif /* XMRIG_WALLETADDRESS_H */
+#endif /* TGXM_WALLETADDRESS_H */

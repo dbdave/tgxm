@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -28,19 +28,19 @@
 #include "crypto/kawpow/KPHash.h"
 
 
-xmrig::CudaKawPowRunner::CudaKawPowRunner(size_t index, const CudaLaunchData &data) :
+tgxm::CudaKawPowRunner::CudaKawPowRunner(size_t index, const CudaLaunchData &data) :
     CudaBaseRunner(index, data)
 {
 }
 
 
-bool xmrig::CudaKawPowRunner::run(uint32_t /*startNonce*/, uint32_t *rescount, uint32_t *resnonce)
+bool tgxm::CudaKawPowRunner::run(uint32_t /*startNonce*/, uint32_t *rescount, uint32_t *resnonce)
 {
     return callWrapper(CudaLib::kawPowHash(m_ctx, m_jobBlob, m_target, rescount, resnonce, &m_skippedHashes));
 }
 
 
-bool xmrig::CudaKawPowRunner::set(const Job &job, uint8_t *blob)
+bool tgxm::CudaKawPowRunner::set(const Job &job, uint8_t *blob)
 {
     if (!CudaBaseRunner::set(job, blob)) {
         return false;
@@ -74,7 +74,7 @@ bool xmrig::CudaKawPowRunner::set(const Job &job, uint8_t *blob)
 }
 
 
-void xmrig::CudaKawPowRunner::jobEarlyNotification(const Job&)
+void tgxm::CudaKawPowRunner::jobEarlyNotification(const Job&)
 {
     CudaLib::kawPowStopHash(m_ctx);
 }

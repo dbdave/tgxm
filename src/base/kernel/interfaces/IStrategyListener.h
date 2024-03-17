@@ -1,4 +1,4 @@
-/* XMRig
+/* TGXm
  * Copyright 2010      Jeff Garzik <jgarzik@pobox.com>
  * Copyright 2012-2014 pooler      <pooler@litecoinpool.org>
  * Copyright 2014      Lucas Jones <https://github.com/lucasjones>
@@ -6,7 +6,7 @@
  * Copyright 2016      Jay D Dee   <jayddee246@gmail.com>
  * Copyright 2017-2018 XMR-Stak    <https://github.com/fireice-uk>, <https://github.com/psychocrypt>
  * Copyright 2018-2020 SChernykh   <https://github.com/SChernykh>
- * Copyright 2016-2020 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright 2016-2020 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,15 +22,15 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_ISTRATEGYLISTENER_H
-#define XMRIG_ISTRATEGYLISTENER_H
+#ifndef TGXM_ISTRATEGYLISTENER_H
+#define TGXM_ISTRATEGYLISTENER_H
 
 
 #include "3rdparty/rapidjson/fwd.h"
 #include "base/tools/Object.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class Algorithm;
@@ -43,7 +43,7 @@ class SubmitResult;
 class IStrategyListener
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE(IStrategyListener);
+    TGXM_DISABLE_COPY_MOVE(IStrategyListener);
 
     IStrategyListener()             = default;
     virtual ~IStrategyListener()    = default;
@@ -57,7 +57,7 @@ public:
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif // XMRIG_ISTRATEGYLISTENER_H
+#endif // TGXM_ISTRATEGYLISTENER_H

@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_OCLKAWPOWRUNNER_H
-#define XMRIG_OCLKAWPOWRUNNER_H
+#ifndef TGXM_OCLKAWPOWRUNNER_H
+#define TGXM_OCLKAWPOWRUNNER_H
 
 
 #include "backend/opencl/runners/OclBaseRunner.h"
@@ -25,7 +25,7 @@
 
 #include <mutex>
 
-namespace xmrig {
+namespace tgxm {
 
 
 class KawPow_CalculateDAGKernel;
@@ -34,7 +34,7 @@ class KawPow_CalculateDAGKernel;
 class OclKawPowRunner : public OclBaseRunner
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE_DEFAULT(OclKawPowRunner)
+    TGXM_DISABLE_COPY_MOVE_DEFAULT(OclKawPowRunner)
 
     OclKawPowRunner(size_t index, const OclLaunchData &data);
     ~OclKawPowRunner() override;
@@ -73,7 +73,7 @@ private:
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif // XMRIG_OCLKAWPOWRUNNER_H
+#endif // TGXM_OCLKAWPOWRUNNER_H

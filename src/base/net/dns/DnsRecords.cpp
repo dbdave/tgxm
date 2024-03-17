@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 #include "base/net/dns/Dns.h"
 
 
-const xmrig::DnsRecord &xmrig::DnsRecords::get(DnsRecord::Type prefered) const
+const tgxm::DnsRecord &tgxm::DnsRecords::get(DnsRecord::Type prefered) const
 {
     static const DnsRecord defaultRecord;
 
@@ -46,7 +46,7 @@ const xmrig::DnsRecord &xmrig::DnsRecords::get(DnsRecord::Type prefered) const
 }
 
 
-size_t xmrig::DnsRecords::count(DnsRecord::Type type) const
+size_t tgxm::DnsRecords::count(DnsRecord::Type type) const
 {
     if (type == DnsRecord::A) {
         return m_ipv4.size();
@@ -60,14 +60,14 @@ size_t xmrig::DnsRecords::count(DnsRecord::Type type) const
 }
 
 
-void xmrig::DnsRecords::clear()
+void tgxm::DnsRecords::clear()
 {
     m_ipv4.clear();
     m_ipv6.clear();
 }
 
 
-void xmrig::DnsRecords::parse(addrinfo *res)
+void tgxm::DnsRecords::parse(addrinfo *res)
 {
     clear();
 

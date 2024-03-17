@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018      Lee Clagett <https://github.com/vtnerd>
  * Copyright (c) 2018-2020 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2020 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2020 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_CN_CTX_H
-#define XMRIG_CN_CTX_H
+#ifndef TGXM_CN_CTX_H
+#define TGXM_CN_CTX_H
 
 
 #include <cstddef>
@@ -28,7 +28,7 @@
 struct cryptonight_ctx;
 
 
-namespace xmrig
+namespace tgxm
 {
 
 
@@ -40,7 +40,7 @@ public:
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif /* XMRIG_CN_CTX_H */
+#endif /* TGXM_CN_CTX_H */

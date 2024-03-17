@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018      Riku Voipio <riku.voipio@iki.fi>
  * Copyright (c) 2018-2023 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2023 XMRig       <support@xmrig.com>
+ * Copyright (c) 2016-2023 TGXm       <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 #include <cctype>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 struct lscpu_desc
@@ -389,4 +389,4 @@ String cpu_name_arm()
 }
 
 
-} // namespace xmrig
+} // namespace tgxm

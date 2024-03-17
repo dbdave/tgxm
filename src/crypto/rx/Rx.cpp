@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2019 tevador     <tevador@gmail.com>
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,13 +27,13 @@
 #include "crypto/randomx/aes_hash.hpp"
 
 
-#ifdef XMRIG_FEATURE_MSR
+#ifdef TGXM_FEATURE_MSR
 #   include "crypto/rx/RxFix.h"
 #   include "crypto/rx/RxMsr.h"
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class RxPrivate;
@@ -52,24 +52,24 @@ public:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-xmrig::HugePagesInfo xmrig::Rx::hugePages()
+tgxm::HugePagesInfo tgxm::Rx::hugePages()
 {
     return d_ptr->queue.hugePages();
 }
 
 
-xmrig::RxDataset *xmrig::Rx::dataset(const Job &job, uint32_t nodeId)
+tgxm::RxDataset *tgxm::Rx::dataset(const Job &job, uint32_t nodeId)
 {
     return d_ptr->queue.dataset(job, nodeId);
 }
 
 
-void xmrig::Rx::destroy()
+void tgxm::Rx::destroy()
 {
-#   ifdef XMRIG_FEATURE_MSR
+#   ifdef TGXM_FEATURE_MSR
     RxMsr::destroy();
 #   endif
 
@@ -79,14 +79,14 @@ void xmrig::Rx::destroy()
 }
 
 
-void xmrig::Rx::init(IRxListener *listener)
+void tgxm::Rx::init(IRxListener *listener)
 {
     d_ptr = new RxPrivate(listener);
 }
 
 
 #include "crypto/randomx/blake2/blake2.h"
-#if defined(XMRIG_FEATURE_AVX2)
+#if defined(TGXM_FEATURE_AVX2)
 #include "crypto/randomx/blake2/avx2/blake2b.h"
 #endif
 
@@ -96,37 +96,37 @@ int (*rx_blake2b)(void* out, size_t outlen, const void* in, size_t inlen) = rx_b
 
 
 template<typename T>
-bool xmrig::Rx::init(const T &seed, const RxConfig &config, const CpuConfig &cpu)
+bool tgxm::Rx::init(const T &seed, const RxConfig &config, const CpuConfig &cpu)
 {
     const auto f = seed.algorithm().family();
     if ((f != Algorithm::RANDOM_X)
-#       ifdef XMRIG_ALGO_CN_HEAVY
+#       ifdef TGXM_ALGO_CN_HEAVY
         && (f != Algorithm::CN_HEAVY)
 #       endif
-#       ifdef XMRIG_ALGO_GHOSTRIDER
+#       ifdef TGXM_ALGO_GHOSTRIDER
         && (f != Algorithm::GHOSTRIDER)
 #       endif
         ) {
-#       ifdef XMRIG_FEATURE_MSR
+#       ifdef TGXM_FEATURE_MSR
         RxMsr::destroy();
 #       endif
 
         return true;
     }
 
-#   ifdef XMRIG_FEATURE_MSR
+#   ifdef TGXM_FEATURE_MSR
     if (!RxMsr::isInitialized()) {
         RxMsr::init(config, cpu.threads().get(seed.algorithm()).data());
     }
 #   endif
 
-#   ifdef XMRIG_ALGO_CN_HEAVY
+#   ifdef TGXM_ALGO_CN_HEAVY
     if (f == Algorithm::CN_HEAVY) {
         return true;
     }
 #   endif
 
-#   ifdef XMRIG_ALGO_GHOSTRIDER
+#   ifdef TGXM_ALGO_GHOSTRIDER
     if (f == Algorithm::GHOSTRIDER) {
         return true;
     }
@@ -137,7 +137,7 @@ bool xmrig::Rx::init(const T &seed, const RxConfig &config, const CpuConfig &cpu
     randomx_set_optimized_dataset_init(config.initDatasetAVX2());
 
     if (!osInitialized) {
-#       ifdef XMRIG_FIX_RYZEN
+#       ifdef TGXM_FIX_RYZEN
         RxFix::setupMainLoopExceptionFrame();
 #       endif
 
@@ -145,13 +145,13 @@ bool xmrig::Rx::init(const T &seed, const RxConfig &config, const CpuConfig &cpu
             SelectSoftAESImpl(cpu.threads().get(seed.algorithm()).count());
         }
 
-#       if defined(XMRIG_FEATURE_SSE4_1)
+#       if defined(TGXM_FEATURE_SSE4_1)
         if (Cpu::info()->has(ICpuInfo::FLAG_SSE41)) {
             rx_blake2b_compress = rx_blake2b_compress_sse41;
         }
 #       endif
 
-#if     defined(XMRIG_FEATURE_AVX2)
+#if     defined(TGXM_FEATURE_AVX2)
         if (Cpu::info()->has(ICpuInfo::FLAG_AVX2)) {
             rx_blake2b = blake2b_avx2;
         }
@@ -171,21 +171,21 @@ bool xmrig::Rx::init(const T &seed, const RxConfig &config, const CpuConfig &cpu
 
 
 template<typename T>
-bool xmrig::Rx::isReady(const T &seed)
+bool tgxm::Rx::isReady(const T &seed)
 {
     return d_ptr->queue.isReady(seed);
 }
 
 
-#ifdef XMRIG_FEATURE_MSR
-bool xmrig::Rx::isMSR()
+#ifdef TGXM_FEATURE_MSR
+bool tgxm::Rx::isMSR()
 {
     return RxMsr::isEnabled();
 }
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 template bool Rx::init(const RxSeed &seed, const RxConfig &config, const CpuConfig &cpu);
@@ -194,4 +194,4 @@ template bool Rx::init(const Job &seed, const RxConfig &config, const CpuConfig 
 template bool Rx::isReady(const Job &seed);
 
 
-} // namespace xmrig
+} // namespace tgxm

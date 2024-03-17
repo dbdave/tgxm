@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2020 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2020 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2020 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -30,12 +30,12 @@
 #include "net/JobResults.h"
 
 
-#ifdef XMRIG_ALGO_RANDOMX
+#ifdef TGXM_ALGO_RANDOMX
 #   include "backend/opencl/runners/OclRxJitRunner.h"
 #   include "backend/opencl/runners/OclRxVmRunner.h"
 #endif
 
-#ifdef XMRIG_ALGO_KAWPOW
+#ifdef TGXM_ALGO_KAWPOW
 #   include "backend/opencl/runners/OclKawPowRunner.h"
 #endif
 
@@ -43,7 +43,7 @@
 #include <thread>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 std::atomic<bool> OclWorker::ready;
@@ -58,11 +58,11 @@ static inline void printError(size_t id, const char *error)
 }
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
 
-xmrig::OclWorker::OclWorker(size_t id, const OclLaunchData &data) :
+tgxm::OclWorker::OclWorker(size_t id, const OclLaunchData &data) :
     GpuWorker(id, data.affinity, -1, data.device.index()),
     m_algorithm(data.algorithm),
     m_miner(data.miner),
@@ -70,7 +70,7 @@ xmrig::OclWorker::OclWorker(size_t id, const OclLaunchData &data) :
 {
     switch (m_algorithm.family()) {
     case Algorithm::RANDOM_X:
-#       ifdef XMRIG_ALGO_RANDOMX
+#       ifdef TGXM_ALGO_RANDOMX
         if (data.thread.isAsm() && data.device.vendorId() == OCL_VENDOR_AMD) {
             m_runner = new OclRxJitRunner(id, data);
         }
@@ -81,13 +81,13 @@ xmrig::OclWorker::OclWorker(size_t id, const OclLaunchData &data) :
         break;
 
     case Algorithm::ARGON2:
-#       ifdef XMRIG_ALGO_ARGON2
+#       ifdef TGXM_ALGO_ARGON2
         m_runner = nullptr;
 #       endif
         break;
 
     case Algorithm::KAWPOW:
-#       ifdef XMRIG_ALGO_KAWPOW
+#       ifdef TGXM_ALGO_KAWPOW
         m_runner = new OclKawPowRunner(id, data);
 #       endif
         break;
@@ -114,13 +114,13 @@ xmrig::OclWorker::OclWorker(size_t id, const OclLaunchData &data) :
 }
 
 
-xmrig::OclWorker::~OclWorker()
+tgxm::OclWorker::~OclWorker()
 {
     delete m_runner;
 }
 
 
-void xmrig::OclWorker::jobEarlyNotification(const Job &job)
+void tgxm::OclWorker::jobEarlyNotification(const Job &job)
 {
     if (m_runner) {
         m_runner->jobEarlyNotification(job);
@@ -128,19 +128,19 @@ void xmrig::OclWorker::jobEarlyNotification(const Job &job)
 }
 
 
-bool xmrig::OclWorker::selfTest()
+bool tgxm::OclWorker::selfTest()
 {
     return m_runner != nullptr;
 }
 
 
-size_t xmrig::OclWorker::intensity() const
+size_t tgxm::OclWorker::intensity() const
 {
     return m_runner ? m_runner->roundSize() : 0;
 }
 
 
-void xmrig::OclWorker::start()
+void tgxm::OclWorker::start()
 {
     cl_uint results[0x100];
 
@@ -197,7 +197,7 @@ void xmrig::OclWorker::start()
 }
 
 
-bool xmrig::OclWorker::consumeJob()
+bool tgxm::OclWorker::consumeJob()
 {
     if (Nonce::sequence(Nonce::OPENCL) == 0) {
         return false;
@@ -218,7 +218,7 @@ bool xmrig::OclWorker::consumeJob()
 }
 
 
-void xmrig::OclWorker::storeStats(uint64_t t)
+void tgxm::OclWorker::storeStats(uint64_t t)
 {
     if (!isReady()) {
         return;

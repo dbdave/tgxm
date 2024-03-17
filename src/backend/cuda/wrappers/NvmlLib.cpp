@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 static uv_lib_t nvmlLib;
@@ -71,10 +71,10 @@ char NvmlLib::m_nvmlVersion[80]     = { 0 };
 String NvmlLib::m_loader;
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-bool xmrig::NvmlLib::init(const char *fileName)
+bool tgxm::NvmlLib::init(const char *fileName)
 {
     if (!m_initialized) {
         m_loader      = fileName;
@@ -86,13 +86,13 @@ bool xmrig::NvmlLib::init(const char *fileName)
 }
 
 
-const char *xmrig::NvmlLib::lastError() noexcept
+const char *tgxm::NvmlLib::lastError() noexcept
 {
     return uv_dlerror(&nvmlLib);
 }
 
 
-void xmrig::NvmlLib::close()
+void tgxm::NvmlLib::close()
 {
     if (m_ready) {
         pNvmlShutdown();
@@ -102,7 +102,7 @@ void xmrig::NvmlLib::close()
 }
 
 
-bool xmrig::NvmlLib::assign(std::vector<CudaDevice> &devices)
+bool tgxm::NvmlLib::assign(std::vector<CudaDevice> &devices)
 {
     uint32_t count = 0;
     if (pNvmlDeviceGetCount(&count) != NVML_SUCCESS) {
@@ -131,7 +131,7 @@ bool xmrig::NvmlLib::assign(std::vector<CudaDevice> &devices)
 }
 
 
-NvmlHealth xmrig::NvmlLib::health(nvmlDevice_t device)
+NvmlHealth tgxm::NvmlLib::health(nvmlDevice_t device)
 {
     if (!device) {
         return {};
@@ -168,7 +168,7 @@ NvmlHealth xmrig::NvmlLib::health(nvmlDevice_t device)
 }
 
 
-bool xmrig::NvmlLib::dlopen()
+bool tgxm::NvmlLib::dlopen()
 {
     if (!m_loader.isNull()) {
         return uv_dlopen(m_loader, &nvmlLib) == 0;
@@ -189,7 +189,7 @@ bool xmrig::NvmlLib::dlopen()
 }
 
 
-bool xmrig::NvmlLib::load()
+bool tgxm::NvmlLib::load()
 {
     try {
         DLSYM(NvmlDeviceGetClockInfo);

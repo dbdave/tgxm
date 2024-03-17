@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 #include "net/Network.h"
 
 
-#ifdef XMRIG_FEATURE_API
+#ifdef TGXM_FEATURE_API
 #   include "base/api/Api.h"
 #   include "hw/api/HwApi.h"
 #endif
@@ -33,19 +33,19 @@
 #include <cassert>
 
 
-xmrig::Controller::Controller(Process *process) :
+tgxm::Controller::Controller(Process *process) :
     Base(process)
 {
 }
 
 
-xmrig::Controller::~Controller()
+tgxm::Controller::~Controller()
 {
     VirtualMemory::destroy();
 }
 
 
-int xmrig::Controller::init()
+int tgxm::Controller::init()
 {
     Base::init();
 
@@ -53,7 +53,7 @@ int xmrig::Controller::init()
 
     m_network = std::make_shared<Network>(this);
 
-#   ifdef XMRIG_FEATURE_API
+#   ifdef TGXM_FEATURE_API
     m_hwApi = std::make_shared<HwApi>();
     api()->addListener(m_hwApi.get());
 #   endif
@@ -62,7 +62,7 @@ int xmrig::Controller::init()
 }
 
 
-void xmrig::Controller::start()
+void tgxm::Controller::start()
 {
     Base::start();
 
@@ -72,7 +72,7 @@ void xmrig::Controller::start()
 }
 
 
-void xmrig::Controller::stop()
+void tgxm::Controller::stop()
 {
     Base::stop();
 
@@ -83,7 +83,7 @@ void xmrig::Controller::stop()
 }
 
 
-xmrig::Miner *xmrig::Controller::miner() const
+tgxm::Miner *tgxm::Controller::miner() const
 {
     assert(m_miner);
 
@@ -91,7 +91,7 @@ xmrig::Miner *xmrig::Controller::miner() const
 }
 
 
-xmrig::Network *xmrig::Controller::network() const
+tgxm::Network *tgxm::Controller::network() const
 {
     assert(m_network);
 
@@ -99,7 +99,7 @@ xmrig::Network *xmrig::Controller::network() const
 }
 
 
-void xmrig::Controller::execCommand(char command) const
+void tgxm::Controller::execCommand(char command) const
 {
     miner()->execCommand(command);
     network()->execCommand(command);

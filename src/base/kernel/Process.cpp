@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 #include "version.h"
 
 
-#ifdef XMRIG_OS_WIN
+#ifdef TGXM_OS_WIN
 #   ifdef _MSC_VER
 #       include <direct.h>
 #       define MKDIR(path) _mkdir(path.c_str());
@@ -39,7 +39,7 @@
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 static char pathBuf[520];
@@ -80,7 +80,7 @@ static std::string getPath(Process::Location location)
         }
 
         auto path       = std::string(pathBuf, size);
-        const auto pos  = path.rfind(*XMRIG_DIR_SEPARATOR);
+        const auto pos  = path.rfind(*TGXM_DIR_SEPARATOR);
 
         if (pos != std::string::npos) {
             return path.substr(0, pos);
@@ -114,19 +114,19 @@ static void setDataDir(const char *path)
 }
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-xmrig::Process::Process(int argc, char **argv) :
+tgxm::Process::Process(int argc, char **argv) :
     m_arguments(argc, argv)
 {
     srand(static_cast<unsigned int>(Chrono::currentMSecsSinceEpoch() ^ reinterpret_cast<uintptr_t>(this)));
 
     setDataDir(m_arguments.value("--data-dir", "-d"));
 
-#   ifdef XMRIG_SHARED_DATADIR
+#   ifdef TGXM_SHARED_DATADIR
     if (dataDir.empty()) {
-        dataDir = fmt::format("{}" XMRIG_DIR_SEPARATOR ".xmrig" XMRIG_DIR_SEPARATOR, location(HomeLocation));
+        dataDir = fmt::format("{}" TGXM_DIR_SEPARATOR ".tgxm" TGXM_DIR_SEPARATOR, location(HomeLocation));
         MKDIR(dataDir);
 
         dataDir += APP_KIND;
@@ -138,7 +138,7 @@ xmrig::Process::Process(int argc, char **argv) :
 }
 
 
-int xmrig::Process::ppid()
+int tgxm::Process::ppid()
 {
 #   if UV_VERSION_HEX >= 0x011000
     return uv_os_getppid();
@@ -148,7 +148,7 @@ int xmrig::Process::ppid()
 }
 
 
-xmrig::String xmrig::Process::exepath()
+tgxm::String tgxm::Process::exepath()
 {
     size_t size = sizeof(pathBuf);
 
@@ -156,12 +156,12 @@ xmrig::String xmrig::Process::exepath()
 }
 
 
-xmrig::String xmrig::Process::location(Location location, const char *fileName)
+tgxm::String tgxm::Process::location(Location location, const char *fileName)
 {
     auto path = getPath(location);
     if (path.empty() || fileName == nullptr) {
         return path.c_str();
     }
 
-    return fmt::format("{}" XMRIG_DIR_SEPARATOR "{}", path, fileName).c_str();
+    return fmt::format("{}" TGXM_DIR_SEPARATOR "{}", path, fileName).c_str();
 }

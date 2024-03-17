@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2019      Spudz76     <https://github.com/Spudz76>
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@
 #include "base/tools/Object.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 static const char *colors_map[] = {
@@ -62,7 +62,7 @@ static const char *colors_map[] = {
 class LogPrivate
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE(LogPrivate)
+    TGXM_DISABLE_COPY_MOVE(LogPrivate)
 
 
     LogPrivate() = default;
@@ -198,11 +198,11 @@ LogPrivate *Log::d          = nullptr;
 uint32_t Log::m_verbose     = 0;
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
 
-void xmrig::Log::add(ILogBackend *backend)
+void tgxm::Log::add(ILogBackend *backend)
 {
     assert(d != nullptr);
 
@@ -212,20 +212,20 @@ void xmrig::Log::add(ILogBackend *backend)
 }
 
 
-void xmrig::Log::destroy()
+void tgxm::Log::destroy()
 {
     delete d;
     d = nullptr;
 }
 
 
-void xmrig::Log::init()
+void tgxm::Log::init()
 {
     d = new LogPrivate();
 }
 
 
-void xmrig::Log::print(const char *fmt, ...)
+void tgxm::Log::print(const char *fmt, ...)
 {
     if (!d) {
         return;
@@ -240,7 +240,7 @@ void xmrig::Log::print(const char *fmt, ...)
 }
 
 
-void xmrig::Log::print(Level level, const char *fmt, ...)
+void tgxm::Log::print(Level level, const char *fmt, ...)
 {
     if (!d) {
         return;

@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -29,12 +29,12 @@
 #include <algorithm>
 
 
-xmrig::OclRxVmRunner::OclRxVmRunner(size_t index, const OclLaunchData &data) : OclRxBaseRunner(index, data)
+tgxm::OclRxVmRunner::OclRxVmRunner(size_t index, const OclLaunchData &data) : OclRxBaseRunner(index, data)
 {
 }
 
 
-xmrig::OclRxVmRunner::~OclRxVmRunner()
+tgxm::OclRxVmRunner::~OclRxVmRunner()
 {
     delete m_init_vm;
     delete m_execute_vm;
@@ -43,13 +43,13 @@ xmrig::OclRxVmRunner::~OclRxVmRunner()
 }
 
 
-size_t xmrig::OclRxVmRunner::bufferSize() const
+size_t tgxm::OclRxVmRunner::bufferSize() const
 {
     return OclRxBaseRunner::bufferSize() + (align(2560 * m_intensity));
 }
 
 
-void xmrig::OclRxVmRunner::build()
+void tgxm::OclRxVmRunner::build()
 {
     OclRxBaseRunner::build();
 
@@ -67,7 +67,7 @@ void xmrig::OclRxVmRunner::build()
 }
 
 
-void xmrig::OclRxVmRunner::execute(uint32_t iteration)
+void tgxm::OclRxVmRunner::execute(uint32_t iteration)
 {
     const uint32_t bfactor        = std::min(data().thread.bfactor(), 8U);
     const uint32_t num_iterations = RxAlgo::programIterations(m_algorithm) >> bfactor;
@@ -90,7 +90,7 @@ void xmrig::OclRxVmRunner::execute(uint32_t iteration)
 }
 
 
-void xmrig::OclRxVmRunner::init()
+void tgxm::OclRxVmRunner::init()
 {
     OclRxBaseRunner::init();
 

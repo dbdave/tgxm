@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_NETWORKSTATE_H
-#define XMRIG_NETWORKSTATE_H
+#ifndef TGXM_NETWORKSTATE_H
+#define TGXM_NETWORKSTATE_H
 
 
 #include "base/crypto/Algorithm.h"
@@ -30,7 +30,7 @@
 #include <vector>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class NetworkState : public StrategyProxy
@@ -42,7 +42,7 @@ public:
     inline uint64_t accepted() const            { return m_accepted; }
     inline uint64_t rejected() const            { return m_rejected; }
 
-#   ifdef XMRIG_FEATURE_API
+#   ifdef TGXM_FEATURE_API
     rapidjson::Value getConnection(rapidjson::Document &doc, int version) const;
     rapidjson::Value getResults(rapidjson::Document &doc, int version) const;
 #   endif
@@ -83,7 +83,7 @@ private:
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif /* XMRIG_NETWORKSTATE_H */
+#endif /* TGXM_NETWORKSTATE_H */

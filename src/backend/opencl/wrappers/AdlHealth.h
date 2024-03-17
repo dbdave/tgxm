@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright 2008-2018 Advanced Micro Devices, Inc.
  * Copyright 2018-2020 SChernykh                    <https://github.com/SChernykh>
- * Copyright 2016-2020 XMRig                        <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright 2016-2020 TGXm                        <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_ADLHEALTH_H
-#define XMRIG_ADLHEALTH_H
+#ifndef TGXM_ADLHEALTH_H
+#define TGXM_ADLHEALTH_H
 
 
 #include <cstdint>
@@ -35,4 +35,4 @@ struct AdlHealth
 };
 
 
-#endif /* XMRIG_ADLHEALTH_H */
+#endif /* TGXM_ADLHEALTH_H */

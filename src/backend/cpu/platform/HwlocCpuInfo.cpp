@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2023 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2023 XMRig       <support@xmrig.com>
+ * Copyright (c) 2016-2023 TGXm       <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifdef XMRIG_HWLOC_DEBUG
+#ifdef TGXM_HWLOC_DEBUG
 #   include <uv.h>
 #endif
 
@@ -44,7 +44,7 @@ static inline int hwloc_obj_type_is_cache(hwloc_obj_type_t type)
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 template <typename func>
@@ -87,7 +87,7 @@ static inline size_t countByType(hwloc_topology_t topology, hwloc_obj_type_t typ
 }
 
 
-#ifndef XMRIG_ARM
+#ifndef TGXM_ARM
 static inline std::vector<hwloc_obj_t> findByType(hwloc_obj_t obj, hwloc_obj_type_t type)
 {
     std::vector<hwloc_obj_t> out;
@@ -114,15 +114,15 @@ static inline bool isCacheExclusive(hwloc_obj_t obj)
 #endif
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-xmrig::HwlocCpuInfo::HwlocCpuInfo()
+tgxm::HwlocCpuInfo::HwlocCpuInfo()
 {
     hwloc_topology_init(&m_topology);
     hwloc_topology_load(m_topology);
 
-#   ifdef XMRIG_HWLOC_DEBUG
+#   ifdef TGXM_HWLOC_DEBUG
 #   if defined(UV_VERSION_HEX) && UV_VERSION_HEX >= 0x010c00
     {
         char env[520] = { 0 };
@@ -177,7 +177,7 @@ xmrig::HwlocCpuInfo::HwlocCpuInfo()
         }
     }
 
-#   if defined(XMRIG_OS_MACOS) && defined(XMRIG_ARM)
+#   if defined(TGXM_OS_MACOS) && defined(TGXM_ARM)
     if (L2() == 33554432U && m_cores == 8 && m_cores == m_threads) {
         m_cache[2] = 16777216U;
     }
@@ -185,13 +185,13 @@ xmrig::HwlocCpuInfo::HwlocCpuInfo()
 }
 
 
-xmrig::HwlocCpuInfo::~HwlocCpuInfo()
+tgxm::HwlocCpuInfo::~HwlocCpuInfo()
 {
     hwloc_topology_destroy(m_topology);
 }
 
 
-bool xmrig::HwlocCpuInfo::membind(hwloc_const_bitmap_t nodeset)
+bool tgxm::HwlocCpuInfo::membind(hwloc_const_bitmap_t nodeset)
 {
     if (!hwloc_topology_get_support(m_topology)->membind->set_thisthread_membind) {
         return false;
@@ -205,9 +205,9 @@ bool xmrig::HwlocCpuInfo::membind(hwloc_const_bitmap_t nodeset)
 }
 
 
-xmrig::CpuThreads xmrig::HwlocCpuInfo::threads(const Algorithm &algorithm, uint32_t limit) const
+tgxm::CpuThreads tgxm::HwlocCpuInfo::threads(const Algorithm &algorithm, uint32_t limit) const
 {
-#   ifndef XMRIG_ARM
+#   ifndef TGXM_ARM
     if (L2() == 0 && L3() == 0) {
         return BasicCpuInfo::threads(algorithm, limit);
     }
@@ -255,7 +255,7 @@ xmrig::CpuThreads xmrig::HwlocCpuInfo::threads(const Algorithm &algorithm, uint3
 }
 
 
-xmrig::CpuThreads xmrig::HwlocCpuInfo::allThreads(const Algorithm &algorithm, uint32_t limit) const
+tgxm::CpuThreads tgxm::HwlocCpuInfo::allThreads(const Algorithm &algorithm, uint32_t limit) const
 {
     CpuThreads threads;
     threads.reserve(m_threads);
@@ -275,9 +275,9 @@ xmrig::CpuThreads xmrig::HwlocCpuInfo::allThreads(const Algorithm &algorithm, ui
 
 
 
-void xmrig::HwlocCpuInfo::processTopLevelCache(hwloc_obj_t cache, const Algorithm &algorithm, CpuThreads &threads, size_t limit) const
+void tgxm::HwlocCpuInfo::processTopLevelCache(hwloc_obj_t cache, const Algorithm &algorithm, CpuThreads &threads, size_t limit) const
 {
-#   ifndef XMRIG_ARM
+#   ifndef TGXM_ARM
     constexpr size_t oneMiB = 1024U * 1024U;
 
     size_t PUs = countByType(cache, HWLOC_OBJ_PU);
@@ -291,7 +291,7 @@ void xmrig::HwlocCpuInfo::processTopLevelCache(hwloc_obj_t cache, const Algorith
 
     const bool L3_exclusive = isCacheExclusive(cache);
 
-#   ifdef XMRIG_ALGO_GHOSTRIDER
+#   ifdef TGXM_ALGO_GHOSTRIDER
     if ((algorithm == Algorithm::GHOSTRIDER_RTM) && L3_exclusive && (PUs > cores.size()) && (PUs < cores.size() * 2)) {
         // Don't use E-cores on Alder Lake
         cores.erase(std::remove_if(cores.begin(), cores.end(), [](hwloc_obj_t c) { return hwloc_bitmap_weight(c->cpuset) == 1; }), cores.end());
@@ -340,7 +340,7 @@ void xmrig::HwlocCpuInfo::processTopLevelCache(hwloc_obj_t cache, const Algorith
         intensity = 2;
     }
 
-#   ifdef XMRIG_ALGO_RANDOMX
+#   ifdef TGXM_ALGO_RANDOMX
     if ((algorithm.family() == Algorithm::RANDOM_X) && L3_exclusive && (PUs > cores.size()) && (PUs < cores.size() * 2)) {
         // Use all L3+L2 on latest Intel CPUs with P-cores, E-cores and exclusive L3 cache
         cacheHashes = (L3 + L2) / scratchpad;
@@ -354,7 +354,7 @@ void xmrig::HwlocCpuInfo::processTopLevelCache(hwloc_obj_t cache, const Algorith
         cacheHashes = std::min(cacheHashes, limit);
     }
 
-#   ifdef XMRIG_ALGO_GHOSTRIDER
+#   ifdef TGXM_ALGO_GHOSTRIDER
     if (algorithm == Algorithm::GHOSTRIDER_RTM) {
         // GhostRider implementation runs 8 hashes at a time
         intensity = 8;
@@ -422,7 +422,7 @@ void xmrig::HwlocCpuInfo::processTopLevelCache(hwloc_obj_t cache, const Algorith
 }
 
 
-void xmrig::HwlocCpuInfo::setThreads(size_t threads)
+void tgxm::HwlocCpuInfo::setThreads(size_t threads)
 {
     if (!threads) {
         return;

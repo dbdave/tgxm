@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 #include <cstdio>
 
 
-xmrig::MsrItem::MsrItem(const rapidjson::Value &value)
+tgxm::MsrItem::MsrItem(const rapidjson::Value &value)
 {
     if (!value.IsString()) {
         return;
@@ -41,13 +41,13 @@ xmrig::MsrItem::MsrItem(const rapidjson::Value &value)
 }
 
 
-rapidjson::Value xmrig::MsrItem::toJSON(rapidjson::Document &doc) const
+rapidjson::Value tgxm::MsrItem::toJSON(rapidjson::Document &doc) const
 {
     return toString().toJSON(doc);
 }
 
 
-xmrig::String xmrig::MsrItem::toString() const
+tgxm::String tgxm::MsrItem::toString() const
 {
     constexpr size_t size = 48;
 

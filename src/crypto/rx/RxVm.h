@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2019 tevador     <tevador@gmail.com>
  * Copyright (c) 2018-2020 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2020 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2020 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_RX_VM_H
-#define XMRIG_RX_VM_H
+#ifndef TGXM_RX_VM_H
+#define TGXM_RX_VM_H
 
 
 #include <cstdint>
@@ -27,7 +27,7 @@
 class randomx_vm;
 
 
-namespace xmrig
+namespace tgxm
 {
 
 
@@ -43,7 +43,7 @@ public:
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif /* XMRIG_RX_VM_H */
+#endif /* TGXM_RX_VM_H */

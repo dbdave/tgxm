@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018      Lee Clagett <https://github.com/vtnerd>
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_ALGORITHM_H
-#define XMRIG_ALGORITHM_H
+#ifndef TGXM_ALGORITHM_H
+#define TGXM_ALGORITHM_H
 
 
 #include <functional>
@@ -28,7 +28,7 @@
 #include "3rdparty/rapidjson/fwd.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class Algorithm
@@ -113,30 +113,30 @@ public:
     static const char *kCN_DOUBLE;
     static const char *kCN_CCX;
 
-#   ifdef XMRIG_ALGO_CN_LITE
+#   ifdef TGXM_ALGO_CN_LITE
     static const char *kCN_LITE;
     static const char *kCN_LITE_0;
     static const char *kCN_LITE_1;
 #   endif
 
-#   ifdef XMRIG_ALGO_CN_HEAVY
+#   ifdef TGXM_ALGO_CN_HEAVY
     static const char *kCN_HEAVY;
     static const char *kCN_HEAVY_0;
     static const char *kCN_HEAVY_TUBE;
     static const char *kCN_HEAVY_XHV;
 #   endif
 
-#   ifdef XMRIG_ALGO_CN_PICO
+#   ifdef TGXM_ALGO_CN_PICO
     static const char *kCN_PICO;
     static const char *kCN_PICO_0;
     static const char *kCN_PICO_TLO;
 #   endif
 
-#   ifdef XMRIG_ALGO_CN_FEMTO
+#   ifdef TGXM_ALGO_CN_FEMTO
     static const char *kCN_UPX2;
 #   endif
 
-#   ifdef XMRIG_ALGO_RANDOMX
+#   ifdef TGXM_ALGO_RANDOMX
     static const char *kRX;
     static const char *kRX_0;
     static const char *kRX_WOW;
@@ -146,19 +146,19 @@ public:
     static const char *kRX_KEVA;
 #   endif
 
-#   ifdef XMRIG_ALGO_ARGON2
+#   ifdef TGXM_ALGO_ARGON2
     static const char *kAR2;
     static const char *kAR2_CHUKWA;
     static const char *kAR2_CHUKWA_V2;
     static const char *kAR2_WRKZ;
 #   endif
 
-#   ifdef XMRIG_ALGO_KAWPOW
+#   ifdef TGXM_ALGO_KAWPOW
     static const char *kKAWPOW;
     static const char *kKAWPOW_RVN;
 #   endif
 
-#   ifdef XMRIG_ALGO_GHOSTRIDER
+#   ifdef TGXM_ALGO_GHOSTRIDER
     static const char* kGHOSTRIDER;
     static const char* kGHOSTRIDER_RTM;
 #   endif
@@ -209,7 +209,7 @@ private:
 using Algorithms = std::vector<Algorithm>;
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif /* XMRIG_ALGORITHM_H */
+#endif /* TGXM_ALGORITHM_H */

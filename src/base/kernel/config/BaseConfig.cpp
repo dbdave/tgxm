@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -35,16 +35,16 @@
 #include <uv.h>
 
 
-#ifdef XMRIG_FEATURE_TLS
+#ifdef TGXM_FEATURE_TLS
 #   include <openssl/opensslv.h>
 #endif
 
-#ifdef XMRIG_FEATURE_HWLOC
+#ifdef TGXM_FEATURE_HWLOC
 #   include "backend/cpu/Cpu.h"
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 const char *BaseConfig::kApi            = "api";
@@ -64,15 +64,15 @@ const char *BaseConfig::kVerbose        = "verbose";
 const char *BaseConfig::kWatch          = "watch";
 
 
-#ifdef XMRIG_FEATURE_TLS
+#ifdef TGXM_FEATURE_TLS
 const char *BaseConfig::kTls            = "tls";
 #endif
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-bool xmrig::BaseConfig::read(const IJsonReader &reader, const char *fileName)
+bool tgxm::BaseConfig::read(const IJsonReader &reader, const char *fileName)
 {
     m_fileName = fileName;
 
@@ -90,7 +90,7 @@ bool xmrig::BaseConfig::read(const IJsonReader &reader, const char *fileName)
     m_printTime         = std::min(reader.getUint(kPrintTime, m_printTime), 3600U);
     m_title             = reader.getValue(kTitle);
 
-#   ifdef XMRIG_FEATURE_TLS
+#   ifdef TGXM_FEATURE_TLS
     m_tls = reader.getValue(kTls);
 #   endif
 
@@ -112,7 +112,7 @@ bool xmrig::BaseConfig::read(const IJsonReader &reader, const char *fileName)
 }
 
 
-bool xmrig::BaseConfig::save()
+bool tgxm::BaseConfig::save()
 {
     if (m_fileName.isNull()) {
         return false;
@@ -130,7 +130,7 @@ bool xmrig::BaseConfig::save()
 }
 
 
-void xmrig::BaseConfig::printVersions()
+void tgxm::BaseConfig::printVersions()
 {
     char buf[256] = { 0 };
 
@@ -146,7 +146,7 @@ void xmrig::BaseConfig::printVersions()
 
     std::string libs;
 
-#   if defined(XMRIG_FEATURE_TLS)
+#   if defined(TGXM_FEATURE_TLS)
     {
 #       if defined(LIBRESSL_VERSION_TEXT)
         snprintf(buf, sizeof buf, "LibreSSL/%s ", LIBRESSL_VERSION_TEXT + 9);
@@ -159,7 +159,7 @@ void xmrig::BaseConfig::printVersions()
     }
 #   endif
 
-#   if defined(XMRIG_FEATURE_HWLOC)
+#   if defined(TGXM_FEATURE_HWLOC)
     libs += Cpu::info()->backend();
 #   endif
 
@@ -167,7 +167,7 @@ void xmrig::BaseConfig::printVersions()
 }
 
 
-void xmrig::BaseConfig::setVerbose(const rapidjson::Value &value)
+void tgxm::BaseConfig::setVerbose(const rapidjson::Value &value)
 {
     if (value.IsBool()) {
         Log::setVerbose(value.GetBool() ? 1 : 0);

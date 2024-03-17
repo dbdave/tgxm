@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright 2018-2023 SChernykh   <https://github.com/SChernykh>
- * Copyright 2016-2023 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright 2016-2023 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@
 #include <atomic>
 #include <uv.h>
 
-#ifdef XMRIG_FEATURE_HWLOC
+#ifdef TGXM_FEATURE_HWLOC
 #   include "base/kernel/Platform.h"
 #   include <hwloc.h>
 
@@ -55,7 +55,7 @@
 #   endif
 #endif
 
-#if defined(XMRIG_ARM)
+#if defined(TGXM_ARM)
 #   include "crypto/cn/sse2neon.h"
 #elif defined(__GNUC__)
 #   include <x86intrin.h>
@@ -92,7 +92,7 @@ CORE_HASH(14, whirlpool  );
 using core_hash_func = void (*)(const uint8_t* data, size_t size, uint8_t* output);
 static const core_hash_func core_hash[15] = { h0, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14 };
 
-namespace xmrig
+namespace tgxm
 {
 
 
@@ -155,7 +155,7 @@ namespace ghostrider
 {
 
 
-#ifdef XMRIG_FEATURE_HWLOC
+#ifdef TGXM_FEATURE_HWLOC
 
 
 static struct AlgoTune
@@ -168,7 +168,7 @@ static struct AlgoTune
 
 struct HelperThread
 {
-    XMRIG_DISABLE_COPY_MOVE_DEFAULT(HelperThread)
+    TGXM_DISABLE_COPY_MOVE_DEFAULT(HelperThread)
 
     HelperThread(hwloc_bitmap_t cpu_set, int priority, bool is8MB) : m_cpuSet(cpu_set), m_priority(priority), m_is8MB(is8MB)
     {
@@ -199,7 +199,7 @@ struct HelperThread
 
     struct TaskBase
     {
-        XMRIG_DISABLE_COPY_MOVE(TaskBase)
+        TGXM_DISABLE_COPY_MOVE(TaskBase)
 
         TaskBase()          = default;
         virtual ~TaskBase() = default;
@@ -286,7 +286,7 @@ struct HelperThread
 
 void benchmark()
 {
-#ifndef XMRIG_ARM
+#ifndef TGXM_ARM
     static std::atomic<int> done{ 0 };
     if (done.exchange(1)) {
         return;
@@ -478,7 +478,7 @@ static inline bool findByType(hwloc_obj_t obj, hwloc_obj_type_t type, func lambd
 
 HelperThread* create_helper_thread(int64_t cpu_index, int priority, const std::vector<int64_t>& affinities)
 {
-#ifndef XMRIG_ARM
+#ifndef TGXM_ARM
     hwloc_bitmap_t helper_cpu_set = hwloc_bitmap_alloc();
     hwloc_bitmap_t main_threads_set = hwloc_bitmap_alloc();
 
@@ -781,7 +781,7 @@ void hash_octa(const uint8_t* data, size_t size, uint8_t* output, cryptonight_ct
 }
 
 
-#else // XMRIG_FEATURE_HWLOC
+#else // TGXM_FEATURE_HWLOC
 
 
 void benchmark() {}
@@ -807,7 +807,7 @@ void hash_octa(const uint8_t* data, size_t size, uint8_t* output, cryptonight_ct
     uint32_t cn_indices[6];
     select_indices(cn_indices, seed);
 
-#ifdef XMRIG_ARM
+#ifdef TGXM_ARM
     uint32_t step[6] = { 1, 1, 1, 1, 1, 1 };
 #else
     uint32_t step[6] = { 4, 4, 1, 2, 4, 4 };
@@ -872,10 +872,10 @@ void hash_octa(const uint8_t* data, size_t size, uint8_t* output, cryptonight_ct
 }
 
 
-#endif // XMRIG_FEATURE_HWLOC
+#endif // TGXM_FEATURE_HWLOC
 
 
 } // namespace ghostrider
 
 
-} // namespace xmrig
+} // namespace tgxm

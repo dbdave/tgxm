@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_OCLCONFIG_H
-#define XMRIG_OCLCONFIG_H
+#ifndef TGXM_OCLCONFIG_H
+#define TGXM_OCLCONFIG_H
 
 
 #include "backend/common/Threads.h"
@@ -26,7 +26,7 @@
 #include "backend/opencl/wrappers/OclPlatform.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class OclConfig
@@ -45,7 +45,7 @@ public:
     inline const String &loader() const                 { return m_loader; }
     inline const Threads<OclThreads> &threads() const   { return m_threads; }
 
-#   ifdef XMRIG_FEATURE_ADL
+#   ifdef TGXM_FEATURE_ADL
     inline bool isAdlEnabled() const                    { return m_adl; }
 #   endif
 
@@ -60,20 +60,20 @@ private:
     String m_loader;
     Threads<OclThreads> m_threads;
 
-#   ifndef XMRIG_OS_APPLE
+#   ifndef TGXM_OS_APPLE
     void setPlatform(const rapidjson::Value &platform);
 
     String m_platformVendor;
     uint32_t m_platformIndex = 0;
 #   endif
 
-#   ifdef XMRIG_FEATURE_ADL
+#   ifdef TGXM_FEATURE_ADL
     bool m_adl          = true;
 #   endif
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif /* XMRIG_OCLCONFIG_H */
+#endif /* TGXM_OCLCONFIG_H */

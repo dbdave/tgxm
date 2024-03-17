@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_OCLKAWPOW_H
-#define XMRIG_OCLKAWPOW_H
+#ifndef TGXM_OCLKAWPOW_H
+#define TGXM_OCLKAWPOW_H
 
 
 #include <cstddef>
@@ -27,7 +27,7 @@
 using cl_kernel = struct _cl_kernel *;
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class IOclRunner;
@@ -41,7 +41,7 @@ public:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-#endif /* XMRIG_OCLKAWPOW_H */
+#endif /* TGXM_OCLKAWPOW_H */

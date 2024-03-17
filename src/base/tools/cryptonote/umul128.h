@@ -26,7 +26,7 @@
 
 #include <cstdint>
 
-#ifdef XMRIG_64_BIT
+#ifdef TGXM_64_BIT
 #   ifdef _MSC_VER
 #       include <intrin.h>
 #       pragma intrinsic(_umul128)

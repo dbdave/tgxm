@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,11 +16,11 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_TASKBAR_H
-#define XMRIG_TASKBAR_H
+#ifndef TGXM_TASKBAR_H
+#define TGXM_TASKBAR_H
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 struct TaskbarPrivate;
@@ -45,7 +45,7 @@ private:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-#endif /* XMRIG_TASKBAR_H */
+#endif /* TGXM_TASKBAR_H */

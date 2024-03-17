@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 #include "base/io/json/Json.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 const char *Http::kEnabled    = "enabled";
@@ -32,16 +32,16 @@ const char *Http::kRestricted = "restricted";
 const char *Http::kToken      = "access-token";
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-xmrig::Http::Http() :
+tgxm::Http::Http() :
     m_host(kLocalhost)
 {
 }
 
 
-bool xmrig::Http::isEqual(const Http &other) const
+bool tgxm::Http::isEqual(const Http &other) const
 {
     return other.m_enabled    == m_enabled &&
            other.m_restricted == m_restricted &&
@@ -51,7 +51,7 @@ bool xmrig::Http::isEqual(const Http &other) const
 }
 
 
-rapidjson::Value xmrig::Http::toJSON(rapidjson::Document &doc) const
+rapidjson::Value tgxm::Http::toJSON(rapidjson::Document &doc) const
 {
     using namespace rapidjson;
     auto &allocator = doc.GetAllocator();
@@ -68,7 +68,7 @@ rapidjson::Value xmrig::Http::toJSON(rapidjson::Document &doc) const
 }
 
 
-void xmrig::Http::load(const rapidjson::Value &http)
+void tgxm::Http::load(const rapidjson::Value &http)
 {
     if (!http.IsObject()) {
         return;
@@ -83,7 +83,7 @@ void xmrig::Http::load(const rapidjson::Value &http)
 }
 
 
-void xmrig::Http::setPort(int port)
+void tgxm::Http::setPort(int port)
 {
     if (port >= 0 && port <= 65536) {
         m_port = static_cast<uint16_t>(port);

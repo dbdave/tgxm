@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2017-2019 XMR-Stak    <https://github.com/fireice-uk>, <https://github.com/psychocrypt>
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@
 
 
 #include "crypto/cn/CryptoNight_monero.h"
-#ifdef XMRIG_VAES
+#ifdef TGXM_VAES
 #   include "crypto/cn/CryptoNight_x86_vaes.h"
 #endif
 
@@ -55,7 +55,7 @@
 #define EDX_Reg  (3)
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 constexpr size_t kCpuFlagsSize                                  = 15;
@@ -63,7 +63,7 @@ static const std::array<const char *, kCpuFlagsSize> flagNames  = { "aes", "vaes
 static_assert(kCpuFlagsSize == ICpuInfo::FLAG_MAX, "kCpuFlagsSize and FLAG_MAX mismatch");
 
 
-#ifdef XMRIG_FEATURE_MSR
+#ifdef TGXM_FEATURE_MSR
 constexpr size_t kMsrArraySize                                  = 6;
 static const std::array<const char *, kMsrArraySize> msrNames   = { MSR_NAMES_LIST };
 static_assert(kMsrArraySize == ICpuInfo::MSR_MOD_MAX, "kMsrArraySize and MSR_MOD_MAX mismatch");
@@ -159,25 +159,25 @@ static inline bool has_cat_l3()     { return has_feature(EXTENDED_FEATURES,     
 static inline bool is_vm()          { return has_feature(PROCESSOR_INFO,        ECX_Reg, 1 << 31); }
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-#ifdef XMRIG_ALGO_ARGON2
+#ifdef TGXM_ALGO_ARGON2
 extern "C" {
 
 
-int cpu_flags_has_avx2()    { return xmrig::has_avx2(); }
-int cpu_flags_has_avx512f() { return xmrig::has_avx512f(); }
-int cpu_flags_has_sse2()    { return xmrig::has_sse2(); }
-int cpu_flags_has_ssse3()   { return xmrig::has_ssse3(); }
-int cpu_flags_has_xop()     { return xmrig::has_xop(); }
+int cpu_flags_has_avx2()    { return tgxm::has_avx2(); }
+int cpu_flags_has_avx512f() { return tgxm::has_avx512f(); }
+int cpu_flags_has_sse2()    { return tgxm::has_sse2(); }
+int cpu_flags_has_ssse3()   { return tgxm::has_ssse3(); }
+int cpu_flags_has_xop()     { return tgxm::has_xop(); }
 
 
 }
 #endif
 
 
-xmrig::BasicCpuInfo::BasicCpuInfo() :
+tgxm::BasicCpuInfo::BasicCpuInfo() :
     m_threads(std::thread::hardware_concurrency())
 {
     cpu_brand_string(m_brand);
@@ -203,7 +203,7 @@ xmrig::BasicCpuInfo::BasicCpuInfo() :
         m_units[i] = i;
     }
 
-#   ifdef XMRIG_FEATURE_ASM
+#   ifdef TGXM_FEATURE_ASM
     if (m_flags.test(FLAG_AES)) {
         char vendor[13] = { 0 };
         int32_t data[4] = { 0 };
@@ -312,13 +312,13 @@ xmrig::BasicCpuInfo::BasicCpuInfo() :
 }
 
 
-const char *xmrig::BasicCpuInfo::backend() const
+const char *tgxm::BasicCpuInfo::backend() const
 {
     return "basic/1";
 }
 
 
-xmrig::CpuThreads xmrig::BasicCpuInfo::threads(const Algorithm &algorithm, uint32_t) const
+tgxm::CpuThreads tgxm::BasicCpuInfo::threads(const Algorithm &algorithm, uint32_t) const
 {
     const size_t count = std::thread::hardware_concurrency();
 
@@ -328,31 +328,31 @@ xmrig::CpuThreads xmrig::BasicCpuInfo::threads(const Algorithm &algorithm, uint3
 
     const auto f = algorithm.family();
 
-#   ifdef XMRIG_ALGO_CN_LITE
+#   ifdef TGXM_ALGO_CN_LITE
     if (f == Algorithm::CN_LITE) {
         return CpuThreads(count, 1);
     }
 #   endif
 
-#   ifdef XMRIG_ALGO_CN_PICO
+#   ifdef TGXM_ALGO_CN_PICO
     if (f == Algorithm::CN_PICO) {
         return CpuThreads(count, 2);
     }
 #   endif
 
-#   ifdef XMRIG_ALGO_CN_FEMTO
+#   ifdef TGXM_ALGO_CN_FEMTO
     if (f == Algorithm::CN_FEMTO) {
         return CpuThreads(count, 2);
     }
 #   endif
 
-#   ifdef XMRIG_ALGO_CN_HEAVY
+#   ifdef TGXM_ALGO_CN_HEAVY
     if (f == Algorithm::CN_HEAVY) {
         return CpuThreads(std::max<size_t>(count / 4, 1), 1);
     }
 #   endif
 
-#   ifdef XMRIG_ALGO_RANDOMX
+#   ifdef TGXM_ALGO_RANDOMX
     if (f == Algorithm::RANDOM_X) {
         if (algorithm == Algorithm::RX_WOW) {
             return count;
@@ -362,13 +362,13 @@ xmrig::CpuThreads xmrig::BasicCpuInfo::threads(const Algorithm &algorithm, uint3
     }
 #   endif
 
-#   ifdef XMRIG_ALGO_ARGON2
+#   ifdef TGXM_ALGO_ARGON2
     if (f == Algorithm::ARGON2) {
         return count;
     }
 #   endif
 
-#   ifdef XMRIG_ALGO_GHOSTRIDER
+#   ifdef TGXM_ALGO_GHOSTRIDER
     if (f == Algorithm::GHOSTRIDER) {
         return CpuThreads(std::max<size_t>(count / 2, 1), 8);
     }
@@ -378,7 +378,7 @@ xmrig::CpuThreads xmrig::BasicCpuInfo::threads(const Algorithm &algorithm, uint3
 }
 
 
-rapidjson::Value xmrig::BasicCpuInfo::toJSON(rapidjson::Document &doc) const
+rapidjson::Value tgxm::BasicCpuInfo::toJSON(rapidjson::Document &doc) const
 {
     using namespace rapidjson;
     auto &allocator = doc.GetAllocator();
@@ -402,13 +402,13 @@ rapidjson::Value xmrig::BasicCpuInfo::toJSON(rapidjson::Document &doc) const
     out.AddMember("nodes",      static_cast<uint64_t>(nodes()), allocator);
     out.AddMember("backend",    StringRef(backend()), allocator);
 
-#   ifdef XMRIG_FEATURE_MSR
+#   ifdef TGXM_FEATURE_MSR
     out.AddMember("msr",        StringRef(msrNames[msrMod()]), allocator);
 #   else
     out.AddMember("msr",        "none", allocator);
 #   endif
 
-#   ifdef XMRIG_FEATURE_ASM
+#   ifdef TGXM_FEATURE_ASM
     out.AddMember("assembly",   StringRef(Assembly(assembly()).toString()), allocator);
 #   else
     out.AddMember("assembly",   "none", allocator);

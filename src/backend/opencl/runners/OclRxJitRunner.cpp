@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -32,12 +32,12 @@
 #include "backend/opencl/wrappers/OclError.h"
 
 
-xmrig::OclRxJitRunner::OclRxJitRunner(size_t index, const OclLaunchData &data) : OclRxBaseRunner(index, data)
+tgxm::OclRxJitRunner::OclRxJitRunner(size_t index, const OclLaunchData &data) : OclRxBaseRunner(index, data)
 {
 }
 
 
-xmrig::OclRxJitRunner::~OclRxJitRunner()
+tgxm::OclRxJitRunner::~OclRxJitRunner()
 {
     delete m_randomx_jit;
     delete m_randomx_run;
@@ -49,13 +49,13 @@ xmrig::OclRxJitRunner::~OclRxJitRunner()
 }
 
 
-size_t xmrig::OclRxJitRunner::bufferSize() const
+size_t tgxm::OclRxJitRunner::bufferSize() const
 {
     return OclRxBaseRunner::bufferSize() + align(256 * m_intensity) + align(5120 * m_intensity) + align(10048 * m_intensity);
 }
 
 
-void xmrig::OclRxJitRunner::build()
+void tgxm::OclRxJitRunner::build()
 {
     OclRxBaseRunner::build();
 
@@ -75,7 +75,7 @@ void xmrig::OclRxJitRunner::build()
 }
 
 
-void xmrig::OclRxJitRunner::execute(uint32_t iteration)
+void tgxm::OclRxJitRunner::execute(uint32_t iteration)
 {
     m_randomx_jit->enqueue(m_queue, m_intensity, iteration);
 
@@ -85,7 +85,7 @@ void xmrig::OclRxJitRunner::execute(uint32_t iteration)
 }
 
 
-void xmrig::OclRxJitRunner::init()
+void tgxm::OclRxJitRunner::init()
 {
     OclRxBaseRunner::init();
 
@@ -95,7 +95,7 @@ void xmrig::OclRxJitRunner::init()
 }
 
 
-bool xmrig::OclRxJitRunner::loadAsmProgram()
+bool tgxm::OclRxJitRunner::loadAsmProgram()
 {
     // Adrenaline drivers on Windows and amdgpu-pro drivers on Linux use ELF header's flags (offset 0x30) to store internal device ID
     // Read it from compiled OpenCL code and substitute this ID into pre-compiled binary to make sure the driver accepts it

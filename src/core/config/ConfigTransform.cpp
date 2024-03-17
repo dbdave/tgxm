@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -25,17 +25,17 @@
 #include "crypto/cn/CnHash.h"
 
 
-#ifdef XMRIG_ALGO_RANDOMX
+#ifdef TGXM_ALGO_RANDOMX
 #   include "crypto/rx/RxConfig.h"
 #endif
 
 
-#ifdef XMRIG_FEATURE_BENCHMARK
+#ifdef TGXM_FEATURE_BENCHMARK
 #   include "base/net/stratum/benchmark/BenchConfig.h"
 #endif
 
 
-namespace xmrig
+namespace tgxm
 {
 
 
@@ -83,10 +83,10 @@ static inline bool isHwAes(uint64_t av)
 }
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-void xmrig::ConfigTransform::finalize(rapidjson::Document &doc)
+void tgxm::ConfigTransform::finalize(rapidjson::Document &doc)
 {
     using namespace rapidjson;
     auto &allocator = doc.GetAllocator();
@@ -103,13 +103,13 @@ void xmrig::ConfigTransform::finalize(rapidjson::Document &doc)
         profile.AddMember(StringRef(kThreads),   m_threads, allocator);
         profile.AddMember(StringRef(kAffinity),  m_affinity, allocator);
 
-#       ifdef XMRIG_ALGO_KAWPOW
+#       ifdef TGXM_ALGO_KAWPOW
         doc[CpuConfig::kField].AddMember(StringRef(Algorithm::kKAWPOW), false, doc.GetAllocator());
 #       endif
         doc[CpuConfig::kField].AddMember(StringRef(kAsterisk), profile, doc.GetAllocator());
     }
 
-#   ifdef XMRIG_FEATURE_OPENCL
+#   ifdef TGXM_FEATURE_OPENCL
     if (m_opencl) {
         set(doc, Config::kOcl, kEnabled, true);
     }
@@ -117,7 +117,7 @@ void xmrig::ConfigTransform::finalize(rapidjson::Document &doc)
 }
 
 
-void xmrig::ConfigTransform::transform(rapidjson::Document &doc, int key, const char *arg)
+void tgxm::ConfigTransform::transform(rapidjson::Document &doc, int key, const char *arg)
 {
     BaseTransform::transform(doc, key, arg);
 
@@ -153,21 +153,21 @@ void xmrig::ConfigTransform::transform(rapidjson::Document &doc, int key, const 
     case IConfig::PauseOnActiveKey: /* --pause-on-active */
         return set(doc, Config::kPauseOnActive, static_cast<uint64_t>(strtol(arg, nullptr, 10)));
 
-#   ifdef XMRIG_ALGO_ARGON2
+#   ifdef TGXM_ALGO_ARGON2
     case IConfig::Argon2ImplKey: /* --argon2-impl */
         return set(doc, CpuConfig::kField, CpuConfig::kArgon2Impl, arg);
 #   endif
 
-#   ifdef XMRIG_FEATURE_ASM
+#   ifdef TGXM_FEATURE_ASM
     case IConfig::AssemblyKey: /* --asm */
         return set(doc, CpuConfig::kField, CpuConfig::kAsm, arg);
 #   endif
 
-#   ifdef XMRIG_ALGO_RANDOMX
+#   ifdef TGXM_ALGO_RANDOMX
     case IConfig::RandomXInitKey: /* --randomx-init */
         return set(doc, RxConfig::kField, RxConfig::kInit, static_cast<int64_t>(strtol(arg, nullptr, 10)));
 
-#   ifdef XMRIG_FEATURE_HWLOC
+#   ifdef TGXM_FEATURE_HWLOC
     case IConfig::RandomXNumaKey: /* --randomx-no-numa */
         return set(doc, RxConfig::kField, RxConfig::kNUMA, false);
 #   endif
@@ -195,7 +195,7 @@ void xmrig::ConfigTransform::transform(rapidjson::Document &doc, int key, const 
         return set(doc, CpuConfig::kField, CpuConfig::kHugePagesJit, true);
 #   endif
 
-#   ifdef XMRIG_FEATURE_OPENCL
+#   ifdef TGXM_FEATURE_OPENCL
     case IConfig::OclKey: /* --opencl */
         m_opencl = true;
         break;
@@ -218,7 +218,7 @@ void xmrig::ConfigTransform::transform(rapidjson::Document &doc, int key, const 
         return set(doc, Config::kOcl, "platform", arg);
 #   endif
 
-#   ifdef XMRIG_FEATURE_CUDA
+#   ifdef TGXM_FEATURE_CUDA
     case IConfig::CudaKey: /* --cuda */
         return set(doc, Config::kCuda, kEnabled, true);
 
@@ -236,22 +236,22 @@ void xmrig::ConfigTransform::transform(rapidjson::Document &doc, int key, const 
         return set(doc, Config::kCuda, "bsleep-hint", static_cast<uint64_t>(strtol(arg, nullptr, 10)));
 #   endif
 
-#   ifdef XMRIG_FEATURE_NVML
+#   ifdef TGXM_FEATURE_NVML
     case IConfig::NvmlKey: /* --no-nvml */
         return set(doc, Config::kCuda, "nvml", false);
 #   endif
 
-#   if defined(XMRIG_FEATURE_NVML) || defined (XMRIG_FEATURE_ADL)
+#   if defined(TGXM_FEATURE_NVML) || defined (TGXM_FEATURE_ADL)
     case IConfig::HealthPrintTimeKey: /* --health-print-time */
         return set(doc, Config::kHealthPrintTime, static_cast<uint64_t>(strtol(arg, nullptr, 10)));
 #   endif
 
-#   ifdef XMRIG_FEATURE_DMI
+#   ifdef TGXM_FEATURE_DMI
     case IConfig::DmiKey: /* --no-dmi */
         return set(doc, Config::kDMI, false);
 #   endif
 
-#   ifdef XMRIG_FEATURE_BENCHMARK
+#   ifdef TGXM_FEATURE_BENCHMARK
     case IConfig::AlgorithmKey:     /* --algo */
     case IConfig::BenchKey:         /* --bench */
     case IConfig::StressKey:        /* --stress */
@@ -271,7 +271,7 @@ void xmrig::ConfigTransform::transform(rapidjson::Document &doc, int key, const 
 }
 
 
-void xmrig::ConfigTransform::transformBoolean(rapidjson::Document &doc, int key, bool enable)
+void tgxm::ConfigTransform::transformBoolean(rapidjson::Document &doc, int key, bool enable)
 {
     switch (key) {
     case IConfig::HugePagesKey: /* --no-huge-pages */
@@ -286,7 +286,7 @@ void xmrig::ConfigTransform::transformBoolean(rapidjson::Document &doc, int key,
 }
 
 
-void xmrig::ConfigTransform::transformUint64(rapidjson::Document &doc, int key, uint64_t arg)
+void tgxm::ConfigTransform::transformUint64(rapidjson::Document &doc, int key, uint64_t arg)
 {
     using namespace rapidjson;
 
@@ -316,8 +316,8 @@ void xmrig::ConfigTransform::transformUint64(rapidjson::Document &doc, int key, 
 }
 
 
-#ifdef XMRIG_FEATURE_BENCHMARK
-void xmrig::ConfigTransform::transformBenchmark(rapidjson::Document &doc, int key, const char *arg)
+#ifdef TGXM_FEATURE_BENCHMARK
+void tgxm::ConfigTransform::transformBenchmark(rapidjson::Document &doc, int key, const char *arg)
 {
     switch (key) {
     case IConfig::AlgorithmKey: /* --algo */

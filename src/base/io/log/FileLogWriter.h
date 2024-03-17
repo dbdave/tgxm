@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,15 +16,15 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_FILELOGWRITER_H
-#define XMRIG_FILELOGWRITER_H
+#ifndef TGXM_FILELOGWRITER_H
+#define TGXM_FILELOGWRITER_H
 
 
 #include <cstddef>
 #include <cstdint>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class FileLogWriter
@@ -41,7 +41,7 @@ public:
     bool writeLine(const char *data, size_t size);
 
 private:
-#   ifdef XMRIG_OS_WIN
+#   ifdef TGXM_OS_WIN
     const char m_endl[3]  = {'\r', '\n', 0};
 #   else
     const char m_endl[2]  = {'\n', 0};
@@ -52,7 +52,7 @@ private:
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif /* XMRIG_FILELOGWRITER_H */
+#endif /* TGXM_FILELOGWRITER_H */

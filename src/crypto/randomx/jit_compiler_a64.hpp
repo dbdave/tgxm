@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2018-2020, tevador    <tevador@gmail.com>
 Copyright (c) 2019-2020, SChernykh  <https://github.com/SChernykh>
-Copyright (c) 2019-2020, XMRig      <https://github.com/xmrig>, <support@xmrig.com>
+Copyright (c) 2019-2020, TGXm      <https://github.com/tgxm>, <support@tgxm.com>
 
 All rights reserved.
 
@@ -60,7 +60,7 @@ namespace randomx {
 		void generateDatasetInitCode() {}
 
 		inline ProgramFunc *getProgramFunc() const {
-#			ifdef XMRIG_SECURE_JIT
+#			ifdef TGXM_SECURE_JIT
 			enableExecution();
 #			endif
 

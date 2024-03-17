@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2022 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2022 XMRig       <support@xmrig.com>
+ * Copyright (c) 2016-2022 TGXm       <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,11 +16,11 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_SUMMARY_H
-#define XMRIG_SUMMARY_H
+#ifndef TGXM_SUMMARY_H
+#define TGXM_SUMMARY_H
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class Controller;
@@ -33,7 +33,7 @@ public:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-#endif /* XMRIG_SUMMARY_H */
+#endif /* TGXM_SUMMARY_H */

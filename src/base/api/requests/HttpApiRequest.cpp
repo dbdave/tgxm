@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 #include "base/net/http/HttpData.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 static const char *kError  = "error";
@@ -58,10 +58,10 @@ static inline const char *rpcError(int code) {
 }
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-xmrig::HttpApiRequest::HttpApiRequest(const HttpData &req, bool restricted) :
+tgxm::HttpApiRequest::HttpApiRequest(const HttpData &req, bool restricted) :
     ApiRequest(SOURCE_HTTP, restricted),
     m_req(req),
     m_res(req.id()),
@@ -103,7 +103,7 @@ xmrig::HttpApiRequest::HttpApiRequest(const HttpData &req, bool restricted) :
 }
 
 
-bool xmrig::HttpApiRequest::accept()
+bool tgxm::HttpApiRequest::accept()
 {
     using namespace rapidjson;
 
@@ -128,7 +128,7 @@ bool xmrig::HttpApiRequest::accept()
 }
 
 
-const rapidjson::Value &xmrig::HttpApiRequest::json() const
+const rapidjson::Value &tgxm::HttpApiRequest::json() const
 {
     if (type() == REQ_JSON_RPC) {
         return Json::getValue(m_body, "params");
@@ -138,13 +138,13 @@ const rapidjson::Value &xmrig::HttpApiRequest::json() const
 }
 
 
-xmrig::IApiRequest::Method xmrig::HttpApiRequest::method() const
+tgxm::IApiRequest::Method tgxm::HttpApiRequest::method() const
 {
     return static_cast<IApiRequest::Method>(m_req.method);
 }
 
 
-void xmrig::HttpApiRequest::done(int status)
+void tgxm::HttpApiRequest::done(int status)
 {
     ApiRequest::done(status);
 
@@ -172,7 +172,7 @@ void xmrig::HttpApiRequest::done(int status)
 }
 
 
-void xmrig::HttpApiRequest::setRpcError(int code, const char *message)
+void tgxm::HttpApiRequest::setRpcError(int code, const char *message)
 {
     using namespace rapidjson;
     auto &allocator = doc().GetAllocator();
@@ -185,13 +185,13 @@ void xmrig::HttpApiRequest::setRpcError(int code, const char *message)
 }
 
 
-void xmrig::HttpApiRequest::setRpcResult(rapidjson::Value &result)
+void tgxm::HttpApiRequest::setRpcResult(rapidjson::Value &result)
 {
     rpcDone(kResult, result);
 }
 
 
-void xmrig::HttpApiRequest::rpcDone(const char *key, rapidjson::Value &value)
+void tgxm::HttpApiRequest::rpcDone(const char *key, rapidjson::Value &value)
 {
     ApiRequest::done(0);
 

@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 #include <algorithm>
 
 
-xmrig::CudaThreads::CudaThreads(const rapidjson::Value &value)
+tgxm::CudaThreads::CudaThreads(const rapidjson::Value &value)
 {
     if (value.IsArray()) {
         for (auto &v : value.GetArray()) {
@@ -37,7 +37,7 @@ xmrig::CudaThreads::CudaThreads(const rapidjson::Value &value)
 }
 
 
-xmrig::CudaThreads::CudaThreads(const std::vector<CudaDevice> &devices, const Algorithm &algorithm)
+tgxm::CudaThreads::CudaThreads(const std::vector<CudaDevice> &devices, const Algorithm &algorithm)
 {
     for (const auto &device : devices) {
         device.generate(algorithm, *this);
@@ -45,7 +45,7 @@ xmrig::CudaThreads::CudaThreads(const std::vector<CudaDevice> &devices, const Al
 }
 
 
-bool xmrig::CudaThreads::isEqual(const CudaThreads &other) const
+bool tgxm::CudaThreads::isEqual(const CudaThreads &other) const
 {
     if (isEmpty() && other.isEmpty()) {
         return true;
@@ -55,7 +55,7 @@ bool xmrig::CudaThreads::isEqual(const CudaThreads &other) const
 }
 
 
-rapidjson::Value xmrig::CudaThreads::toJSON(rapidjson::Document &doc) const
+rapidjson::Value tgxm::CudaThreads::toJSON(rapidjson::Document &doc) const
 {
     using namespace rapidjson;
     auto &allocator = doc.GetAllocator();

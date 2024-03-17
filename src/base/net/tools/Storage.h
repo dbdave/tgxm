@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright 2018-2023 SChernykh   <https://github.com/SChernykh>
- * Copyright 2016-2023 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright 2016-2023 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,15 +16,15 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_STORAGE_H
-#define XMRIG_STORAGE_H
+#ifndef TGXM_STORAGE_H
+#define TGXM_STORAGE_H
 
 
 #include <cassert>
 #include <map>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 template <class TYPE>
@@ -82,7 +82,7 @@ private:
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif /* XMRIG_STORAGE_H */
+#endif /* TGXM_STORAGE_H */

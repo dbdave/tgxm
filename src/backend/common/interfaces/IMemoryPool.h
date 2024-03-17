@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2020 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2020 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2020 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_IMEMORYPOOL_H
-#define XMRIG_IMEMORYPOOL_H
+#ifndef TGXM_IMEMORYPOOL_H
+#define TGXM_IMEMORYPOOL_H
 
 
 #include "base/tools/Object.h"
@@ -27,13 +27,13 @@
 #include <cstdint>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class IMemoryPool
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE(IMemoryPool)
+    TGXM_DISABLE_COPY_MOVE(IMemoryPool)
 
     IMemoryPool()           = default;
     virtual ~IMemoryPool()  = default;
@@ -44,8 +44,8 @@ public:
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
 
-#endif /* XMRIG_IMEMORYPOOL_H */
+#endif /* TGXM_IMEMORYPOOL_H */

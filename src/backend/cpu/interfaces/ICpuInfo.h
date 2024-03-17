@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2023 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2023 XMRig       <support@xmrig.com>
+ * Copyright (c) 2016-2023 TGXm       <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_CPUINFO_H
-#define XMRIG_CPUINFO_H
+#ifndef TGXM_CPUINFO_H
+#define TGXM_CPUINFO_H
 
 
 #include "backend/cpu/CpuThreads.h"
@@ -26,19 +26,19 @@
 #include "crypto/common/Assembly.h"
 
 
-#ifdef XMRIG_FEATURE_HWLOC
+#ifdef TGXM_FEATURE_HWLOC
 using hwloc_const_bitmap_t  = const struct hwloc_bitmap_s *;
 using hwloc_topology_t      = struct hwloc_topology *;
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class ICpuInfo
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE(ICpuInfo)
+    TGXM_DISABLE_COPY_MOVE(ICpuInfo)
 
     enum Vendor : uint32_t {
         VENDOR_UNKNOWN,
@@ -123,7 +123,7 @@ public:
     virtual Vendor vendor() const                                                   = 0;
     virtual uint32_t model() const                                                  = 0;
 
-#   ifdef XMRIG_FEATURE_HWLOC
+#   ifdef TGXM_FEATURE_HWLOC
     virtual bool membind(hwloc_const_bitmap_t nodeset)                              = 0;
     virtual const std::vector<uint32_t> &nodeset() const                            = 0;
     virtual hwloc_topology_t topology() const                                       = 0;
@@ -131,7 +131,7 @@ public:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-#endif // XMRIG_CPUINFO_H
+#endif // TGXM_CPUINFO_H

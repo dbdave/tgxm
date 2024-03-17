@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -40,24 +40,24 @@
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 
-#ifdef XMRIG_FEATURE_ENV
+#ifdef TGXM_FEATURE_ENV
 static std::map<String, String> variables;
 
 
 static void createVariables()
 {
-    variables.insert({ "XMRIG_VERSION",  APP_VERSION });
-    variables.insert({ "XMRIG_KIND",     APP_KIND });
-    variables.insert({ "XMRIG_HOSTNAME", Env::hostname() });
-    variables.insert({ "XMRIG_EXE",      Process::exepath() });
-    variables.insert({ "XMRIG_EXE_DIR",  Process::location(Process::ExeLocation) });
-    variables.insert({ "XMRIG_CWD",      Process::location(Process::CwdLocation) });
-    variables.insert({ "XMRIG_HOME_DIR", Process::location(Process::HomeLocation) });
-    variables.insert({ "XMRIG_TEMP_DIR", Process::location(Process::TempLocation) });
-    variables.insert({ "XMRIG_DATA_DIR", Process::location(Process::DataLocation) });
+    variables.insert({ "TGXM_VERSION",  APP_VERSION });
+    variables.insert({ "TGXM_KIND",     APP_KIND });
+    variables.insert({ "TGXM_HOSTNAME", Env::hostname() });
+    variables.insert({ "TGXM_EXE",      Process::exepath() });
+    variables.insert({ "TGXM_EXE_DIR",  Process::location(Process::ExeLocation) });
+    variables.insert({ "TGXM_CWD",      Process::location(Process::CwdLocation) });
+    variables.insert({ "TGXM_HOME_DIR", Process::location(Process::HomeLocation) });
+    variables.insert({ "TGXM_TEMP_DIR", Process::location(Process::TempLocation) });
+    variables.insert({ "TGXM_DATA_DIR", Process::location(Process::DataLocation) });
 
     String hostname = "HOSTNAME";
     if (!getenv(hostname)) { // NOLINT(concurrency-mt-unsafe)
@@ -67,12 +67,12 @@ static void createVariables()
 #endif
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-xmrig::String xmrig::Env::expand(const char *in, const std::map<String, String> &extra)
+tgxm::String tgxm::Env::expand(const char *in, const std::map<String, String> &extra)
 {
-#   ifdef XMRIG_FEATURE_ENV
+#   ifdef TGXM_FEATURE_ENV
     if (in == nullptr) {
         return {};
     }
@@ -116,9 +116,9 @@ xmrig::String xmrig::Env::expand(const char *in, const std::map<String, String> 
 }
 
 
-xmrig::String xmrig::Env::get(const String &name, const std::map<String, String> &extra)
+tgxm::String tgxm::Env::get(const String &name, const std::map<String, String> &extra)
 {
-#   ifdef XMRIG_FEATURE_ENV
+#   ifdef TGXM_FEATURE_ENV
     if (variables.empty()) {
         createVariables();
     }
@@ -140,7 +140,7 @@ xmrig::String xmrig::Env::get(const String &name, const std::map<String, String>
 }
 
 
-xmrig::String xmrig::Env::hostname()
+tgxm::String tgxm::Env::hostname()
 {
     char buf[UV_MAXHOSTNAMESIZE]{};
 

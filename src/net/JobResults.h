@@ -1,4 +1,4 @@
-/* XMRig
+/* TGXm
  * Copyright 2010      Jeff Garzik <jgarzik@pobox.com>
  * Copyright 2012-2014 pooler      <pooler@litecoinpool.org>
  * Copyright 2014      Lucas Jones <https://github.com/lucasjones>
@@ -7,7 +7,7 @@
  * Copyright 2017-2018 XMR-Stak    <https://github.com/fireice-uk>, <https://github.com/psychocrypt>
  * Copyright 2018      Lee Clagett <https://github.com/vtnerd>
  * Copyright 2018-2020 SChernykh   <https://github.com/SChernykh>
- * Copyright 2016-2020 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright 2016-2020 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,15 +23,15 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_JOBRESULTS_H
-#define XMRIG_JOBRESULTS_H
+#ifndef TGXM_JOBRESULTS_H
+#define TGXM_JOBRESULTS_H
 
 
 #include <cstddef>
 #include <cstdint>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class IJobResultListener;
@@ -49,13 +49,13 @@ public:
     static void submit(const Job& job, uint32_t nonce, const uint8_t* result, const uint8_t* miner_signature);
     static void submit(const JobResult &result);
 
-#   if defined(XMRIG_FEATURE_OPENCL) || defined(XMRIG_FEATURE_CUDA)
+#   if defined(TGXM_FEATURE_OPENCL) || defined(TGXM_FEATURE_CUDA)
     static void submit(const Job &job, uint32_t *results, size_t count, uint32_t device_index);
 #   endif
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-#endif /* XMRIG_JOBRESULTS_H */
+#endif /* TGXM_JOBRESULTS_H */

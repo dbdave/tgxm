@@ -1,4 +1,4 @@
-/* XMRig
+/* TGXm
  * Copyright 2010      Jeff Garzik <jgarzik@pobox.com>
  * Copyright 2012-2014 pooler      <pooler@litecoinpool.org>
  * Copyright 2014      Lucas Jones <https://github.com/lucasjones>
@@ -7,7 +7,7 @@
  * Copyright 2017-2018 XMR-Stak    <https://github.com/fireice-uk>, <https://github.com/psychocrypt>
  * Copyright 2018      Lee Clagett <https://github.com/vtnerd>
  * Copyright 2018      SChernykh   <https://github.com/SChernykh>
- * Copyright 2016-2019 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright 2016-2019 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,14 +23,14 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_CRYPTONIGHT_MONERO_H
-#define XMRIG_CRYPTONIGHT_MONERO_H
+#ifndef TGXM_CRYPTONIGHT_MONERO_H
+#define TGXM_CRYPTONIGHT_MONERO_H
 
 #include <fenv.h>
 #include <math.h>
 
 // VARIANT ALTERATIONS
-#ifndef XMRIG_ARM
+#ifndef TGXM_ARM
 #   define VARIANT1_INIT(part) \
     uint64_t tweak1_2_##part = 0; \
     if (BASE == Algorithm::CN_1) { \
@@ -60,7 +60,7 @@
     }
 
 
-#ifndef XMRIG_ARM
+#ifndef TGXM_ARM
 #   define VARIANT2_INIT(part) \
     __m128i division_result_xmm_##part = _mm_cvtsi64_si128(static_cast<int64_t>(h##part[12])); \
     __m128i sqrt_result_xmm_##part     = _mm_cvtsi64_si128(static_cast<int64_t>(h##part[13]));
@@ -207,4 +207,4 @@
 extern bool cn_sse41_enabled;
 extern bool cn_vaes_enabled;
 
-#endif /* XMRIG_CRYPTONIGHT_MONERO_H */
+#endif /* TGXM_CRYPTONIGHT_MONERO_H */

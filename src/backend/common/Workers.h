@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_WORKERS_H
-#define XMRIG_WORKERS_H
+#ifndef TGXM_WORKERS_H
+#define TGXM_WORKERS_H
 
 
 #include <memory>
@@ -27,17 +27,17 @@
 #include "backend/cpu/CpuLaunchData.h"
 
 
-#ifdef XMRIG_FEATURE_OPENCL
+#ifdef TGXM_FEATURE_OPENCL
 #   include "backend/opencl/OclLaunchData.h"
 #endif
 
 
-#ifdef XMRIG_FEATURE_CUDA
+#ifdef TGXM_FEATURE_CUDA
 #   include "backend/cuda/CudaLaunchData.h"
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class Benchmark;
@@ -49,7 +49,7 @@ template<class T>
 class Workers
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE(Workers)
+    TGXM_DISABLE_COPY_MOVE(Workers)
 
     Workers();
     ~Workers();
@@ -62,7 +62,7 @@ public:
     void setBackend(IBackend *backend);
     void stop();
 
-#   ifdef XMRIG_FEATURE_BENCHMARK
+#   ifdef TGXM_FEATURE_BENCHMARK
     void start(const std::vector<T> &data, const std::shared_ptr<Benchmark> &benchmark);
 #   endif
 
@@ -78,7 +78,7 @@ private:
 
 
 template<class T>
-void xmrig::Workers<T>::jobEarlyNotification(const Job &job)
+void tgxm::Workers<T>::jobEarlyNotification(const Job &job)
 {
     for (Thread<T>* t : m_workers) {
         if (t->worker()) {
@@ -93,21 +93,21 @@ IWorker *Workers<CpuLaunchData>::create(Thread<CpuLaunchData> *handle);
 extern template class Workers<CpuLaunchData>;
 
 
-#ifdef XMRIG_FEATURE_OPENCL
+#ifdef TGXM_FEATURE_OPENCL
 template<>
 IWorker *Workers<OclLaunchData>::create(Thread<OclLaunchData> *handle);
 extern template class Workers<OclLaunchData>;
 #endif
 
 
-#ifdef XMRIG_FEATURE_CUDA
+#ifdef TGXM_FEATURE_CUDA
 template<>
 IWorker *Workers<CudaLaunchData>::create(Thread<CudaLaunchData> *handle);
 extern template class Workers<CudaLaunchData>;
 #endif
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-#endif /* XMRIG_WORKERS_H */
+#endif /* TGXM_WORKERS_H */

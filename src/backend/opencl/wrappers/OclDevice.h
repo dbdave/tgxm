@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_OCLDEVICE_H
-#define XMRIG_OCLDEVICE_H
+#ifndef TGXM_OCLDEVICE_H
+#define TGXM_OCLDEVICE_H
 
 
 #include "backend/common/misc/PciTopology.h"
@@ -32,7 +32,7 @@ using cl_device_id      = struct _cl_device_id *;
 using cl_platform_id    = struct _cl_platform_id *;
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class Algorithm;
@@ -81,7 +81,7 @@ public:
     inline size_t maxMemAllocSize() const       { return m_maxMemoryAlloc; }
     inline uint32_t index() const               { return m_index; }
 
-#   ifdef XMRIG_FEATURE_API
+#   ifdef TGXM_FEATURE_API
     void toJSON(rapidjson::Value &out, rapidjson::Document &doc) const;
 #   endif
 
@@ -104,7 +104,7 @@ private:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-#endif /* XMRIG_OCLDEVICE_H */
+#endif /* TGXM_OCLDEVICE_H */

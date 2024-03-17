@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2019 tevador     <tevador@gmail.com>
  * Copyright (c) 2018-2020 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2020 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2020 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 #include "crypto/rx/RxSeed.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 constexpr size_t oneMiB = 1024 * 1024;
@@ -38,7 +38,7 @@ constexpr size_t oneMiB = 1024 * 1024;
 class RxBasicStoragePrivate
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE(RxBasicStoragePrivate)
+    TGXM_DISABLE_COPY_MOVE(RxBasicStoragePrivate)
 
     inline RxBasicStoragePrivate() = default;
     inline ~RxBasicStoragePrivate() { deleteDataset(); }
@@ -122,28 +122,28 @@ private:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-xmrig::RxBasicStorage::RxBasicStorage() :
+tgxm::RxBasicStorage::RxBasicStorage() :
     d_ptr(new RxBasicStoragePrivate())
 {
 }
 
 
-xmrig::RxBasicStorage::~RxBasicStorage()
+tgxm::RxBasicStorage::~RxBasicStorage()
 {
     delete d_ptr;
 }
 
 
-bool xmrig::RxBasicStorage::isAllocated() const
+bool tgxm::RxBasicStorage::isAllocated() const
 {
     return d_ptr->dataset() && d_ptr->dataset()->cache() && d_ptr->dataset()->cache()->get();
 }
 
 
-xmrig::HugePagesInfo xmrig::RxBasicStorage::hugePages() const
+tgxm::HugePagesInfo tgxm::RxBasicStorage::hugePages() const
 {
     if (!d_ptr->dataset()) {
         return {};
@@ -153,7 +153,7 @@ xmrig::HugePagesInfo xmrig::RxBasicStorage::hugePages() const
 }
 
 
-xmrig::RxDataset *xmrig::RxBasicStorage::dataset(const Job &job, uint32_t) const
+tgxm::RxDataset *tgxm::RxBasicStorage::dataset(const Job &job, uint32_t) const
 {
     if (!d_ptr->isReady(job)) {
         return nullptr;
@@ -163,7 +163,7 @@ xmrig::RxDataset *xmrig::RxBasicStorage::dataset(const Job &job, uint32_t) const
 }
 
 
-void xmrig::RxBasicStorage::init(const RxSeed &seed, uint32_t threads, bool hugePages, bool oneGbPages, RxConfig::Mode mode, int priority)
+void tgxm::RxBasicStorage::init(const RxSeed &seed, uint32_t threads, bool hugePages, bool oneGbPages, RxConfig::Mode mode, int priority)
 {
     d_ptr->setSeed(seed);
 

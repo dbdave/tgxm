@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,17 +20,17 @@
 #include "crypto/common/Nonce.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 std::atomic<bool> Nonce::m_paused = {true};
 std::atomic<uint64_t>  Nonce::m_sequence[Nonce::MAX] = { {1}, {1}, {1} };
 std::atomic<uint64_t> Nonce::m_nonces[2] = { {0}, {0} };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-bool xmrig::Nonce::next(uint8_t index, uint32_t *nonce, uint32_t reserveCount, uint64_t mask)
+bool tgxm::Nonce::next(uint8_t index, uint32_t *nonce, uint32_t reserveCount, uint64_t mask)
 {
     mask &= 0x7FFFFFFFFFFFFFFFULL;
     if (reserveCount == 0 || mask < reserveCount - 1) {
@@ -65,7 +65,7 @@ bool xmrig::Nonce::next(uint8_t index, uint32_t *nonce, uint32_t reserveCount, u
 }
 
 
-void xmrig::Nonce::stop()
+void tgxm::Nonce::stop()
 {
     pause(false);
 
@@ -75,7 +75,7 @@ void xmrig::Nonce::stop()
 }
 
 
-void xmrig::Nonce::touch()
+void tgxm::Nonce::touch()
 {
     for (auto &i : m_sequence) {
         i++;

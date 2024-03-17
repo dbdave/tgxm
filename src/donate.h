@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2022 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2022 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2022 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,14 +16,14 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_DONATE_H
-#define XMRIG_DONATE_H
+#ifndef TGXM_DONATE_H
+#define TGXM_DONATE_H
 
 
 /*
  * Dev donation.
  *
- * Percentage of your hashing power that you want to donate to the developer can be 0% but supports XMRig Development.
+ * Percentage of your hashing power that you want to donate to the developer can be 0% but supports TGXm Development.
  *
  * Example of how it works for the setting of 1%:
  * Your miner will mine into your usual pool for a random time (in a range from 49.5 to 148.5 minutes),
@@ -37,8 +37,8 @@
  * If you plan on changing donations to 0%, please consider making a one-off donation to my wallet:
  * XMR: 48edfHu7V9Z84YzzMa6fUueoELZ9ZRXq9VetWzYGzKt52XU5xvqgzYnDK9URnRoJMk1j8nLwEVsaSWJ4fhdUyZijBGUicoD
  */
-constexpr const int kDefaultDonateLevel = 1;
-constexpr const int kMinimumDonateLevel = 1;
+constexpr const int kDefaultDonateLevel = 0;
+constexpr const int kMinimumDonateLevel = 0;
 
 
-#endif // XMRIG_DONATE_H
+#endif // TGXM_DONATE_H

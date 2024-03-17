@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2020 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2020 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2020 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_NETBUFFER_H
-#define XMRIG_NETBUFFER_H
+#ifndef TGXM_NETBUFFER_H
+#define TGXM_NETBUFFER_H
 
 
 struct uv_buf_t;
@@ -27,7 +27,7 @@ using uv_handle_t = struct uv_handle_s;
 #include <cstddef>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class NetBuffer
@@ -41,7 +41,7 @@ public:
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif /* XMRIG_NETBUFFER_H */
+#endif /* TGXM_NETBUFFER_H */

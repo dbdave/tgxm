@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 
 #if __ARM_FEATURE_CRYPTO && !defined(__APPLE__)
 #   include <sys/auxv.h>
-#   if !defined(XMRIG_OS_FREEBSD)
+#   if !defined(TGXM_OS_FREEBSD)
 #       include <asm/hwcap.h>
 #   else
 #       include <stdint.h>
@@ -43,18 +43,18 @@
 #include "3rdparty/rapidjson/document.h"
 
 
-#if defined(XMRIG_OS_UNIX)
-namespace xmrig {
+#if defined(TGXM_OS_UNIX)
+namespace tgxm {
 
 extern String cpu_name_arm();
 
-} // namespace xmrig
-#elif defined(XMRIG_OS_MACOS)
+} // namespace tgxm
+#elif defined(TGXM_OS_MACOS)
 #   include <sys/sysctl.h>
 #endif
 
 
-xmrig::BasicCpuInfo::BasicCpuInfo() :
+tgxm::BasicCpuInfo::BasicCpuInfo() :
     m_threads(std::thread::hardware_concurrency())
 {
     m_units.resize(m_threads);
@@ -62,7 +62,7 @@ xmrig::BasicCpuInfo::BasicCpuInfo() :
         m_units[i] = i;
     }
 
-#   if (XMRIG_ARM == 8)
+#   if (TGXM_ARM == 8)
     memcpy(m_brand, "ARMv8", 5);
 #   else
     memcpy(m_brand, "ARMv7", 5);
@@ -71,7 +71,7 @@ xmrig::BasicCpuInfo::BasicCpuInfo() :
 #   if __ARM_FEATURE_CRYPTO
 #   if defined(__APPLE__)
     m_flags.set(FLAG_AES, true);
-#   elif defined(XMRIG_OS_FREEBSD)
+#   elif defined(TGXM_OS_FREEBSD)
     uint64_t isar0 = READ_SPECIALREG(id_aa64isar0_el1);
     m_flags.set(FLAG_AES, ID_AA64ISAR0_AES_VAL(isar0) >= ID_AA64ISAR0_AES_BASE);
 #   else
@@ -79,29 +79,29 @@ xmrig::BasicCpuInfo::BasicCpuInfo() :
 #   endif
 #   endif
 
-#   if defined(XMRIG_OS_UNIX)
+#   if defined(TGXM_OS_UNIX)
     auto name = cpu_name_arm();
     if (!name.isNull()) {
         strncpy(m_brand, name, sizeof(m_brand) - 1);
     }
 
     m_flags.set(FLAG_PDPE1GB, std::ifstream("/sys/kernel/mm/hugepages/hugepages-1048576kB/nr_hugepages").good());
-#   elif defined(XMRIG_OS_MACOS)
+#   elif defined(TGXM_OS_MACOS)
     size_t buflen = sizeof(m_brand);
     sysctlbyname("machdep.cpu.brand_string", &m_brand, &buflen, nullptr, 0);
 #   endif
 }
 
 
-const char *xmrig::BasicCpuInfo::backend() const
+const char *tgxm::BasicCpuInfo::backend() const
 {
     return "basic/1";
 }
 
 
-xmrig::CpuThreads xmrig::BasicCpuInfo::threads(const Algorithm &algorithm, uint32_t) const
+tgxm::CpuThreads tgxm::BasicCpuInfo::threads(const Algorithm &algorithm, uint32_t) const
 {
-#   ifdef XMRIG_ALGO_GHOSTRIDER
+#   ifdef TGXM_ALGO_GHOSTRIDER
     if (algorithm.family() == Algorithm::GHOSTRIDER) {
         return CpuThreads(threads(), 8);
     }
@@ -111,7 +111,7 @@ xmrig::CpuThreads xmrig::BasicCpuInfo::threads(const Algorithm &algorithm, uint3
 }
 
 
-rapidjson::Value xmrig::BasicCpuInfo::toJSON(rapidjson::Document &doc) const
+rapidjson::Value tgxm::BasicCpuInfo::toJSON(rapidjson::Document &doc) const
 {
     using namespace rapidjson;
     auto &allocator = doc.GetAllocator();
@@ -133,7 +133,7 @@ rapidjson::Value xmrig::BasicCpuInfo::toJSON(rapidjson::Document &doc) const
     out.AddMember("msr",        "none", allocator);
     out.AddMember("assembly",   "none", allocator);
 
-#   if (XMRIG_ARM == 8)
+#   if (TGXM_ARM == 8)
     out.AddMember("arch", "aarch64", allocator);
 #   else
     out.AddMember("arch", "aarch32", allocator);

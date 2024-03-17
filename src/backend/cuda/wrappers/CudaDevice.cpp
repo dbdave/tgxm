@@ -1,4 +1,4 @@
-/* XMRig
+/* TGXm
  * Copyright 2010      Jeff Garzik <jgarzik@pobox.com>
  * Copyright 2012-2014 pooler      <pooler@litecoinpool.org>
  * Copyright 2014      Lucas Jones <https://github.com/lucasjones>
@@ -6,7 +6,7 @@
  * Copyright 2016      Jay D Dee   <jayddee246@gmail.com>
  * Copyright 2017-2018 XMR-Stak    <https://github.com/fireice-uk>, <https://github.com/psychocrypt>
  * Copyright 2018-2020 SChernykh   <https://github.com/SChernykh>
- * Copyright 2016-2020 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright 2016-2020 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -31,14 +31,14 @@
 #include "base/io/log/Log.h"
 
 
-#ifdef XMRIG_FEATURE_NVML
+#ifdef TGXM_FEATURE_NVML
 #   include "backend/cuda/wrappers/NvmlLib.h"
 #endif
 
 #include <algorithm>
 
 
-xmrig::CudaDevice::CudaDevice(uint32_t index, int32_t bfactor, int32_t bsleep) :
+tgxm::CudaDevice::CudaDevice(uint32_t index, int32_t bfactor, int32_t bsleep) :
     m_index(index)
 {
     auto ctx = CudaLib::alloc(index, bfactor, bsleep);
@@ -54,7 +54,7 @@ xmrig::CudaDevice::CudaDevice(uint32_t index, int32_t bfactor, int32_t bsleep) :
 }
 
 
-xmrig::CudaDevice::CudaDevice(CudaDevice &&other) noexcept :
+tgxm::CudaDevice::CudaDevice(CudaDevice &&other) noexcept :
     m_index(other.m_index),
     m_ctx(other.m_ctx),
     m_topology(other.m_topology),
@@ -64,49 +64,49 @@ xmrig::CudaDevice::CudaDevice(CudaDevice &&other) noexcept :
 }
 
 
-xmrig::CudaDevice::~CudaDevice()
+tgxm::CudaDevice::~CudaDevice()
 {
     CudaLib::release(m_ctx);
 }
 
 
-size_t xmrig::CudaDevice::freeMemSize() const
+size_t tgxm::CudaDevice::freeMemSize() const
 {
     return CudaLib::deviceUlong(m_ctx, CudaLib::DeviceMemoryFree);
 }
 
 
-size_t xmrig::CudaDevice::globalMemSize() const
+size_t tgxm::CudaDevice::globalMemSize() const
 {
     return CudaLib::deviceUlong(m_ctx, CudaLib::DeviceMemoryTotal);
 }
 
 
-uint32_t xmrig::CudaDevice::clock() const
+uint32_t tgxm::CudaDevice::clock() const
 {
     return CudaLib::deviceUint(m_ctx, CudaLib::DeviceClockRate) / 1000;
 }
 
 
-uint32_t xmrig::CudaDevice::computeCapability(bool major) const
+uint32_t tgxm::CudaDevice::computeCapability(bool major) const
 {
     return CudaLib::deviceUint(m_ctx, major ? CudaLib::DeviceArchMajor : CudaLib::DeviceArchMinor);
 }
 
 
-uint32_t xmrig::CudaDevice::memoryClock() const
+uint32_t tgxm::CudaDevice::memoryClock() const
 {
     return CudaLib::deviceUint(m_ctx, CudaLib::DeviceMemoryClockRate) / 1000;
 }
 
 
-uint32_t xmrig::CudaDevice::smx() const
+uint32_t tgxm::CudaDevice::smx() const
 {
     return CudaLib::deviceUint(m_ctx, CudaLib::DeviceSmx);
 }
 
 
-void xmrig::CudaDevice::generate(const Algorithm &algorithm, CudaThreads &threads) const
+void tgxm::CudaDevice::generate(const Algorithm &algorithm, CudaThreads &threads) const
 {
     if (!CudaLib::deviceInfo(m_ctx, -1, -1, algorithm)) {
         return;
@@ -116,8 +116,8 @@ void xmrig::CudaDevice::generate(const Algorithm &algorithm, CudaThreads &thread
 }
 
 
-#ifdef XMRIG_FEATURE_API
-void xmrig::CudaDevice::toJSON(rapidjson::Value &out, rapidjson::Document &doc) const
+#ifdef TGXM_FEATURE_API
+void tgxm::CudaDevice::toJSON(rapidjson::Value &out, rapidjson::Document &doc) const
 {
     using namespace rapidjson;
     auto &allocator = doc.GetAllocator();
@@ -130,7 +130,7 @@ void xmrig::CudaDevice::toJSON(rapidjson::Value &out, rapidjson::Document &doc) 
     out.AddMember("clock",          clock(), allocator);
     out.AddMember("memory_clock",   memoryClock(), allocator);
 
-#   ifdef XMRIG_FEATURE_NVML
+#   ifdef TGXM_FEATURE_NVML
     if (m_nvmlDevice) {
         auto data = NvmlLib::health(m_nvmlDevice);
 

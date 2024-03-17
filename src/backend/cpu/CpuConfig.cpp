@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 #include <algorithm>
 
 
-namespace xmrig {
+namespace tgxm {
 
 const char *CpuConfig::kEnabled             = "enabled";
 const char *CpuConfig::kField               = "cpu";
@@ -37,27 +37,27 @@ const char *CpuConfig::kMemoryPool          = "memory-pool";
 const char *CpuConfig::kPriority            = "priority";
 const char *CpuConfig::kYield               = "yield";
 
-#ifdef XMRIG_FEATURE_ASM
+#ifdef TGXM_FEATURE_ASM
 const char *CpuConfig::kAsm                 = "asm";
 #endif
 
-#ifdef XMRIG_ALGO_ARGON2
+#ifdef TGXM_ALGO_ARGON2
 const char *CpuConfig::kArgon2Impl          = "argon2-impl";
 #endif
 
 
 extern template class Threads<CpuThreads>;
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-bool xmrig::CpuConfig::isHwAES() const
+bool tgxm::CpuConfig::isHwAES() const
 {
     return (m_aes == AES_AUTO ? (Cpu::info()->hasAES() ? AES_HW : AES_SOFT) : m_aes) == AES_HW;
 }
 
 
-rapidjson::Value xmrig::CpuConfig::toJSON(rapidjson::Document &doc) const
+rapidjson::Value tgxm::CpuConfig::toJSON(rapidjson::Document &doc) const
 {
     using namespace rapidjson;
     auto &allocator = doc.GetAllocator();
@@ -76,11 +76,11 @@ rapidjson::Value xmrig::CpuConfig::toJSON(rapidjson::Document &doc) const
         obj.AddMember(StringRef(kMaxThreadsHint), m_limit, allocator);
     }
 
-#   ifdef XMRIG_FEATURE_ASM
+#   ifdef TGXM_FEATURE_ASM
     obj.AddMember(StringRef(kAsm), m_assembly.toJSON(), allocator);
 #   endif
 
-#   ifdef XMRIG_ALGO_ARGON2
+#   ifdef TGXM_ALGO_ARGON2
     obj.AddMember(StringRef(kArgon2Impl), m_argon2Impl.toJSON(), allocator);
 #   endif
 
@@ -90,13 +90,13 @@ rapidjson::Value xmrig::CpuConfig::toJSON(rapidjson::Document &doc) const
 }
 
 
-size_t xmrig::CpuConfig::memPoolSize() const
+size_t tgxm::CpuConfig::memPoolSize() const
 {
     return m_memoryPool < 0 ? std::max(Cpu::info()->threads(), Cpu::info()->L3() >> 21) : m_memoryPool;
 }
 
 
-std::vector<xmrig::CpuLaunchData> xmrig::CpuConfig::get(const Miner *miner, const Algorithm &algorithm) const
+std::vector<tgxm::CpuLaunchData> tgxm::CpuConfig::get(const Miner *miner, const Algorithm &algorithm) const
 {
     if (algorithm.family() == Algorithm::KAWPOW) {
         return {};
@@ -127,7 +127,7 @@ std::vector<xmrig::CpuLaunchData> xmrig::CpuConfig::get(const Miner *miner, cons
 }
 
 
-void xmrig::CpuConfig::read(const rapidjson::Value &value)
+void tgxm::CpuConfig::read(const rapidjson::Value &value)
 {
     if (value.IsObject()) {
         m_enabled      = Json::getBool(value, kEnabled, m_enabled);
@@ -140,11 +140,11 @@ void xmrig::CpuConfig::read(const rapidjson::Value &value)
         setMemoryPool(Json::getValue(value, kMemoryPool));
         setPriority(Json::getInt(value,  kPriority, -1));
 
-#       ifdef XMRIG_FEATURE_ASM
+#       ifdef TGXM_FEATURE_ASM
         m_assembly = Json::getValue(value, kAsm);
 #       endif
 
-#       ifdef XMRIG_ALGO_ARGON2
+#       ifdef TGXM_ALGO_ARGON2
         m_argon2Impl = Json::getString(value, kArgon2Impl);
 #       endif
 
@@ -163,7 +163,7 @@ void xmrig::CpuConfig::read(const rapidjson::Value &value)
 }
 
 
-void xmrig::CpuConfig::generate()
+void tgxm::CpuConfig::generate()
 {
     if (!isEnabled() || m_threads.has("*")) {
         return;
@@ -171,20 +171,20 @@ void xmrig::CpuConfig::generate()
 
     size_t count = 0;
 
-    count += xmrig::generate<Algorithm::CN>(m_threads, m_limit);
-    count += xmrig::generate<Algorithm::CN_LITE>(m_threads, m_limit);
-    count += xmrig::generate<Algorithm::CN_HEAVY>(m_threads, m_limit);
-    count += xmrig::generate<Algorithm::CN_PICO>(m_threads, m_limit);
-    count += xmrig::generate<Algorithm::CN_FEMTO>(m_threads, m_limit);
-    count += xmrig::generate<Algorithm::RANDOM_X>(m_threads, m_limit);
-    count += xmrig::generate<Algorithm::ARGON2>(m_threads, m_limit);
-    count += xmrig::generate<Algorithm::GHOSTRIDER>(m_threads, m_limit);
+    count += tgxm::generate<Algorithm::CN>(m_threads, m_limit);
+    count += tgxm::generate<Algorithm::CN_LITE>(m_threads, m_limit);
+    count += tgxm::generate<Algorithm::CN_HEAVY>(m_threads, m_limit);
+    count += tgxm::generate<Algorithm::CN_PICO>(m_threads, m_limit);
+    count += tgxm::generate<Algorithm::CN_FEMTO>(m_threads, m_limit);
+    count += tgxm::generate<Algorithm::RANDOM_X>(m_threads, m_limit);
+    count += tgxm::generate<Algorithm::ARGON2>(m_threads, m_limit);
+    count += tgxm::generate<Algorithm::GHOSTRIDER>(m_threads, m_limit);
 
     m_shouldSave |= count > 0;
 }
 
 
-void xmrig::CpuConfig::setAesMode(const rapidjson::Value &value)
+void tgxm::CpuConfig::setAesMode(const rapidjson::Value &value)
 {
     if (value.IsBool()) {
         m_aes = value.GetBool() ? AES_HW : AES_SOFT;
@@ -195,7 +195,7 @@ void xmrig::CpuConfig::setAesMode(const rapidjson::Value &value)
 }
 
 
-void xmrig::CpuConfig::setHugePages(const rapidjson::Value &value)
+void tgxm::CpuConfig::setHugePages(const rapidjson::Value &value)
 {
     if (value.IsBool()) {
         m_hugePageSize = value.GetBool() ? kDefaultHugePageSizeKb : 0U;
@@ -208,7 +208,7 @@ void xmrig::CpuConfig::setHugePages(const rapidjson::Value &value)
 }
 
 
-void xmrig::CpuConfig::setMemoryPool(const rapidjson::Value &value)
+void tgxm::CpuConfig::setMemoryPool(const rapidjson::Value &value)
 {
     if (value.IsBool()) {
         m_memoryPool = value.GetBool() ? -1 : 0;

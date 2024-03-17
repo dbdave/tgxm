@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2019      Spudz76     <https://github.com/Spudz76>
  * Copyright (c) 2018-2020 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2020 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2020 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,20 +17,20 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_SYSLOG_H
-#define XMRIG_SYSLOG_H
+#ifndef TGXM_SYSLOG_H
+#define TGXM_SYSLOG_H
 
 
 #include "base/kernel/interfaces/ILogBackend.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class SysLog : public ILogBackend
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE(SysLog)
+    TGXM_DISABLE_COPY_MOVE(SysLog)
 
     SysLog();
     ~SysLog() override;
@@ -40,7 +40,7 @@ protected:
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif /* XMRIG_SYSLOG_H */
+#endif /* TGXM_SYSLOG_H */

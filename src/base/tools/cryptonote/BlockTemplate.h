@@ -1,8 +1,8 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2012-2013 The Cryptonote developers
  * Copyright (c) 2014-2021 The Monero Project
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_BLOCKTEMPLATE_H
-#define XMRIG_BLOCKTEMPLATE_H
+#ifndef TGXM_BLOCKTEMPLATE_H
+#define TGXM_BLOCKTEMPLATE_H
 
 
 #include "3rdparty/rapidjson/fwd.h"
@@ -29,7 +29,7 @@
 #include "base/tools/Span.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class BlockTemplate
@@ -40,7 +40,7 @@ public:
     static constexpr size_t kNonceSize      = 4;
     static constexpr size_t kSignatureSize  = 64;
 
-#   ifdef XMRIG_PROXY_PROJECT
+#   ifdef TGXM_PROXY_PROJECT
     static constexpr bool kCalcHashes       = true;
 #   else
     static constexpr bool kCalcHashes       = false;
@@ -151,7 +151,7 @@ private:
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif /* XMRIG_BLOCKTEMPLATE_H */
+#endif /* TGXM_BLOCKTEMPLATE_H */

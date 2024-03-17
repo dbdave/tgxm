@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,14 +27,14 @@
 #include "core/Controller.h"
 
 
-#ifdef XMRIG_FEATURE_TLS
+#ifdef TGXM_FEATURE_TLS
 #   include "base/net/https/HttpsServer.h"
 #else
 #   include "base/net/http/HttpServer.h"
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 static const char *kAuthorization = "authorization";
 
@@ -43,10 +43,10 @@ static const char *favicon = nullptr;
 static size_t faviconSize  = 0;
 #endif
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-xmrig::Httpd::Httpd(Base *base) :
+tgxm::Httpd::Httpd(Base *base) :
     m_base(base)
 {
     m_httpListener = std::make_shared<HttpListener>(this);
@@ -55,10 +55,10 @@ xmrig::Httpd::Httpd(Base *base) :
 }
 
 
-xmrig::Httpd::~Httpd() = default;
+tgxm::Httpd::~Httpd() = default;
 
 
-bool xmrig::Httpd::start()
+bool tgxm::Httpd::start()
 {
     const auto &config = m_base->config()->http();
 
@@ -68,7 +68,7 @@ bool xmrig::Httpd::start()
 
     bool tls = false;
 
-#   ifdef XMRIG_FEATURE_TLS
+#   ifdef TGXM_FEATURE_TLS
     m_http = new HttpsServer(m_httpListener);
     tls = m_http->setTls(m_base->config()->tls());
 #   else
@@ -110,7 +110,7 @@ bool xmrig::Httpd::start()
 }
 
 
-void xmrig::Httpd::stop()
+void tgxm::Httpd::stop()
 {
     delete m_server;
     delete m_http;
@@ -122,7 +122,7 @@ void xmrig::Httpd::stop()
 
 
 
-void xmrig::Httpd::onConfigChanged(Config *config, Config *previousConfig)
+void tgxm::Httpd::onConfigChanged(Config *config, Config *previousConfig)
 {
     if (config->http() == previousConfig->http()) {
         return;
@@ -133,7 +133,7 @@ void xmrig::Httpd::onConfigChanged(Config *config, Config *previousConfig)
 }
 
 
-void xmrig::Httpd::onHttpData(const HttpData &data)
+void tgxm::Httpd::onHttpData(const HttpData &data)
 {
     if (data.method == HTTP_OPTIONS) {
         return HttpApiResponse(data.id()).end();
@@ -175,7 +175,7 @@ void xmrig::Httpd::onHttpData(const HttpData &data)
 }
 
 
-int xmrig::Httpd::auth(const HttpData &req) const
+int tgxm::Httpd::auth(const HttpData &req) const
 {
     const Http &config = m_base->config()->http();
 

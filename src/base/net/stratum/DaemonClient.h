@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2019      Howard Chu  <https://github.com/hyc>
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_DAEMONCLIENT_H
-#define XMRIG_DAEMONCLIENT_H
+#ifndef TGXM_DAEMONCLIENT_H
+#define TGXM_DAEMONCLIENT_H
 
 
 #include "base/kernel/interfaces/IDnsListener.h"
@@ -39,14 +39,14 @@ using uv_handle_t   = struct uv_handle_s;
 using uv_stream_t   = struct uv_stream_s;
 using uv_tcp_t      = struct uv_tcp_s;
 
-#ifdef XMRIG_FEATURE_TLS
+#ifdef TGXM_FEATURE_TLS
 using BIO           = struct bio_st;
 using SSL           = struct ssl_st;
 using SSL_CTX       = struct ssl_ctx_st;
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class DnsRequest;
@@ -55,7 +55,7 @@ class DnsRequest;
 class DaemonClient : public BaseClient, public IDnsListener, public ITimerListener, public IHttpListener
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE_DEFAULT(DaemonClient)
+    TGXM_DISABLE_COPY_MOVE_DEFAULT(DaemonClient)
 
     DaemonClient(int id, IClientListener *listener);
     ~DaemonClient() override;
@@ -145,7 +145,7 @@ private:
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif /* XMRIG_DAEMONCLIENT_H */
+#endif /* TGXM_DAEMONCLIENT_H */

@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -30,27 +30,27 @@
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 static const char kStratumTcp[]            = "stratum+tcp://";
 static const char kStratumSsl[]            = "stratum+ssl://";
 static const char kSOCKS5[]                = "socks5://";
 
-#ifdef XMRIG_FEATURE_HTTP
+#ifdef TGXM_FEATURE_HTTP
 static const char kDaemonHttp[]            = "daemon+http://";
 static const char kDaemonHttps[]           = "daemon+https://";
 #endif
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-xmrig::Url::Url(const char *url)
+tgxm::Url::Url(const char *url)
 {
     parse(url);
 }
 
 
-xmrig::Url::Url(const char *host, uint16_t port, bool tls, Scheme scheme) :
+tgxm::Url::Url(const char *host, uint16_t port, bool tls, Scheme scheme) :
     m_tls(tls),
     m_scheme(scheme),
     m_host(host),
@@ -66,13 +66,13 @@ xmrig::Url::Url(const char *host, uint16_t port, bool tls, Scheme scheme) :
 }
 
 
-bool xmrig::Url::isEqual(const Url &other) const
+bool tgxm::Url::isEqual(const Url &other) const
 {
     return (m_tls == other.m_tls && m_scheme == other.m_scheme && m_host == other.m_host && m_url == other.m_url && m_port == other.m_port);
 }
 
 
-bool xmrig::Url::parse(const char *url)
+bool tgxm::Url::parse(const char *url)
 {
     if (url == nullptr) {
         return false;
@@ -94,7 +94,7 @@ bool xmrig::Url::parse(const char *url)
             m_scheme = SOCKS5;
             m_tls    = false;
         }
-#       ifdef XMRIG_FEATURE_HTTP
+#       ifdef TGXM_FEATURE_HTTP
         else if (strncasecmp(url, kDaemonHttps, sizeof(kDaemonHttps) - 1) == 0) {
             m_scheme = DAEMON;
             m_tls    = true;
@@ -137,7 +137,7 @@ bool xmrig::Url::parse(const char *url)
 }
 
 
-bool xmrig::Url::parseIPv6(const char *addr)
+bool tgxm::Url::parseIPv6(const char *addr)
 {
     const char *end = strchr(addr, ']');
     if (!end) {

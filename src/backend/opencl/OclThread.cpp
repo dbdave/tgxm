@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 #include <algorithm>
 
 
-namespace xmrig {
+namespace tgxm {
 
 static const char *kIndex        = "index";
 static const char *kIntensity    = "intensity";
@@ -33,16 +33,16 @@ static const char *kThreads      = "threads";
 static const char *kUnroll       = "unroll";
 static const char *kWorksize     = "worksize";
 
-#ifdef XMRIG_ALGO_RANDOMX
+#ifdef TGXM_ALGO_RANDOMX
 static const char *kBFactor      = "bfactor";
 static const char *kGCNAsm       = "gcn_asm";
 static const char* kDatasetHost  = "dataset_host";
 #endif
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-xmrig::OclThread::OclThread(const rapidjson::Value &value)
+tgxm::OclThread::OclThread(const rapidjson::Value &value)
 {
     if (!value.IsObject()) {
         return;
@@ -78,7 +78,7 @@ xmrig::OclThread::OclThread(const rapidjson::Value &value)
         m_threads.emplace_back(-1);
     }
 
-#   ifdef XMRIG_ALGO_RANDOMX
+#   ifdef TGXM_ALGO_RANDOMX
     const auto &gcnAsm = Json::getValue(value, kGCNAsm);
     if (gcnAsm.IsBool()) {
         m_fields.set(RANDOMX_FIELDS, true);
@@ -91,7 +91,7 @@ xmrig::OclThread::OclThread(const rapidjson::Value &value)
 }
 
 
-bool xmrig::OclThread::isEqual(const OclThread &other) const
+bool tgxm::OclThread::isEqual(const OclThread &other) const
 {
     return other.m_threads.size() == m_threads.size() &&
            std::equal(m_threads.begin(), m_threads.end(), other.m_threads.begin()) &&
@@ -107,7 +107,7 @@ bool xmrig::OclThread::isEqual(const OclThread &other) const
 }
 
 
-rapidjson::Value xmrig::OclThread::toJSON(rapidjson::Document &doc) const
+rapidjson::Value tgxm::OclThread::toJSON(rapidjson::Document &doc) const
 {
     using namespace rapidjson;
     auto &allocator = doc.GetAllocator();
@@ -136,7 +136,7 @@ rapidjson::Value xmrig::OclThread::toJSON(rapidjson::Document &doc) const
     out.AddMember(StringRef(kThreads), threads, allocator);
 
     if (m_fields.test(RANDOMX_FIELDS)) {
-#       ifdef XMRIG_ALGO_RANDOMX
+#       ifdef TGXM_ALGO_RANDOMX
         out.AddMember(StringRef(kBFactor),      bfactor(), allocator);
         out.AddMember(StringRef(kGCNAsm),       isAsm(), allocator);
         out.AddMember(StringRef(kDatasetHost),  isDatasetHost(), allocator);

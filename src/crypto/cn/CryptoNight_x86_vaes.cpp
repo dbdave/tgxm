@@ -1,4 +1,4 @@
-/* XMRig
+/* TGXm
  * Copyright 2010      Jeff Garzik <jgarzik@pobox.com>
  * Copyright 2012-2014 pooler      <pooler@litecoinpool.org>
  * Copyright 2014      Lucas Jones <https://github.com/lucasjones>
@@ -7,7 +7,7 @@
  * Copyright 2017-2019 XMR-Stak    <https://github.com/fireice-uk>, <https://github.com/psychocrypt>
  * Copyright 2018      Lee Clagett <https://github.com/vtnerd>
  * Copyright 2018-2020 SChernykh   <https://github.com/SChernykh>
- * Copyright 2016-2020 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright 2016-2020 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -159,7 +159,7 @@ static FORCEINLINE void vaes_round(__m256i key, __m256i& x0, __m256i& x1, __m256
 }
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 NOINLINE void cn_explode_scratchpad_vaes(cryptonight_ctx* ctx, size_t memory, bool half_mem)
@@ -475,4 +475,4 @@ NOINLINE void cn_implode_scratchpad_vaes_double(cryptonight_ctx* ctx1, cryptonig
 }
 
 
-} // xmrig
+} // tgxm

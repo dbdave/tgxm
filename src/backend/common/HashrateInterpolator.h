@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright 2018-2020 SChernykh   <https://github.com/SChernykh>
- * Copyright 2016-2020 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright 2016-2020 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_HASHRATE_INTERPOLATOR_H
-#define XMRIG_HASHRATE_INTERPOLATOR_H
+#ifndef TGXM_HASHRATE_INTERPOLATOR_H
+#define TGXM_HASHRATE_INTERPOLATOR_H
 
 
 #include <mutex>
@@ -25,7 +25,7 @@
 #include <utility>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class HashrateInterpolator
@@ -45,7 +45,7 @@ private:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-#endif /* XMRIG_HASHRATE_INTERPOLATOR_H */
+#endif /* TGXM_HASHRATE_INTERPOLATOR_H */

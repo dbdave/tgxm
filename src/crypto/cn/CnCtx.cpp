@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018      Lee Clagett <https://github.com/vtnerd>
  * Copyright (c) 2018-2020 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2020 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2020 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 #include "crypto/common/VirtualMemory.h"
 
 
-void xmrig::CnCtx::create(cryptonight_ctx **ctx, uint8_t *memory, size_t size, size_t count)
+void tgxm::CnCtx::create(cryptonight_ctx **ctx, uint8_t *memory, size_t size, size_t count)
 {
     for (size_t i = 0; i < count; ++i) {
         auto *c     = static_cast<cryptonight_ctx *>(_mm_malloc(sizeof(cryptonight_ctx), 4096));
@@ -42,7 +42,7 @@ void xmrig::CnCtx::create(cryptonight_ctx **ctx, uint8_t *memory, size_t size, s
 }
 
 
-void xmrig::CnCtx::release(cryptonight_ctx **ctx, size_t count)
+void tgxm::CnCtx::release(cryptonight_ctx **ctx, size_t count)
 {
     if (ctx[0] == nullptr) {
         return;

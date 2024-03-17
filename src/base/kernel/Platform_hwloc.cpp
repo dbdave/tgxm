@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2023 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2023 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2023 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -24,8 +24,8 @@
 #include <thread>
 
 
-#ifndef XMRIG_OS_APPLE
-bool xmrig::Platform::setThreadAffinity(uint64_t cpu_id)
+#ifndef TGXM_OS_APPLE
+bool tgxm::Platform::setThreadAffinity(uint64_t cpu_id)
 {
     auto topology = Cpu::info()->topology();
     auto pu       = hwloc_get_pu_obj_by_os_index(topology, static_cast<unsigned>(cpu_id));

@@ -1,8 +1,8 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2012-2013 The Cryptonote developers
  * Copyright (c) 2014-2021 The Monero Project
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_BLOBREADER_H
-#define XMRIG_BLOBREADER_H
+#ifndef TGXM_BLOBREADER_H
+#define TGXM_BLOBREADER_H
 
 
 #include <cstdint>
@@ -27,7 +27,7 @@
 #include <stdexcept>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 template<bool EXCEPTIONS>
@@ -128,7 +128,7 @@ private:
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif /* XMRIG_BLOBREADER_H */
+#endif /* TGXM_BLOBREADER_H */

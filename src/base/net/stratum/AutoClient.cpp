@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,13 +21,13 @@
 #include "base/io/json/Json.h"
 
 
-xmrig::AutoClient::AutoClient(int id, const char *agent, IClientListener *listener) :
+tgxm::AutoClient::AutoClient(int id, const char *agent, IClientListener *listener) :
     EthStratumClient(id, agent, listener)
 {
 }
 
 
-bool xmrig::AutoClient::handleResponse(int64_t id, const rapidjson::Value &result, const rapidjson::Value &error)
+bool tgxm::AutoClient::handleResponse(int64_t id, const rapidjson::Value &result, const rapidjson::Value &error)
 {
     if (m_mode == DEFAULT_MODE) {
         return Client::handleResponse(id, result, error); // NOLINT(bugprone-parent-virtual-call)
@@ -37,7 +37,7 @@ bool xmrig::AutoClient::handleResponse(int64_t id, const rapidjson::Value &resul
 }
 
 
-bool xmrig::AutoClient::parseLogin(const rapidjson::Value &result, int *code)
+bool tgxm::AutoClient::parseLogin(const rapidjson::Value &result, int *code)
 {
     if (result.HasMember("job")) {
         return Client::parseLogin(result, code);
@@ -65,7 +65,7 @@ bool xmrig::AutoClient::parseLogin(const rapidjson::Value &result, int *code)
     m_mode = ETH_MODE;
     setAlgo(algo);
 
-#   ifdef XMRIG_ALGO_GHOSTRIDER
+#   ifdef TGXM_ALGO_GHOSTRIDER
     if (algo.family() == Algorithm::GHOSTRIDER) {
         setExtraNonce2Size(Json::getUint64(result, "extra_nonce2_size"));
     }
@@ -75,7 +75,7 @@ bool xmrig::AutoClient::parseLogin(const rapidjson::Value &result, int *code)
 }
 
 
-int64_t xmrig::AutoClient::submit(const JobResult &result)
+int64_t tgxm::AutoClient::submit(const JobResult &result)
 {
     if (m_mode == DEFAULT_MODE) {
         return Client::submit(result); // NOLINT(bugprone-parent-virtual-call)
@@ -85,7 +85,7 @@ int64_t xmrig::AutoClient::submit(const JobResult &result)
 }
 
 
-void xmrig::AutoClient::parseNotification(const char *method, const rapidjson::Value &params, const rapidjson::Value &error)
+void tgxm::AutoClient::parseNotification(const char *method, const rapidjson::Value &params, const rapidjson::Value &error)
 {
     if (m_mode == DEFAULT_MODE) {
         return Client::parseNotification(method, params, error); // NOLINT(bugprone-parent-virtual-call)

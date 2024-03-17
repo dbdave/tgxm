@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2023 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2023 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2023 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 #include "base/net/dns/DnsRecord.h"
 
 
-xmrig::DnsRecord::DnsRecord(const addrinfo *addr) :
+tgxm::DnsRecord::DnsRecord(const addrinfo *addr) :
     m_type(addr->ai_family == AF_INET6 ? AAAA : (addr->ai_family == AF_INET ? A : Unknown))
 {
     static_assert(sizeof(m_data) >= sizeof(sockaddr_in6), "Not enough storage for IPv6 address.");
@@ -32,7 +32,7 @@ xmrig::DnsRecord::DnsRecord(const addrinfo *addr) :
 }
 
 
-const sockaddr *xmrig::DnsRecord::addr(uint16_t port) const
+const sockaddr *tgxm::DnsRecord::addr(uint16_t port) const
 {
     reinterpret_cast<sockaddr_in*>(m_data)->sin_port = htons(port);
 
@@ -40,7 +40,7 @@ const sockaddr *xmrig::DnsRecord::addr(uint16_t port) const
 }
 
 
-xmrig::String xmrig::DnsRecord::ip() const
+tgxm::String tgxm::DnsRecord::ip() const
 {
     char *buf = nullptr;
 

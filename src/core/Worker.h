@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_MINER_H
-#define XMRIG_MINER_H
+#ifndef TGXM_MINER_H
+#define TGXM_MINER_H
 
 
 #include <vector>
@@ -31,7 +31,7 @@
 #include "base/tools/Object.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class Controller;
@@ -43,7 +43,7 @@ class IBackend;
 class Miner : public ITimerListener, public IBaseListener, public IApiListener, public IRxListener
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE_DEFAULT(Miner)
+    TGXM_DISABLE_COPY_MOVE_DEFAULT(Miner)
 
     Miner(Controller *controller);
     ~Miner() override;
@@ -63,11 +63,11 @@ protected:
     void onConfigChanged(Config *config, Config *previousConfig) override;
     void onTimer(const Timer *timer) override;
 
-#   ifdef XMRIG_FEATURE_API
+#   ifdef TGXM_FEATURE_API
     void onRequest(IApiRequest &request) override;
 #   endif
 
-#   ifdef XMRIG_ALGO_RANDOMX
+#   ifdef TGXM_ALGO_RANDOMX
     void onDatasetReady() override;
 #   endif
 
@@ -76,7 +76,7 @@ private:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-#endif /* XMRIG_MINER_H */
+#endif /* TGXM_MINER_H */

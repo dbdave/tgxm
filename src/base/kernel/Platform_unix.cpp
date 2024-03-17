@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifdef XMRIG_OS_FREEBSD
+#ifdef TGXM_OS_FREEBSD
 #   include <sys/types.h>
 #   include <sys/param.h>
 #   ifndef __DragonFly__
@@ -43,7 +43,7 @@
 #include "version.h"
 
 
-char *xmrig::Platform::createUserAgent()
+char *tgxm::Platform::createUserAgent()
 {
     constexpr const size_t max = 256;
 
@@ -70,21 +70,21 @@ char *xmrig::Platform::createUserAgent()
 }
 
 
-#ifndef XMRIG_FEATURE_HWLOC
+#ifndef TGXM_FEATURE_HWLOC
 #ifdef __DragonFly__
 
-bool xmrig::Platform::setThreadAffinity(uint64_t cpu_id)
+bool tgxm::Platform::setThreadAffinity(uint64_t cpu_id)
 {
     return true;
 }
 
 #else
 
-#ifdef XMRIG_OS_FREEBSD
+#ifdef TGXM_OS_FREEBSD
 typedef cpuset_t cpu_set_t;
 #endif
 
-bool xmrig::Platform::setThreadAffinity(uint64_t cpu_id)
+bool tgxm::Platform::setThreadAffinity(uint64_t cpu_id)
 {
     cpu_set_t mn;
     CPU_ZERO(&mn);
@@ -101,15 +101,15 @@ bool xmrig::Platform::setThreadAffinity(uint64_t cpu_id)
 }
 
 #endif // __DragonFly__
-#endif // XMRIG_FEATURE_HWLOC
+#endif // TGXM_FEATURE_HWLOC
 
 
-void xmrig::Platform::setProcessPriority(int)
+void tgxm::Platform::setProcessPriority(int)
 {
 }
 
 
-void xmrig::Platform::setThreadPriority(int priority)
+void tgxm::Platform::setThreadPriority(int priority)
 {
     if (priority == -1) {
         return;
@@ -157,7 +157,7 @@ void xmrig::Platform::setThreadPriority(int priority)
 }
 
 
-bool xmrig::Platform::isOnBatteryPower()
+bool tgxm::Platform::isOnBatteryPower()
 {
     for (int i = 0; i <= 1; ++i) {
         char buf[64];
@@ -173,7 +173,7 @@ bool xmrig::Platform::isOnBatteryPower()
 }
 
 
-uint64_t xmrig::Platform::idleTime()
+uint64_t tgxm::Platform::idleTime()
 {
     return std::numeric_limits<uint64_t>::max();
 }

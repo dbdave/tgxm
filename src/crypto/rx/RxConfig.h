@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2023 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2023 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2023 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,14 +16,14 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_RXCONFIG_H
-#define XMRIG_RXCONFIG_H
+#ifndef TGXM_RXCONFIG_H
+#define TGXM_RXCONFIG_H
 
 
 #include "3rdparty/rapidjson/fwd.h"
 
 
-#ifdef XMRIG_FEATURE_MSR
+#ifdef TGXM_FEATURE_MSR
 #   include "hw/msr/MsrItem.h"
 #endif
 
@@ -31,7 +31,7 @@
 #include <vector>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class RxConfig
@@ -62,14 +62,14 @@ public:
     static const char *kScratchpadPrefetchMode;
     static const char *kWrmsr;
 
-#   ifdef XMRIG_FEATURE_HWLOC
+#   ifdef TGXM_FEATURE_HWLOC
     static const char *kNUMA;
 #   endif
 
     bool read(const rapidjson::Value &value);
     rapidjson::Value toJSON(rapidjson::Document &doc) const;
 
-#   ifdef XMRIG_FEATURE_HWLOC
+#   ifdef TGXM_FEATURE_HWLOC
     std::vector<uint32_t> nodeset() const;
 #   else
     inline std::vector<uint32_t> nodeset() const { return std::vector<uint32_t>(); }
@@ -87,13 +87,13 @@ public:
 
     inline ScratchpadPrefetchMode scratchpadPrefetchMode() const { return m_scratchpadPrefetchMode; }
 
-#   ifdef XMRIG_FEATURE_MSR
+#   ifdef TGXM_FEATURE_MSR
     const char *msrPresetName() const;
     const MsrItems &msrPreset() const;
 #   endif
 
 private:
-#   ifdef XMRIG_FEATURE_MSR
+#   ifdef TGXM_FEATURE_MSR
     uint32_t msrMod() const;
     void readMSR(const rapidjson::Value &value);
 
@@ -115,7 +115,7 @@ private:
 
     ScratchpadPrefetchMode m_scratchpadPrefetchMode = ScratchpadPrefetchT0;
 
-#   ifdef XMRIG_FEATURE_HWLOC
+#   ifdef TGXM_FEATURE_HWLOC
     bool m_numa           = true;
     std::vector<uint32_t> m_nodeset;
 #   endif
@@ -123,7 +123,7 @@ private:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-#endif // XMRIG_RXCONFIG_H
+#endif // TGXM_RXCONFIG_H

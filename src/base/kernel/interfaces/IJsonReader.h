@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_IJSONREADER_H
-#define XMRIG_IJSONREADER_H
+#ifndef TGXM_IJSONREADER_H
+#define TGXM_IJSONREADER_H
 
 
 #include "3rdparty/rapidjson/fwd.h"
@@ -25,13 +25,13 @@
 #include "base/tools/String.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class IJsonReader
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE(IJsonReader)
+    TGXM_DISABLE_COPY_MOVE(IJsonReader)
 
     IJsonReader()           = default;
     virtual ~IJsonReader()  = default;
@@ -52,7 +52,7 @@ public:
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif // XMRIG_IJSONREADER_H
+#endif // TGXM_IJSONREADER_H

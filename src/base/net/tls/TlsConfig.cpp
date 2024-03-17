@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018      Lee Clagett <https://github.com/vtnerd>
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 #include "base/net/tls/TlsGen.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 const char *TlsConfig::kCert            = "cert";
@@ -42,7 +42,7 @@ static const char *kTLSv1_2             = "TLSv1.2";
 static const char *kTLSv1_3             = "TLSv1.3";
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
 /**
@@ -52,7 +52,7 @@ static const char *kTLSv1_3             = "TLSv1.3";
  * "ciphersuites" set list of available TLSv1.3 ciphersuites.
  * "dhparam"      load DH parameters for DHE ciphers from file.
  */
-xmrig::TlsConfig::TlsConfig(const rapidjson::Value &value)
+tgxm::TlsConfig::TlsConfig(const rapidjson::Value &value)
 {
     if (value.IsObject()) {
         m_enabled = Json::getBool(value, kEnabled, m_enabled);
@@ -79,7 +79,7 @@ xmrig::TlsConfig::TlsConfig(const rapidjson::Value &value)
             generate();
         }
     }
-#   ifdef XMRIG_FORCE_TLS
+#   ifdef TGXM_FORCE_TLS
     else if (value.IsNull()) {
         generate();
     }
@@ -93,7 +93,7 @@ xmrig::TlsConfig::TlsConfig(const rapidjson::Value &value)
 }
 
 
-bool xmrig::TlsConfig::generate(const char *commonName)
+bool tgxm::TlsConfig::generate(const char *commonName)
 {
     TlsGen gen;
 
@@ -115,7 +115,7 @@ bool xmrig::TlsConfig::generate(const char *commonName)
 }
 
 
-rapidjson::Value xmrig::TlsConfig::toJSON(rapidjson::Document &doc) const
+rapidjson::Value tgxm::TlsConfig::toJSON(rapidjson::Document &doc) const
 {
     using namespace rapidjson;
 
@@ -158,7 +158,7 @@ rapidjson::Value xmrig::TlsConfig::toJSON(rapidjson::Document &doc) const
 }
 
 
-void xmrig::TlsConfig::setProtocols(const char *protocols)
+void tgxm::TlsConfig::setProtocols(const char *protocols)
 {
     const std::vector<String> vec = String(protocols).split(' ');
 
@@ -179,7 +179,7 @@ void xmrig::TlsConfig::setProtocols(const char *protocols)
 }
 
 
-void xmrig::TlsConfig::setProtocols(const rapidjson::Value &protocols)
+void tgxm::TlsConfig::setProtocols(const rapidjson::Value &protocols)
 {
     m_protocols = 0;
 

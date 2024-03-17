@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -42,31 +42,31 @@
 #endif
 
 
-#ifdef XMRIG_FEATURE_API
+#ifdef TGXM_FEATURE_API
 #   include "base/api/Api.h"
 #   include "base/api/interfaces/IApiRequest.h"
 
-namespace xmrig {
+namespace tgxm {
 
 static const char *kConfigPathV1 = "/1/config";
 static const char *kConfigPathV2 = "/2/config";
 
-} // namespace xmrig
+} // namespace tgxm
 #endif
 
 
-#ifdef XMRIG_FEATURE_EMBEDDED_CONFIG
+#ifdef TGXM_FEATURE_EMBEDDED_CONFIG
 #   include "core/config/Config_default.h"
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class BasePrivate
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE_DEFAULT(BasePrivate)
+    TGXM_DISABLE_COPY_MOVE_DEFAULT(BasePrivate)
 
 
     inline explicit BasePrivate(Process *process)
@@ -79,7 +79,7 @@ public:
 
     inline ~BasePrivate()
     {
-#       ifdef XMRIG_FEATURE_API
+#       ifdef TGXM_FEATURE_API
         delete api;
 #       endif
 
@@ -140,12 +140,12 @@ private:
             return config.release();
         }
 
-        chain.addFile(Process::location(Process::HomeLocation, ".config" XMRIG_DIR_SEPARATOR APP_ID ".json"));
+        chain.addFile(Process::location(Process::HomeLocation, ".config" TGXM_DIR_SEPARATOR APP_ID ".json"));
         if (read(chain, config)) {
             return config.release();
         }
 
-#       ifdef XMRIG_FEATURE_EMBEDDED_CONFIG
+#       ifdef TGXM_FEATURE_EMBEDDED_CONFIG
         chain.addRaw(default_config);
 
         if (read(chain, config)) {
@@ -158,31 +158,31 @@ private:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-xmrig::Base::Base(Process *process)
+tgxm::Base::Base(Process *process)
     : d_ptr(new BasePrivate(process))
 {
 
 }
 
 
-xmrig::Base::~Base()
+tgxm::Base::~Base()
 {
     delete d_ptr;
 }
 
 
-bool xmrig::Base::isReady() const
+bool tgxm::Base::isReady() const
 {
     return d_ptr->config != nullptr;
 }
 
 
-int xmrig::Base::init()
+int tgxm::Base::init()
 {
-#   ifdef XMRIG_FEATURE_API
+#   ifdef TGXM_FEATURE_API
     d_ptr->api = new Api(this);
     d_ptr->api->addListener(this);
 #   endif
@@ -210,9 +210,9 @@ int xmrig::Base::init()
 }
 
 
-void xmrig::Base::start()
+void tgxm::Base::start()
 {
-#   ifdef XMRIG_FEATURE_API
+#   ifdef TGXM_FEATURE_API
     api()->start();
 #   endif
 
@@ -226,9 +226,9 @@ void xmrig::Base::start()
 }
 
 
-void xmrig::Base::stop()
+void tgxm::Base::stop()
 {
-#   ifdef XMRIG_FEATURE_API
+#   ifdef TGXM_FEATURE_API
     api()->stop();
 #   endif
 
@@ -237,7 +237,7 @@ void xmrig::Base::stop()
 }
 
 
-xmrig::Api *xmrig::Base::api() const
+tgxm::Api *tgxm::Base::api() const
 {
     assert(d_ptr->api != nullptr);
 
@@ -245,13 +245,13 @@ xmrig::Api *xmrig::Base::api() const
 }
 
 
-bool xmrig::Base::isBackground() const
+bool tgxm::Base::isBackground() const
 {
     return d_ptr->config && d_ptr->config->isBackground();
 }
 
 
-bool xmrig::Base::reload(const rapidjson::Value &json)
+bool tgxm::Base::reload(const rapidjson::Value &json)
 {
     JsonReader reader(json);
     if (reader.isEmpty()) {
@@ -279,7 +279,7 @@ bool xmrig::Base::reload(const rapidjson::Value &json)
 }
 
 
-xmrig::Config *xmrig::Base::config() const
+tgxm::Config *tgxm::Base::config() const
 {
     assert(d_ptr->config != nullptr);
 
@@ -287,13 +287,13 @@ xmrig::Config *xmrig::Base::config() const
 }
 
 
-void xmrig::Base::addListener(IBaseListener *listener)
+void tgxm::Base::addListener(IBaseListener *listener)
 {
     d_ptr->listeners.push_back(listener);
 }
 
 
-void xmrig::Base::onFileChanged(const String &fileName)
+void tgxm::Base::onFileChanged(const String &fileName)
 {
     LOG_WARN("%s " YELLOW("\"%s\" was changed, reloading configuration"), Tags::config(), fileName.data());
 
@@ -313,8 +313,8 @@ void xmrig::Base::onFileChanged(const String &fileName)
 }
 
 
-#ifdef XMRIG_FEATURE_API
-void xmrig::Base::onRequest(IApiRequest &request)
+#ifdef TGXM_FEATURE_API
+void tgxm::Base::onRequest(IApiRequest &request)
 {
     if (request.method() == IApiRequest::METHOD_GET) {
         if (request.url() == kConfigPathV1 || request.url() == kConfigPathV2) {

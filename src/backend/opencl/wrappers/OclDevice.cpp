@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 #include "base/io/log/Log.h"
 
 
-#ifdef XMRIG_FEATURE_ADL
+#ifdef TGXM_FEATURE_ADL
 #   include "backend/opencl/wrappers/AdlLib.h"
 #endif
 
@@ -40,14 +40,14 @@ typedef union
 } topology_amd;
 
 
-namespace xmrig {
+namespace tgxm {
 
 
-#ifdef XMRIG_ALGO_RANDOMX
+#ifdef TGXM_ALGO_RANDOMX
 extern bool ocl_generic_rx_generator(const OclDevice &device, const Algorithm &algorithm, OclThreads &threads);
 #endif
 
-#ifdef XMRIG_ALGO_KAWPOW
+#ifdef TGXM_ALGO_KAWPOW
 extern bool ocl_generic_kawpow_generator(const OclDevice& device, const Algorithm& algorithm, OclThreads& threads);
 #endif
 
@@ -56,10 +56,10 @@ extern bool ocl_generic_cn_generator(const OclDevice &device, const Algorithm &a
 
 
 static ocl_gen_config_fun generators[] = {
-#   ifdef XMRIG_ALGO_RANDOMX
+#   ifdef TGXM_ALGO_RANDOMX
     ocl_generic_rx_generator,
 #   endif
-#   ifdef XMRIG_ALGO_KAWPOW
+#   ifdef TGXM_ALGO_KAWPOW
     ocl_generic_kawpow_generator,
 #   endif
     ocl_vega_cn_generator,
@@ -214,10 +214,10 @@ static OclDevice::Type getType(const String &name, const OclVendor platformVendo
 }
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-xmrig::OclDevice::OclDevice(uint32_t index, cl_device_id id, cl_platform_id platform) :
+tgxm::OclDevice::OclDevice(uint32_t index, cl_device_id id, cl_platform_id platform) :
     m_id(id),
     m_platform(platform),
     m_platformVendor(OclLib::getString(platform, CL_PLATFORM_VENDOR)),
@@ -251,7 +251,7 @@ xmrig::OclDevice::OclDevice(uint32_t index, cl_device_id id, cl_platform_id plat
 }
 
 
-xmrig::String xmrig::OclDevice::printableName() const
+tgxm::String tgxm::OclDevice::printableName() const
 {
     const size_t size = m_board.size() + m_name.size() + 64;
     char *buf         = new char[size]();
@@ -267,13 +267,13 @@ xmrig::String xmrig::OclDevice::printableName() const
 }
 
 
-uint32_t xmrig::OclDevice::clock() const
+uint32_t tgxm::OclDevice::clock() const
 {
     return OclLib::getUint(id(), CL_DEVICE_MAX_CLOCK_FREQUENCY);
 }
 
 
-void xmrig::OclDevice::generate(const Algorithm &algorithm, OclThreads &threads) const
+void tgxm::OclDevice::generate(const Algorithm &algorithm, OclThreads &threads) const
 {
     for (auto fn : generators) {
         if (fn(*this, algorithm, threads)) {
@@ -283,8 +283,8 @@ void xmrig::OclDevice::generate(const Algorithm &algorithm, OclThreads &threads)
 }
 
 
-#ifdef XMRIG_FEATURE_API
-void xmrig::OclDevice::toJSON(rapidjson::Value &out, rapidjson::Document &doc) const
+#ifdef TGXM_FEATURE_API
+void tgxm::OclDevice::toJSON(rapidjson::Value &out, rapidjson::Document &doc) const
 {
     using namespace rapidjson;
     auto &allocator = doc.GetAllocator();
@@ -295,7 +295,7 @@ void xmrig::OclDevice::toJSON(rapidjson::Value &out, rapidjson::Document &doc) c
     out.AddMember("cu",          computeUnits(), allocator);
     out.AddMember("global_mem",  static_cast<uint64_t>(globalMemSize()), allocator);
 
-#   ifdef XMRIG_FEATURE_ADL
+#   ifdef TGXM_FEATURE_ADL
     if (AdlLib::isReady()) {
         auto data = AdlLib::health(*this);
 

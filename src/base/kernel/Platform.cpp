@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2023 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2023 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2023 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,22 +23,22 @@
 #include <uv.h>
 
 
-#ifdef XMRIG_FEATURE_TLS
+#ifdef TGXM_FEATURE_TLS
 #   include <openssl/ssl.h>
 #   include <openssl/err.h>
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 String Platform::m_userAgent;
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-void xmrig::Platform::init(const char *userAgent)
+void tgxm::Platform::init(const char *userAgent)
 {
-#   ifdef XMRIG_FEATURE_TLS
+#   ifdef TGXM_FEATURE_TLS
     SSL_library_init();
     SSL_load_error_strings();
 

@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018      Lee Clagett <https://github.com/vtnerd>
  * Copyright (c) 2018-2023 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2023 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2023 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ int DH_set0_pqg(DH *dh, BIGNUM *p, BIGNUM *q, BIGNUM *g)
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 // https://wiki.openssl.org/index.php/Diffie-Hellman_parameters
@@ -100,16 +100,16 @@ static DH *get_dh2048()
 #endif
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-xmrig::TlsContext::~TlsContext()
+tgxm::TlsContext::~TlsContext()
 {
     SSL_CTX_free(m_ctx);
 }
 
 
-xmrig::TlsContext *xmrig::TlsContext::create(const TlsConfig &config)
+tgxm::TlsContext *tgxm::TlsContext::create(const TlsConfig &config)
 {
     if (!config.isEnabled()) {
         return nullptr;
@@ -126,7 +126,7 @@ xmrig::TlsContext *xmrig::TlsContext::create(const TlsConfig &config)
 }
 
 
-bool xmrig::TlsContext::load(const TlsConfig &config)
+bool tgxm::TlsContext::load(const TlsConfig &config)
 {
     m_ctx = SSL_CTX_new(SSLv23_server_method());
     if (m_ctx == nullptr) {
@@ -162,7 +162,7 @@ bool xmrig::TlsContext::load(const TlsConfig &config)
 }
 
 
-bool xmrig::TlsContext::setCiphers(const char *ciphers)
+bool tgxm::TlsContext::setCiphers(const char *ciphers)
 {
     if (ciphers == nullptr || SSL_CTX_set_cipher_list(m_ctx, ciphers) == 1) {
         return true;
@@ -174,7 +174,7 @@ bool xmrig::TlsContext::setCiphers(const char *ciphers)
 }
 
 
-bool xmrig::TlsContext::setCipherSuites(const char *ciphersuites)
+bool tgxm::TlsContext::setCipherSuites(const char *ciphersuites)
 {
     if (ciphersuites == nullptr) {
         return true;
@@ -192,7 +192,7 @@ bool xmrig::TlsContext::setCipherSuites(const char *ciphersuites)
 }
 
 
-bool xmrig::TlsContext::setDH(const char *dhparam)
+bool tgxm::TlsContext::setDH(const char *dhparam)
 {
 #   if OPENSSL_VERSION_NUMBER < 0x30000000L || defined(LIBRESSL_VERSION_NUMBER)
     DH *dh = nullptr;
@@ -262,7 +262,7 @@ bool xmrig::TlsContext::setDH(const char *dhparam)
 }
 
 
-void xmrig::TlsContext::setProtocols(uint32_t protocols)
+void tgxm::TlsContext::setProtocols(uint32_t protocols)
 {
     if (protocols == 0) {
         return;

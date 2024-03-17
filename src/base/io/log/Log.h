@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2019      Spudz76     <https://github.com/Spudz76>
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,15 +17,15 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_LOG_H
-#define XMRIG_LOG_H
+#ifndef TGXM_LOG_H
+#define TGXM_LOG_H
 
 
 #include <cstddef>
 #include <cstdint>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class ILogBackend;
@@ -76,7 +76,7 @@ private:
 #define BRIGHT_BLACK_S      CSI "0;90m" // somewhat MD.GRAY
 #define BLACK_S             CSI "0;30m"
 
-#ifdef XMRIG_OS_APPLE
+#ifdef TGXM_OS_APPLE
 #   define BLACK_BOLD_S     CSI "0;37m"
 #else
 #   define BLACK_BOLD_S     CSI "1;30m" // another name for GRAY
@@ -136,36 +136,36 @@ private:
 #define CYAN_BG_BOLD(x)     CYAN_BG_BOLD_S x CLEAR
 
 
-#define LOG_EMERG(x, ...)   xmrig::Log::print(xmrig::Log::EMERG,   x, ##__VA_ARGS__)
-#define LOG_ALERT(x, ...)   xmrig::Log::print(xmrig::Log::ALERT,   x, ##__VA_ARGS__)
-#define LOG_CRIT(x, ...)    xmrig::Log::print(xmrig::Log::CRIT,    x, ##__VA_ARGS__)
-#define LOG_ERR(x, ...)     xmrig::Log::print(xmrig::Log::ERR,     x, ##__VA_ARGS__)
-#define LOG_WARN(x, ...)    xmrig::Log::print(xmrig::Log::WARNING, x, ##__VA_ARGS__)
-#define LOG_NOTICE(x, ...)  xmrig::Log::print(xmrig::Log::NOTICE,  x, ##__VA_ARGS__)
-#define LOG_INFO(x, ...)    xmrig::Log::print(xmrig::Log::INFO,    x, ##__VA_ARGS__)
-#define LOG_VERBOSE(x, ...) if (xmrig::Log::verbose() > 0) { xmrig::Log::print(xmrig::Log::INFO, x, ##__VA_ARGS__); }
-#define LOG_V1(x, ...)      if (xmrig::Log::verbose() > 0) { xmrig::Log::print(xmrig::Log::INFO, x, ##__VA_ARGS__); }
-#define LOG_V2(x, ...)      if (xmrig::Log::verbose() > 1) { xmrig::Log::print(xmrig::Log::INFO, x, ##__VA_ARGS__); }
-#define LOG_V3(x, ...)      if (xmrig::Log::verbose() > 2) { xmrig::Log::print(xmrig::Log::INFO, x, ##__VA_ARGS__); }
-#define LOG_V4(x, ...)      if (xmrig::Log::verbose() > 3) { xmrig::Log::print(xmrig::Log::INFO, x, ##__VA_ARGS__); }
-#define LOG_V5(x, ...)      if (xmrig::Log::verbose() > 4) { xmrig::Log::print(xmrig::Log::INFO, x, ##__VA_ARGS__); }
+#define LOG_EMERG(x, ...)   tgxm::Log::print(tgxm::Log::EMERG,   x, ##__VA_ARGS__)
+#define LOG_ALERT(x, ...)   tgxm::Log::print(tgxm::Log::ALERT,   x, ##__VA_ARGS__)
+#define LOG_CRIT(x, ...)    tgxm::Log::print(tgxm::Log::CRIT,    x, ##__VA_ARGS__)
+#define LOG_ERR(x, ...)     tgxm::Log::print(tgxm::Log::ERR,     x, ##__VA_ARGS__)
+#define LOG_WARN(x, ...)    tgxm::Log::print(tgxm::Log::WARNING, x, ##__VA_ARGS__)
+#define LOG_NOTICE(x, ...)  tgxm::Log::print(tgxm::Log::NOTICE,  x, ##__VA_ARGS__)
+#define LOG_INFO(x, ...)    tgxm::Log::print(tgxm::Log::INFO,    x, ##__VA_ARGS__)
+#define LOG_VERBOSE(x, ...) if (tgxm::Log::verbose() > 0) { tgxm::Log::print(tgxm::Log::INFO, x, ##__VA_ARGS__); }
+#define LOG_V1(x, ...)      if (tgxm::Log::verbose() > 0) { tgxm::Log::print(tgxm::Log::INFO, x, ##__VA_ARGS__); }
+#define LOG_V2(x, ...)      if (tgxm::Log::verbose() > 1) { tgxm::Log::print(tgxm::Log::INFO, x, ##__VA_ARGS__); }
+#define LOG_V3(x, ...)      if (tgxm::Log::verbose() > 2) { tgxm::Log::print(tgxm::Log::INFO, x, ##__VA_ARGS__); }
+#define LOG_V4(x, ...)      if (tgxm::Log::verbose() > 3) { tgxm::Log::print(tgxm::Log::INFO, x, ##__VA_ARGS__); }
+#define LOG_V5(x, ...)      if (tgxm::Log::verbose() > 4) { tgxm::Log::print(tgxm::Log::INFO, x, ##__VA_ARGS__); }
 
 #ifdef APP_DEBUG
-#   define LOG_DEBUG(x, ...) xmrig::Log::print(xmrig::Log::DEBUG, x, ##__VA_ARGS__)
+#   define LOG_DEBUG(x, ...) tgxm::Log::print(tgxm::Log::DEBUG, x, ##__VA_ARGS__)
 #else
 #   define LOG_DEBUG(x, ...)
 #endif
 
 #if defined(APP_DEBUG) || defined(APP_DEVEL)
-#   define LOG_DEBUG_ERR(x, ...)  xmrig::Log::print(xmrig::Log::ERR,     x, ##__VA_ARGS__)
-#   define LOG_DEBUG_WARN(x, ...) xmrig::Log::print(xmrig::Log::WARNING, x, ##__VA_ARGS__)
+#   define LOG_DEBUG_ERR(x, ...)  tgxm::Log::print(tgxm::Log::ERR,     x, ##__VA_ARGS__)
+#   define LOG_DEBUG_WARN(x, ...) tgxm::Log::print(tgxm::Log::WARNING, x, ##__VA_ARGS__)
 #else
 #   define LOG_DEBUG_ERR(x, ...)
 #   define LOG_DEBUG_WARN(x, ...)
 #endif
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif /* XMRIG_LOG_H */
+#endif /* TGXM_LOG_H */

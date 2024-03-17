@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2014-2019 heapwolf    <https://github.com/heapwolf>
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@
  */
 
 
-#ifndef XMRIG_HTTPCONTEXT_H
-#define XMRIG_HTTPCONTEXT_H
+#ifndef TGXM_HTTPCONTEXT_H
+#define TGXM_HTTPCONTEXT_H
 
 
 using llhttp_settings_t     = struct llhttp_settings_s;
@@ -37,7 +37,7 @@ using uv_tcp_t              = struct uv_tcp_s;
 #include <memory>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class IHttpListener;
@@ -46,7 +46,7 @@ class IHttpListener;
 class HttpContext : public HttpData
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE_DEFAULT(HttpContext)
+    TGXM_DISABLE_COPY_MOVE_DEFAULT(HttpContext)
 
     HttpContext(int parser_type, const std::weak_ptr<IHttpListener> &listener);
     ~HttpContext() override;
@@ -91,8 +91,8 @@ private:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-#endif // XMRIG_HTTPCONTEXT_H
+#endif // TGXM_HTTPCONTEXT_H
 

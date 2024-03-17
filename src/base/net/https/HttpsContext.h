@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
  */
 
 
-#ifndef XMRIG_HTTPSCONTEXT_H
-#define XMRIG_HTTPSCONTEXT_H
+#ifndef TGXM_HTTPSCONTEXT_H
+#define TGXM_HTTPSCONTEXT_H
 
 
 using BIO = struct bio_st;
@@ -29,7 +29,7 @@ using SSL = struct ssl_st;
 #include "base/net/tls/ServerTls.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class TlsContext;
@@ -38,7 +38,7 @@ class TlsContext;
 class HttpsContext : public HttpContext, public ServerTls
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE_DEFAULT(HttpsContext)
+    TGXM_DISABLE_COPY_MOVE_DEFAULT(HttpsContext)
 
     HttpsContext(TlsContext *tls, const std::weak_ptr<IHttpListener> &listener);
     ~HttpsContext() override;
@@ -66,8 +66,8 @@ private:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-#endif // XMRIG_HTTPSCONTEXT_H
+#endif // TGXM_HTTPSCONTEXT_H
 

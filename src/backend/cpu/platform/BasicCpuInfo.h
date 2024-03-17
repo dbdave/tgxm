@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2017-2019 XMR-Stak    <https://github.com/fireice-uk>, <https://github.com/psychocrypt>
  * Copyright (c) 2018-2023 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2023 XMRig       <support@xmrig.com>
+ * Copyright (c) 2016-2023 TGXm       <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_BASICCPUINFO_H
-#define XMRIG_BASICCPUINFO_H
+#ifndef TGXM_BASICCPUINFO_H
+#define TGXM_BASICCPUINFO_H
 
 
 #include "backend/cpu/interfaces/ICpuInfo.h"
@@ -27,7 +27,7 @@
 #include <bitset>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class BasicCpuInfo : public ICpuInfo
@@ -65,7 +65,7 @@ protected:
     inline Vendor vendor() const override                       { return m_vendor; }
     inline uint32_t model() const override
     {
-#   ifndef XMRIG_ARM
+#   ifndef TGXM_ARM
         return m_model;
 #   else
         return 0;
@@ -80,7 +80,7 @@ protected:
     Vendor m_vendor         = VENDOR_UNKNOWN;
 
 private:
-#   ifndef XMRIG_ARM
+#   ifndef TGXM_ARM
     uint32_t m_procInfo     = 0;
     uint32_t m_family       = 0;
     uint32_t m_model        = 0;
@@ -93,7 +93,7 @@ private:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-#endif // XMRIG_BASICCPUINFO_H
+#endif // TGXM_BASICCPUINFO_H

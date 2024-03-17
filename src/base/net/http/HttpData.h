@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2014-2019 heapwolf    <https://github.com/heapwolf>
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@
  */
 
 
-#ifndef XMRIG_HTTPDATA_H
-#define XMRIG_HTTPDATA_H
+#ifndef TGXM_HTTPDATA_H
+#define TGXM_HTTPDATA_H
 
 
 #include "3rdparty/rapidjson/document.h"
@@ -30,13 +30,13 @@
 #include <string>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class HttpData
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE_DEFAULT(HttpData)
+    TGXM_DISABLE_COPY_MOVE_DEFAULT(HttpData)
 
     static const std::string kApplicationJson;
     static const std::string kContentType;
@@ -77,8 +77,8 @@ private:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-#endif // XMRIG_HTTPDATA_H
+#endif // TGXM_HTTPDATA_H
 

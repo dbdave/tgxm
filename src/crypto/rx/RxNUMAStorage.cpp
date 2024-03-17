@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2019 tevador     <tevador@gmail.com>
  * Copyright (c) 2018-2023 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2023 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2023 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@
 #include <thread>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 constexpr size_t oneMiB = 1024 * 1024;
@@ -74,7 +74,7 @@ static inline void printDatasetReady(uint32_t nodeId, uint64_t ts)
 class RxNUMAStoragePrivate
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE_DEFAULT(RxNUMAStoragePrivate)
+    TGXM_DISABLE_COPY_MOVE_DEFAULT(RxNUMAStoragePrivate)
 
     inline explicit RxNUMAStoragePrivate(const std::vector<uint32_t> &nodeset) :
         m_nodeset(nodeset)
@@ -329,28 +329,28 @@ private:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-xmrig::RxNUMAStorage::RxNUMAStorage(const std::vector<uint32_t> &nodeset) :
+tgxm::RxNUMAStorage::RxNUMAStorage(const std::vector<uint32_t> &nodeset) :
     d_ptr(new RxNUMAStoragePrivate(nodeset))
 {
 }
 
 
-xmrig::RxNUMAStorage::~RxNUMAStorage()
+tgxm::RxNUMAStorage::~RxNUMAStorage()
 {
     delete d_ptr;
 }
 
 
-bool xmrig::RxNUMAStorage::isAllocated() const
+bool tgxm::RxNUMAStorage::isAllocated() const
 {
     return d_ptr->isAllocated();
 }
 
 
-xmrig::HugePagesInfo xmrig::RxNUMAStorage::hugePages() const
+tgxm::HugePagesInfo tgxm::RxNUMAStorage::hugePages() const
 {
     if (!d_ptr->isAllocated()) {
         return {};
@@ -360,7 +360,7 @@ xmrig::HugePagesInfo xmrig::RxNUMAStorage::hugePages() const
 }
 
 
-xmrig::RxDataset *xmrig::RxNUMAStorage::dataset(const Job &job, uint32_t nodeId) const
+tgxm::RxDataset *tgxm::RxNUMAStorage::dataset(const Job &job, uint32_t nodeId) const
 {
     if (!d_ptr->isReady(job)) {
         return nullptr;
@@ -370,7 +370,7 @@ xmrig::RxDataset *xmrig::RxNUMAStorage::dataset(const Job &job, uint32_t nodeId)
 }
 
 
-void xmrig::RxNUMAStorage::init(const RxSeed &seed, uint32_t threads, bool hugePages, bool oneGbPages, RxConfig::Mode, int priority)
+void tgxm::RxNUMAStorage::init(const RxSeed &seed, uint32_t threads, bool hugePages, bool oneGbPages, RxConfig::Mode, int priority)
 {
     d_ptr->setSeed(seed);
 

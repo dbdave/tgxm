@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 #include "crypto/rx/RxAlgo.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 enum Version : uint32_t
@@ -41,11 +41,11 @@ enum Version : uint32_t
 static uv_lib_t cudaLib;
 
 #if defined(__APPLE__)
-static String defaultLoader = "libxmrig-cuda.dylib";
+static String defaultLoader = "libtgxm-cuda.dylib";
 #elif defined(_WIN32)
-static String defaultLoader = "xmrig-cuda.dll";
+static String defaultLoader = "tgxm-cuda.dll";
 #else
-static String defaultLoader = "libxmrig-cuda.so";
+static String defaultLoader = "libtgxm-cuda.so";
 #endif
 
 
@@ -130,10 +130,10 @@ String CudaLib::m_error;
 String CudaLib::m_loader;
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-bool xmrig::CudaLib::init(const char *fileName)
+bool tgxm::CudaLib::init(const char *fileName)
 {
     if (!m_initialized) {
         m_initialized = true;
@@ -158,25 +158,25 @@ bool xmrig::CudaLib::init(const char *fileName)
 }
 
 
-const char *xmrig::CudaLib::lastError() noexcept
+const char *tgxm::CudaLib::lastError() noexcept
 {
     return m_error;
 }
 
 
-void xmrig::CudaLib::close()
+void tgxm::CudaLib::close()
 {
     uv_dlclose(&cudaLib);
 }
 
 
-bool xmrig::CudaLib::cnHash(nvid_ctx *ctx, uint32_t startNonce, uint64_t height, uint64_t target, uint32_t *rescount, uint32_t *resnonce)
+bool tgxm::CudaLib::cnHash(nvid_ctx *ctx, uint32_t startNonce, uint64_t height, uint64_t target, uint32_t *rescount, uint32_t *resnonce)
 {
     return pCnHash(ctx, startNonce, height, target, rescount, resnonce);
 }
 
 
-bool xmrig::CudaLib::deviceInfo(nvid_ctx *ctx, int32_t blocks, int32_t threads, const Algorithm &algorithm, int32_t dataset_host) noexcept
+bool tgxm::CudaLib::deviceInfo(nvid_ctx *ctx, int32_t blocks, int32_t threads, const Algorithm &algorithm, int32_t dataset_host) noexcept
 {
     const Algorithm algo = RxAlgo::id(algorithm);
 
@@ -188,43 +188,43 @@ bool xmrig::CudaLib::deviceInfo(nvid_ctx *ctx, int32_t blocks, int32_t threads, 
 }
 
 
-bool xmrig::CudaLib::deviceInit(nvid_ctx *ctx) noexcept
+bool tgxm::CudaLib::deviceInit(nvid_ctx *ctx) noexcept
 {
     return pDeviceInit(ctx);
 }
 
 
-bool xmrig::CudaLib::rxHash(nvid_ctx *ctx, uint32_t startNonce, uint64_t target, uint32_t *rescount, uint32_t *resnonce) noexcept
+bool tgxm::CudaLib::rxHash(nvid_ctx *ctx, uint32_t startNonce, uint64_t target, uint32_t *rescount, uint32_t *resnonce) noexcept
 {
     return pRxHash(ctx, startNonce, target, rescount, resnonce);
 }
 
 
-bool xmrig::CudaLib::rxPrepare(nvid_ctx *ctx, const void *dataset, size_t datasetSize, bool dataset_host, uint32_t batchSize) noexcept
+bool tgxm::CudaLib::rxPrepare(nvid_ctx *ctx, const void *dataset, size_t datasetSize, bool dataset_host, uint32_t batchSize) noexcept
 {
     return pRxPrepare(ctx, dataset, datasetSize, dataset_host, batchSize);
 }
 
 
-bool xmrig::CudaLib::kawPowHash(nvid_ctx *ctx, uint8_t* job_blob, uint64_t target, uint32_t *rescount, uint32_t *resnonce, uint32_t *skipped_hashes) noexcept
+bool tgxm::CudaLib::kawPowHash(nvid_ctx *ctx, uint8_t* job_blob, uint64_t target, uint32_t *rescount, uint32_t *resnonce, uint32_t *skipped_hashes) noexcept
 {
     return pKawPowHash(ctx, job_blob, target, rescount, resnonce, skipped_hashes);
 }
 
 
-bool xmrig::CudaLib::kawPowPrepare(nvid_ctx *ctx, const void* cache, size_t cache_size, const void* dag_precalc, size_t dag_size, uint32_t height, const uint64_t* dag_sizes) noexcept
+bool tgxm::CudaLib::kawPowPrepare(nvid_ctx *ctx, const void* cache, size_t cache_size, const void* dag_precalc, size_t dag_size, uint32_t height, const uint64_t* dag_sizes) noexcept
 {
     return pKawPowPrepare_v2(ctx, cache, cache_size, dag_precalc, dag_size, height, dag_sizes);
 }
 
 
-bool xmrig::CudaLib::kawPowStopHash(nvid_ctx *ctx) noexcept
+bool tgxm::CudaLib::kawPowStopHash(nvid_ctx *ctx) noexcept
 {
     return pKawPowStopHash(ctx);
 }
 
 
-bool xmrig::CudaLib::setJob(nvid_ctx *ctx, const void *data, size_t size, const Algorithm &algorithm) noexcept
+bool tgxm::CudaLib::setJob(nvid_ctx *ctx, const void *data, size_t size, const Algorithm &algorithm) noexcept
 {
     const Algorithm algo = RxAlgo::id(algorithm);
     if (pSetJob) {
@@ -235,43 +235,43 @@ bool xmrig::CudaLib::setJob(nvid_ctx *ctx, const void *data, size_t size, const 
 }
 
 
-const char *xmrig::CudaLib::deviceName(nvid_ctx *ctx) noexcept
+const char *tgxm::CudaLib::deviceName(nvid_ctx *ctx) noexcept
 {
     return pDeviceName(ctx);
 }
 
 
-const char *xmrig::CudaLib::lastError(nvid_ctx *ctx) noexcept
+const char *tgxm::CudaLib::lastError(nvid_ctx *ctx) noexcept
 {
     return pLastError(ctx);
 }
 
 
-const char *xmrig::CudaLib::pluginVersion() noexcept
+const char *tgxm::CudaLib::pluginVersion() noexcept
 {
     return pPluginVersion();
 }
 
 
-int32_t xmrig::CudaLib::deviceInt(nvid_ctx *ctx, DeviceProperty property) noexcept
+int32_t tgxm::CudaLib::deviceInt(nvid_ctx *ctx, DeviceProperty property) noexcept
 {
     return pDeviceInt(ctx, property);
 }
 
 
-nvid_ctx *xmrig::CudaLib::alloc(uint32_t id, int32_t bfactor, int32_t bsleep) noexcept
+nvid_ctx *tgxm::CudaLib::alloc(uint32_t id, int32_t bfactor, int32_t bsleep) noexcept
 {
     return pAlloc(id, bfactor, bsleep);
 }
 
 
-std::string xmrig::CudaLib::version(uint32_t version)
+std::string tgxm::CudaLib::version(uint32_t version)
 {
     return std::to_string(version / 1000) + "." + std::to_string((version % 1000) / 10);
 }
 
 
-std::vector<xmrig::CudaDevice> xmrig::CudaLib::devices(int32_t bfactor, int32_t bsleep, const std::vector<uint32_t> &hints) noexcept
+std::vector<tgxm::CudaDevice> tgxm::CudaLib::devices(int32_t bfactor, int32_t bsleep, const std::vector<uint32_t> &hints) noexcept
 {
     const uint32_t count = deviceCount();
     if (!count) {
@@ -306,43 +306,43 @@ std::vector<xmrig::CudaDevice> xmrig::CudaLib::devices(int32_t bfactor, int32_t 
 }
 
 
-uint32_t xmrig::CudaLib::deviceCount() noexcept
+uint32_t tgxm::CudaLib::deviceCount() noexcept
 {
     return pDeviceCount();
 }
 
 
-uint32_t xmrig::CudaLib::deviceUint(nvid_ctx *ctx, DeviceProperty property) noexcept
+uint32_t tgxm::CudaLib::deviceUint(nvid_ctx *ctx, DeviceProperty property) noexcept
 {
     return pDeviceUint(ctx, property);
 }
 
 
-uint32_t xmrig::CudaLib::driverVersion() noexcept
+uint32_t tgxm::CudaLib::driverVersion() noexcept
 {
     return pVersion(DriverVersion);
 }
 
 
-uint32_t xmrig::CudaLib::runtimeVersion() noexcept
+uint32_t tgxm::CudaLib::runtimeVersion() noexcept
 {
     return pVersion(RuntimeVersion);
 }
 
 
-uint64_t xmrig::CudaLib::deviceUlong(nvid_ctx *ctx, DeviceProperty property) noexcept
+uint64_t tgxm::CudaLib::deviceUlong(nvid_ctx *ctx, DeviceProperty property) noexcept
 {
     return pDeviceUlong(ctx, property);
 }
 
 
-void xmrig::CudaLib::release(nvid_ctx *ctx) noexcept
+void tgxm::CudaLib::release(nvid_ctx *ctx) noexcept
 {
     pRelease(ctx);
 }
 
 
-bool xmrig::CudaLib::open()
+bool tgxm::CudaLib::open()
 {
     m_error = nullptr;
 
@@ -350,7 +350,7 @@ bool xmrig::CudaLib::open()
         return true;
     }
 
-#   ifdef XMRIG_OS_LINUX
+#   ifdef TGXM_OS_LINUX
     if (m_loader == defaultLoader) {
         m_loader = Process::location(Process::ExeLocation, m_loader);
         if (uv_dlopen(m_loader, &cudaLib) == 0) {
@@ -365,7 +365,7 @@ bool xmrig::CudaLib::open()
 }
 
 
-void xmrig::CudaLib::load()
+void tgxm::CudaLib::load()
 {
     DLSYM(Version);
 

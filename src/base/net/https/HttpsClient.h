@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2014-2019 heapwolf    <https://github.com/heapwolf>
  * Copyright (c) 2018-2020 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2020 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2020 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@
  */
 
 
-#ifndef XMRIG_HTTPSCLIENT_H
-#define XMRIG_HTTPSCLIENT_H
+#ifndef TGXM_HTTPSCLIENT_H
+#define TGXM_HTTPSCLIENT_H
 
 
 using BIO       = struct bio_st;
@@ -32,13 +32,13 @@ using X509      = struct x509_st;
 #include "base/tools/String.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class HttpsClient : public HttpClient
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE_DEFAULT(HttpsClient)
+    TGXM_DISABLE_COPY_MOVE_DEFAULT(HttpsClient)
 
     HttpsClient(const char *tag, FetchRequest &&req, const std::weak_ptr<IHttpListener> &listener);
     ~HttpsClient() override;
@@ -66,7 +66,7 @@ private:
 };
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-#endif // XMRIG_HTTPSCLIENT_H
+#endif // TGXM_HTTPSCLIENT_H

@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_ETHSTRATUMCLIENT_H
-#define XMRIG_ETHSTRATUMCLIENT_H
+#ifndef TGXM_ETHSTRATUMCLIENT_H
+#define TGXM_ETHSTRATUMCLIENT_H
 
 
 #include "base/net/stratum/Client.h"
@@ -26,13 +26,13 @@
 #include <utility>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class EthStratumClient : public Client
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE_DEFAULT(EthStratumClient)
+    TGXM_DISABLE_COPY_MOVE_DEFAULT(EthStratumClient)
 
     EthStratumClient(int id, const char *agent, IClientListener *listener);
     ~EthStratumClient() override = default;
@@ -47,7 +47,7 @@ protected:
 
     void setExtraNonce(const rapidjson::Value &nonce);
 
-#   ifdef XMRIG_ALGO_GHOSTRIDER
+#   ifdef TGXM_ALGO_GHOSTRIDER
     inline void setExtraNonce2Size(uint64_t size)   { m_extraNonce2Size = size; }
 #   endif
 
@@ -62,7 +62,7 @@ private:
     bool m_authorized   = false;
     std::pair<uint64_t, String> m_extraNonce{};
 
-#   ifdef XMRIG_ALGO_GHOSTRIDER
+#   ifdef TGXM_ALGO_GHOSTRIDER
     uint64_t m_extraNonce2Size = 0;
     uint64_t m_nextDifficulty = 0;
     String m_ntime;
@@ -70,7 +70,7 @@ private:
 };
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */
 
 
-#endif /* XMRIG_ETHSTRATUMCLIENT_H */
+#endif /* TGXM_ETHSTRATUMCLIENT_H */

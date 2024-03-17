@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -38,12 +38,12 @@
 #include "core/config/Config_platform.h"
 
 
-#ifdef XMRIG_FEATURE_TLS
+#ifdef TGXM_FEATURE_TLS
 #   include "base/net/tls/TlsConfig.h"
 #endif
 
 
-void xmrig::BaseTransform::load(JsonChain &chain, Process *process, IConfigTransform &transform)
+void tgxm::BaseTransform::load(JsonChain &chain, Process *process, IConfigTransform &transform)
 {
     using namespace rapidjson;
 
@@ -79,7 +79,7 @@ void xmrig::BaseTransform::load(JsonChain &chain, Process *process, IConfigTrans
 }
 
 
-void xmrig::BaseTransform::finalize(rapidjson::Document &doc)
+void tgxm::BaseTransform::finalize(rapidjson::Document &doc)
 {
     using namespace rapidjson;
     auto &allocator = doc.GetAllocator();
@@ -108,7 +108,7 @@ void xmrig::BaseTransform::finalize(rapidjson::Document &doc)
 }
 
 
-void xmrig::BaseTransform::transform(rapidjson::Document &doc, int key, const char *arg)
+void tgxm::BaseTransform::transform(rapidjson::Document &doc, int key, const char *arg)
 {
     switch (key) {
     case IConfig::AlgorithmKey: /* --algo */
@@ -157,13 +157,13 @@ void xmrig::BaseTransform::transform(rapidjson::Document &doc, int key, const ch
             array.PushBack(rapidjson::kObjectType, doc.GetAllocator());
         }
 
-#       ifdef XMRIG_FEATURE_BENCHMARK
+#       ifdef TGXM_FEATURE_BENCHMARK
         if (key != IConfig::UrlKey) {
             set(doc, array[array.Size() - 1], Pool::kUrl,
-#           ifdef XMRIG_FEATURE_TLS
-                "stratum+ssl://randomx.xmrig.com:443"
+#           ifdef TGXM_FEATURE_TLS
+                "stratum+ssl://randomx.tgxm.com:443"
 #           else
-                "randomx.xmrig.com:3333"
+                "randomx.tgxm.com:3333"
 #           endif
             );
         } else
@@ -218,7 +218,7 @@ void xmrig::BaseTransform::transform(rapidjson::Document &doc, int key, const ch
     case IConfig::TitleKey: /* --title */
         return set(doc, BaseConfig::kTitle, arg);
 
-#   ifdef XMRIG_FEATURE_TLS
+#   ifdef TGXM_FEATURE_TLS
     case IConfig::TlsCertKey: /* --tls-cert */
         return set(doc, BaseConfig::kTls, TlsConfig::kCert, arg);
 
@@ -276,7 +276,7 @@ void xmrig::BaseTransform::transform(rapidjson::Document &doc, int key, const ch
 }
 
 
-void xmrig::BaseTransform::transformBoolean(rapidjson::Document &doc, int key, bool enable)
+void tgxm::BaseTransform::transformBoolean(rapidjson::Document &doc, int key, bool enable)
 {
     switch (key) {
     case IConfig::BackgroundKey: /* --background */
@@ -293,12 +293,12 @@ void xmrig::BaseTransform::transformBoolean(rapidjson::Document &doc, int key, b
 
     case IConfig::SubmitToOriginKey: /* --submit-to-origin */
         return add(doc, Pools::kPools, Pool::kSubmitToOrigin, enable);
-#   ifdef XMRIG_FEATURE_HTTP
+#   ifdef TGXM_FEATURE_HTTP
     case IConfig::DaemonKey: /* --daemon */
         return add(doc, Pools::kPools, Pool::kDaemon, enable);
 #   endif
 
-#   ifndef XMRIG_PROXY_PROJECT
+#   ifndef TGXM_PROXY_PROJECT
     case IConfig::NicehashKey: /* --nicehash */
         return add<bool>(doc, Pools::kPools, Pool::kNicehash, enable);
 #   endif
@@ -332,7 +332,7 @@ void xmrig::BaseTransform::transformBoolean(rapidjson::Document &doc, int key, b
 }
 
 
-void xmrig::BaseTransform::transformUint64(rapidjson::Document &doc, int key, uint64_t arg)
+void tgxm::BaseTransform::transformUint64(rapidjson::Document &doc, int key, uint64_t arg)
 {
     switch (key) {
     case IConfig::RetriesKey: /* --retries */
@@ -357,7 +357,7 @@ void xmrig::BaseTransform::transformUint64(rapidjson::Document &doc, int key, ui
     case IConfig::DnsTtlKey: /* --dns-ttl */
         return set(doc, DnsConfig::kField, DnsConfig::kTTL, arg);
 
-#   ifdef XMRIG_FEATURE_HTTP
+#   ifdef TGXM_FEATURE_HTTP
     case IConfig::DaemonPollKey:  /* --daemon-poll-interval */
         return add(doc, Pools::kPools, Pool::kDaemonPollInterval, arg);
 

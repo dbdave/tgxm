@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -19,17 +19,17 @@
 #include "Chrono.h"
 
 
-#ifdef XMRIG_OS_WIN
+#ifdef TGXM_OS_WIN
 #   include <Windows.h>
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 double Chrono::highResolutionMSecs()
 {
-#   ifdef XMRIG_OS_WIN
+#   ifdef TGXM_OS_WIN
     LARGE_INTEGER f, t;
     QueryPerformanceFrequency(&f);
     QueryPerformanceCounter(&t);
@@ -41,4 +41,4 @@ double Chrono::highResolutionMSecs()
 }
 
 
-} /* namespace xmrig */
+} /* namespace tgxm */

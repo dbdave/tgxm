@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2023 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2023 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2023 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 #include <fstream>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 static const char *kLocalhost = "localhost";
@@ -68,17 +68,17 @@ bool isFileExist(const char *fileName)
 }
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-xmrig::TlsGen::~TlsGen()
+tgxm::TlsGen::~TlsGen()
 {
     EVP_PKEY_free(m_pkey);
     X509_free(m_x509);
 }
 
 
-void xmrig::TlsGen::generate(const char *commonName)
+void tgxm::TlsGen::generate(const char *commonName)
 {
     if (isFileExist(m_cert) && isFileExist(m_certKey)) {
         return;
@@ -99,7 +99,7 @@ void xmrig::TlsGen::generate(const char *commonName)
 }
 
 
-bool xmrig::TlsGen::generate_x509(const char *commonName)
+bool tgxm::TlsGen::generate_x509(const char *commonName)
 {
     m_x509 = X509_new();
     if (!m_x509) {
@@ -123,7 +123,7 @@ bool xmrig::TlsGen::generate_x509(const char *commonName)
 }
 
 
-bool xmrig::TlsGen::write()
+bool tgxm::TlsGen::write()
 {
     auto pkey_file = fopen(m_certKey, "wb");
     if (!pkey_file) {

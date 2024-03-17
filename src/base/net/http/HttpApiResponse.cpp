@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2014-2019 heapwolf    <https://github.com/heapwolf>
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -24,22 +24,22 @@
 #include "base/net/http/HttpData.h"
 
 
-namespace xmrig {
+namespace tgxm {
 
 static const char *kError  = "error";
 static const char *kStatus = "status";
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-xmrig::HttpApiResponse::HttpApiResponse(uint64_t id) :
+tgxm::HttpApiResponse::HttpApiResponse(uint64_t id) :
     HttpResponse(id),
     m_doc(rapidjson::kObjectType)
 {
 }
 
 
-xmrig::HttpApiResponse::HttpApiResponse(uint64_t id, int status) :
+tgxm::HttpApiResponse::HttpApiResponse(uint64_t id, int status) :
     HttpResponse(id),
     m_doc(rapidjson::kObjectType)
 {
@@ -47,7 +47,7 @@ xmrig::HttpApiResponse::HttpApiResponse(uint64_t id, int status) :
 }
 
 
-void xmrig::HttpApiResponse::end()
+void tgxm::HttpApiResponse::end()
 {
     using namespace rapidjson;
 

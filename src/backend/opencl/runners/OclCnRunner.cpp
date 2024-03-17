@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
 #include "crypto/cn/CnAlgo.h"
 
 
-xmrig::OclCnRunner::OclCnRunner(size_t index, const OclLaunchData &data) : OclBaseRunner(index, data)
+tgxm::OclCnRunner::OclCnRunner(size_t index, const OclLaunchData &data) : OclBaseRunner(index, data)
 {
     uint32_t stridedIndex = data.thread.stridedIndex();
     const auto f = m_algorithm.family();
@@ -57,7 +57,7 @@ xmrig::OclCnRunner::OclCnRunner(size_t index, const OclLaunchData &data) : OclBa
 }
 
 
-xmrig::OclCnRunner::~OclCnRunner()
+tgxm::OclCnRunner::~OclCnRunner()
 {
     delete m_cn0;
     delete m_cn1;
@@ -78,7 +78,7 @@ xmrig::OclCnRunner::~OclCnRunner()
 }
 
 
-size_t xmrig::OclCnRunner::bufferSize() const
+size_t tgxm::OclCnRunner::bufferSize() const
 {
     return OclBaseRunner::bufferSize() +
            align(m_algorithm.l3() * m_intensity) +
@@ -87,7 +87,7 @@ size_t xmrig::OclCnRunner::bufferSize() const
 }
 
 
-void xmrig::OclCnRunner::run(uint32_t nonce, uint32_t *hashOutput)
+void tgxm::OclCnRunner::run(uint32_t nonce, uint32_t *hashOutput)
 {
     static const cl_uint zero = 0;
 
@@ -114,7 +114,7 @@ void xmrig::OclCnRunner::run(uint32_t nonce, uint32_t *hashOutput)
 }
 
 
-void xmrig::OclCnRunner::set(const Job &job, uint8_t *blob)
+void tgxm::OclCnRunner::set(const Job &job, uint8_t *blob)
 {
     if (job.size() > (Job::kMaxBlobSize - 4)) {
         throw std::length_error("job size too big");
@@ -151,7 +151,7 @@ void xmrig::OclCnRunner::set(const Job &job, uint8_t *blob)
 }
 
 
-void xmrig::OclCnRunner::build()
+void tgxm::OclCnRunner::build()
 {
     OclBaseRunner::build();
 
@@ -175,7 +175,7 @@ void xmrig::OclCnRunner::build()
 }
 
 
-void xmrig::OclCnRunner::init()
+void tgxm::OclCnRunner::init()
 {
     OclBaseRunner::init();
 

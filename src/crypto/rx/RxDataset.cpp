@@ -1,7 +1,7 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2019 tevador     <tevador@gmail.com>
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
 #include <uv.h>
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 static void init_dataset_wrapper(randomx_dataset *dataset, randomx_cache *cache, uint32_t startItem, uint32_t itemCount, int priority)
@@ -49,10 +49,10 @@ static void init_dataset_wrapper(randomx_dataset *dataset, randomx_cache *cache,
 }
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-xmrig::RxDataset::RxDataset(bool hugePages, bool oneGbPages, bool cache, RxConfig::Mode mode, uint32_t node) :
+tgxm::RxDataset::RxDataset(bool hugePages, bool oneGbPages, bool cache, RxConfig::Mode mode, uint32_t node) :
     m_mode(mode),
     m_node(node)
 {
@@ -70,14 +70,14 @@ xmrig::RxDataset::RxDataset(bool hugePages, bool oneGbPages, bool cache, RxConfi
 }
 
 
-xmrig::RxDataset::RxDataset(RxCache *cache) :
+tgxm::RxDataset::RxDataset(RxCache *cache) :
     m_node(0),
     m_cache(cache)
 {
 }
 
 
-xmrig::RxDataset::~RxDataset()
+tgxm::RxDataset::~RxDataset()
 {
     randomx_release_dataset(m_dataset);
 
@@ -86,7 +86,7 @@ xmrig::RxDataset::~RxDataset()
 }
 
 
-bool xmrig::RxDataset::init(const Buffer &seed, uint32_t numThreads, int priority)
+bool tgxm::RxDataset::init(const Buffer &seed, uint32_t numThreads, int priority)
 {
     if (!m_cache || !m_cache->get()) {
         return false;
@@ -122,19 +122,19 @@ bool xmrig::RxDataset::init(const Buffer &seed, uint32_t numThreads, int priorit
 }
 
 
-bool xmrig::RxDataset::isHugePages() const
+bool tgxm::RxDataset::isHugePages() const
 {
     return m_memory && m_memory->isHugePages();
 }
 
 
-bool xmrig::RxDataset::isOneGbPages() const
+bool tgxm::RxDataset::isOneGbPages() const
 {
     return m_memory && m_memory->isOneGbPages();
 }
 
 
-xmrig::HugePagesInfo xmrig::RxDataset::hugePages(bool cache) const
+tgxm::HugePagesInfo tgxm::RxDataset::hugePages(bool cache) const
 {
     auto pages = m_memory ? m_memory->hugePages() : HugePagesInfo();
 
@@ -146,7 +146,7 @@ xmrig::HugePagesInfo xmrig::RxDataset::hugePages(bool cache) const
 }
 
 
-size_t xmrig::RxDataset::size(bool cache) const
+size_t tgxm::RxDataset::size(bool cache) const
 {
     size_t size = 0;
 
@@ -162,7 +162,7 @@ size_t xmrig::RxDataset::size(bool cache) const
 }
 
 
-uint8_t *xmrig::RxDataset::tryAllocateScrathpad()
+uint8_t *tgxm::RxDataset::tryAllocateScrathpad()
 {
     auto p = reinterpret_cast<uint8_t *>(raw());
     if (!p) {
@@ -178,13 +178,13 @@ uint8_t *xmrig::RxDataset::tryAllocateScrathpad()
 }
 
 
-void *xmrig::RxDataset::raw() const
+void *tgxm::RxDataset::raw() const
 {
     return m_dataset ? randomx_get_dataset_memory(m_dataset) : nullptr;
 }
 
 
-void xmrig::RxDataset::setRaw(const void *raw)
+void tgxm::RxDataset::setRaw(const void *raw)
 {
     if (!m_dataset) {
         return;
@@ -195,7 +195,7 @@ void xmrig::RxDataset::setRaw(const void *raw)
 }
 
 
-void xmrig::RxDataset::allocate(bool hugePages, bool oneGbPages)
+void tgxm::RxDataset::allocate(bool hugePages, bool oneGbPages)
 {
     if (m_mode == RxConfig::LightMode) {
         LOG_ERR(CLEAR "%s" RED_BOLD_S "fast RandomX mode disabled by config", Tags::randomx());
@@ -218,7 +218,7 @@ void xmrig::RxDataset::allocate(bool hugePages, bool oneGbPages)
 
     m_dataset = randomx_create_dataset(m_memory->raw());
 
-#   ifdef XMRIG_OS_LINUX
+#   ifdef TGXM_OS_LINUX
     if (oneGbPages && !isOneGbPages()) {
         LOG_ERR(CLEAR "%s" RED_BOLD_S "failed to allocate RandomX dataset using 1GB pages", Tags::randomx());
     }

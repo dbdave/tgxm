@@ -1,6 +1,6 @@
-/* XMRig
+/* TGXm
  * Copyright (c) 2018-2021 SChernykh   <https://github.com/SChernykh>
- * Copyright (c) 2016-2021 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright (c) 2016-2021 TGXm       <https://github.com/tgxm>, <support@tgxm.com>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMRIG_CPUWORKER_H
-#define XMRIG_CPUWORKER_H
+#ifndef TGXM_CPUWORKER_H
+#define TGXM_CPUWORKER_H
 
 
 #include "backend/common/Worker.h"
@@ -27,18 +27,18 @@
 #include "net/JobResult.h"
 
 
-#ifdef XMRIG_ALGO_RANDOMX
+#ifdef TGXM_ALGO_RANDOMX
 class randomx_vm;
 #endif
 
 
-namespace xmrig {
+namespace tgxm {
 
 
 class RxVm;
 
 
-#ifdef XMRIG_ALGO_GHOSTRIDER
+#ifdef TGXM_ALGO_GHOSTRIDER
 namespace ghostrider { struct HelperThread; }
 #endif
 
@@ -47,14 +47,14 @@ template<size_t N>
 class CpuWorker : public Worker
 {
 public:
-    XMRIG_DISABLE_COPY_MOVE_DEFAULT(CpuWorker)
+    TGXM_DISABLE_COPY_MOVE_DEFAULT(CpuWorker)
 
     CpuWorker(size_t id, const CpuLaunchData &data);
     ~CpuWorker() override;
 
     size_t threads() const override
     {
-#       ifdef XMRIG_ALGO_GHOSTRIDER
+#       ifdef TGXM_ALGO_GHOSTRIDER
         return ((m_algorithm.family() == Algorithm::GHOSTRIDER) && m_ghHelper) ? 2 : 1;
 #       else
         return 1;
@@ -73,7 +73,7 @@ protected:
 private:
     inline cn_hash_fun fn(const Algorithm &algorithm) const { return CnHash::fn(algorithm, m_av, m_assembly); }
 
-#   ifdef XMRIG_ALGO_RANDOMX
+#   ifdef TGXM_ALGO_RANDOMX
     void allocateRandomX_VM();
 #   endif
 
@@ -95,16 +95,16 @@ private:
     VirtualMemory *m_memory = nullptr;
     WorkerJob<N> m_job;
 
-#   ifdef XMRIG_ALGO_RANDOMX
+#   ifdef TGXM_ALGO_RANDOMX
     randomx_vm *m_vm        = nullptr;
     Buffer m_seed;
 #   endif
 
-#   ifdef XMRIG_ALGO_GHOSTRIDER
+#   ifdef TGXM_ALGO_GHOSTRIDER
     ghostrider::HelperThread* m_ghHelper = nullptr;
 #   endif
 
-#   ifdef XMRIG_FEATURE_BENCHMARK
+#   ifdef TGXM_FEATURE_BENCHMARK
     uint32_t m_benchSize    = 0;
 #   endif
 };
@@ -122,7 +122,7 @@ extern template class CpuWorker<5>;
 extern template class CpuWorker<8>;
 
 
-} // namespace xmrig
+} // namespace tgxm
 
 
-#endif /* XMRIG_CPUWORKER_H */
+#endif /* TGXM_CPUWORKER_H */
