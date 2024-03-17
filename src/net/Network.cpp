@@ -33,7 +33,7 @@
 #include "base/tools/Timer.h"
 #include "core/config/Config.h"
 #include "core/Controller.h"
-#include "core/Miner.h"
+#include "core/Worker.h"
 #include "net/JobResult.h"
 #include "net/JobResults.h"
 #include "net/strategies/DonateStrategy.h"

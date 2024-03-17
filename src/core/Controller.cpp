@@ -19,7 +19,7 @@
 #include "core/Controller.h"
 #include "backend/cpu/Cpu.h"
 #include "core/config/Config.h"
-#include "core/Miner.h"
+#include "core/Worker.h"
 #include "crypto/common/VirtualMemory.h"
 #include "net/Network.h"
 

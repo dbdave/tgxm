@@ -26,7 +26,7 @@
 #include "base/tools/Alignment.h"
 #include "base/tools/Chrono.h"
 #include "core/config/Config.h"
-#include "core/Miner.h"
+#include "core/Worker.h"
 #include "crypto/cn/CnCtx.h"
 #include "crypto/cn/CryptoNight_test.h"
 #include "crypto/cn/CryptoNight.h"
